@@ -1,0 +1,41 @@
+#
+# This is a template for build properties that can be changed locally. If any
+# of these are not set locally then the build will prompt for them
+#
+# which branch to build, default is trunk
+svn-url.properties.file=svn-url-trunk.properties
+#
+#
+# PromptNCIPlugin.properties settings
+#
+nci.prompt.ipAddress=192.168.1.103
+nci.prompt.dataBaseName=protege
+nci.prompt.evsHistoryTableName=evs_history
+nci.prompt.userName=protege
+nci.prompt.password=protege
+#
+# which config file to use for EditTab
+config.file=ncitab_byName.xml
+#
+#
+client.max.memory=-Xmx600M
+#
+# these are props for protege.properties file for both client/server
+edu.stanford.smi.protegex.owl.jena.reasoner.URL=http\://cbvapp-d1012.nci.nih.gov\:8090/explain/
+edu.stanford.smi.protege.server.ServerPanel.host_name=cbvapp-d1012.nci.nih.gov\:2633
+
+
+#
+# Settings for configure.server.projects target
+#
+# properties for the ontology and database that will be used by the 
+# server to serve the ontology.   The ontology.prefix indicates just the 
+# ontology file without the ".owl" suffix.
+#
+memory=700M
+ontology.prefix=SmallBase3byName
+db.host=192.168.1.103
+db.database=protege
+db.table=SmallBase3byName
+db.user=protege
+db.password=protege

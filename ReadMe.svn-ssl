@@ -1,0 +1,37 @@
+
+If svn is not using the correct version of the neon library one will
+see the following error when trying to checkout some of the svn
+sources:
+
+        SSL is not supported.
+
+Assuming you are willing to recompile svn, this can easily be fixed.
+You need to download the sources for neon
+(http://www.webdav.org/neon/) and svn
+(http://subversion.tigris.org/).  I used neon version 0.26.1 and
+subversion version 1.4.3.
+
+You then need to make neon with ssl support:
+
+    ./configure --with-ssl
+    make clean
+    make
+    (sudo) make install.
+
+Now you make svn using this version of neon:
+
+    ./configure --with-neon=/usr/local/
+    make clean
+    make
+    (sudo) make install.
+
+The first time I tried this, it did not work.  I believe that the
+reason must be that the option
+
+        --with-neon=/usr/local/
+
+is important in the configure of svn.
+
+NOTE (for OS X 10.4.1 on intel): On the newer Macs, the arhive and reinstalls mechanism is a nice feature for restoring system file. However it steps on usr/local
+so the above steps would need to be repeated in that case. Fink Commander places all code in /sw which does not get destroyed on reinstalls
+Using Fink I found updating subversion to version 1.4.3 was sufficient to fix the problem without touching neon.

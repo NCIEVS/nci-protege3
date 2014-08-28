@@ -1,0 +1,82 @@
+#!/bin/sh -x
+
+if test x$1 == x
+then
+   echo The first argument should be the name of the branch.
+   exit
+fi
+branch_name=$1
+
+output_file=svn-url-${branch_name}.properties
+log_message="creating branch - ${branch_name}"
+
+protege_base_url=http://smi-protege.stanford.edu/repos/protege
+nci_base_url=https://ncisvn.nci.nih.gov/svn/protegegui/collaborativedevterminologytools
+
+function addStanfordProject {
+   trunk=$1
+   branch=nci-branches/${branch_name}/$2
+   project_var_name=$3
+   project_name=$4
+   svn copy -m "${log_message}" ${protege_base_url}/${trunk} ${protege_base_url}/${branch}
+   if [[ $? != 0 ]] 
+   then
+     echo "Halted due to svn error"
+     exit -1
+   fi
+   echo "" >> ${output_file}
+   echo "${project_var_name}.url=\${protege.base.url}/${branch}" >> ${output_file}
+   echo "${project_var_name}.project=\${projects}/${project_name}" >> ${output_file}
+   echo "" >> ${output_file}
+}
+
+function addNCIProject {
+   trunk=$1
+   branch=nci-branches/${branch_name}/$2
+   project_var_name=$3
+   project_name=$4
+   svn copy -m "${log_message}" ${nci_base_url}/${trunk} ${nci_base_url}/${branch}
+   if [[ $? != 0 ]] 
+   then
+     echo "Halted due to svn error"
+     exit -1
+   fi
+   echo "" >> ${output_file}
+   echo "${project_var_name}.url=\${nci.base.url}/${branch}" >> ${output_file}
+   echo "${project_var_name}.project=\${projects}/${project_name}" >> ${output_file}
+   echo "" >> ${output_file}
+}
+
+
+rm ${output_file}
+
+svn mkdir -m "${log_message}" ${protege_base_url}/nci-branches/${branch_name}
+svn mkdir -m "${log_message}" ${nci_base_url}/nci-branches/${branch_name}
+
+#
+# addStanfordProject 
+# addNCIProject
+#   arg1 = the path of the trunk in svn not including the prefix
+#   arg2 = the last part of the path of the branch in svn
+#   arg3 = the prefix of the name used by ant variables related to this project
+#   arg4 = the directory where "ant checkout" places the project
+
+addStanfordProject protege-core/trunk protege-core protege.core protege-core
+addStanfordProject owl/trunk owl protege.owl protege-owl
+addStanfordProject ClarkParsiaDatabase/trunk ClarkParsiaDatabase clark.parsia.db ClarkParsiaDatabase
+addStanfordProject rdf-backend/trunk rdf-backend rdfbackend rdf-backend
+addStanfordProject change-management/trunk change-management changes changes
+addStanfordProject standard-extensions/trunk standard-extensions standard.extensions standard-extensions
+addStanfordProject chat/trunk chat chat chat
+addStanfordProject protege-collab/trunk protege-collab collab collab
+addStanfordProject prompt/trunk prompt prompt prompt
+addStanfordProject lucene-query/trunk lucene-query advancedQuery advancedQuery
+addStanfordProject dev-plugins/trunk/protegeLoad protegeLoad protegeLoad protegeLoad
+
+addNCIProject protegegui/trunk protegegui ncitab ncitab
+addNCIProject protegehistory//NCIConceptHistory/trunk NCIConceptHistory nciconcepthistory nciconcepthistory
+addNCIProject protegehistory/NCIEVSHistory/trunk NCIEVSHistory ncievshistory ncievshistory
+addNCIProject classification/trunk  classification classification classification
+addNCIProject classificationui/trunk classificationui classificationui classificationui
+addNCIProject codegen/trunk codegen codegen codegen
+addNCIProject protegeworkflow/trunk protegeworkflow protegeworkflow protegeworkflow

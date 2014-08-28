@@ -1,0 +1,38 @@
+Index: src/edu/stanford/smi/protege/resource/Text.java
+===================================================================
+--- src/edu/stanford/smi/protege/resource/Text.java	(revision 15436)
++++ src/edu/stanford/smi/protege/resource/Text.java	(working copy)
+@@ -31,7 +31,7 @@
+     }
+ 
+     public static String getBuildInfo() {
+-        return "Build " + getBuildNumber();
++        return "Build 1.4.2";
+     }
+ 
+     public static String getProgramName() {
+@@ -43,7 +43,7 @@
+     }
+ 
+     public static String getProgramNameAndVersion() {
+-        return getProgramName() + " " + getVersion() + " " + getStatus();
++        return "NCI " + getProgramName() + " 1.4.2 " + getStatus();
+     }
+ 
+     public static String getBuildNumber() {
+Index: src/edu/stanford/smi/protege/util/SystemUtilities.java
+===================================================================
+--- src/edu/stanford/smi/protege/util/SystemUtilities.java	(revision 15436)
++++ src/edu/stanford/smi/protege/util/SystemUtilities.java	(working copy)
+@@ -329,10 +329,9 @@
+ 
+     public static void logSystemInfo() {
+         StringBuffer buffer = new StringBuffer();
++        buffer.append("NCI ");
+         buffer.append(Text.getProgramTextName());
+         buffer.append(" ");
+-        buffer.append(Text.getVersion());
+-        buffer.append(" ");
+         buffer.append(Text.getBuildInfo());
+         buffer.append(", JVM ");
+         buffer.append(getSystemProperty("java.runtime.version"));

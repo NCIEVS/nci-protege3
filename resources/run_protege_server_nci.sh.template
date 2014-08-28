@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# Change to the script' working directory, should be the Protege root directory 
+cd $(dirname $0)
+
+# Attempt to use the bundled VM if none specified
+if [ "$JAVA_HOME" == "" ]; then
+	JAVA_HOME=/usr/local/jdk1.5.0_06
+fi
+
+JAVA_PATH=$JAVA_HOME/jre/bin
+
+# Check if the Java VM can be found 
+if [ ! -e $JAVA_PATH/java ]; then
+	echo Java VM could not be found. Please check your JAVA_HOME environment variable.
+	exit 1
+fi
+
+CLASSPATH=protege.jar:looks.jar:unicode_panel.jar:mysql-connector-java-5.0.0-beta-bin.jar
+MAINCLASS=edu.stanford.smi.protege.server.Server
+
+# If you want automatic saving of the project, setup the number of seconds in SAVE_INTERVAL_VALUE
+ SAVE_INTERVAL=-saveIntervalSec=600
+
+MAX_MEMORY=@SERVER_MAX_MEMORY@
+ENCODING=-Dfile.encoding=UTF-8
+TRANS_LEVEL=-Dtransaction.level=READ_COMMITTED
+RMI_REG_PORT=-Dprotege.rmi.registry.port=2633
+RMI_SERV_PORT=-Dprotege.rmi.server.port=1524
+CODEBASE_URL=file:$PWD/protege.jar
+CODEBASE=-Djava.rmi.server.codebase=$CODEBASE_URL
+HOSTNAME_PARAM=-Djava.rmi.server.hostname=@SERVER_HOST_NAME@
+CBIO_OPTS=-Djava.awt.headless=true
+LOG4J_OPT=-Dlog4j.configuration=file:./log4j.xml
+DEBUG_OPT=-agentlib:jdwp-transport=dt_socket,address=8000,server=y,suspend=n
+
+OPTIONS="$CBIO_OPTS $MAX_MEMORY $ENCODING $TRANS_LEVEL $RMI_REG_PORT $RMI_SERV_PORT $CODEBASE $HOSTNAME_PARAM ${LOG4J_OPT} $DEBUG_OPT"
+
+export METAPROJECT=/app/protege/data/meta/nci_metaproject.pprj		
+
+
+nohup $JAVA_PATH/java -server -cp $CLASSPATH $OPTIONS $MAINCLASS $SAVE_INTERVAL $METAPROJECT </dev/null >console.txt  2>&1 &
+
+ 

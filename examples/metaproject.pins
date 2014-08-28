@@ -1,0 +1,519 @@
+; Wed Feb 17 07:46:10 EST 2010
+; 
+;+ (version "3.4.3")
+;+ (build "Build 572")
+
+([Do+not+edit+-+SmallBase3byName+annotations] of  Project
+
+	(allowedGroupOperation
+		[metaproject_Instance_7]
+		[nci_metaproject_Instance_100003]
+		[nci_metaproject_Instance_60037]
+		[nci_metaproject_Instance_10004]
+		[nci_metaproject_Instance_70005]
+		[nci_metaprojectLL_Instance_10000]
+		[nci_metaproject_Instance_60036]
+		[nci_metaproject_Instance_70000])
+	(location "examples/annotation_SmallBase3byName-db.pprj")
+	(name "Do not edit - SmallBase3byName annotations"))
+
+([metaproject_Class0] of  CoreProtegeOperations
+
+	(name "DisplayInProjectList"))
+
+([metaproject_Class10000] of  User
+
+	(group
+		[projects_00022]
+		[nci_metaproject_Instance_10003]
+		[nci_metaproject_Instance_60002])
+	(name "David Yee")
+	(password "x"))
+
+([metaproject_Class10001] of  GroupOperation
+
+	(allowedGroup [projects_00022])
+	(allowedOperation [metaproject_Class0]))
+
+([metaproject_Instance_0] of  Group
+
+	(member [nci_metaproject_Instance_90025])
+	(name "NCI_Workflow_Modeler"))
+
+([metaproject_Instance_2] of  NCIPluginOperations
+
+	(name "EditWFUser"))
+
+([metaproject_Instance_3] of  NCIPluginOperations
+
+	(name "CreateWFAssignment"))
+
+([metaproject_Instance_4] of  NCIPluginOperations
+
+	(name "EditWFAssignment"))
+
+([metaproject_Instance_5] of  NCIPluginOperations
+
+	(name "DeleteWFAssignment"))
+
+([metaproject_Instance_6] of  NCIPluginOperations
+
+	(name "CreateWFSuggestionAssignment"))
+
+([metaproject_Instance_7] of  GroupOperation
+
+	(allowedGroup [metaproject_Instance_0])
+	(allowedOperation
+		[metaproject_Instance_4]
+		[metaproject_Instance_6]))
+
+([nci_metaproject_Instance_0] of  Group
+
+	(member
+		[nci_metaproject_Instance_5]
+		[nci_metaproject_Instance_10005])
+	(name "NCI_Editor"))
+
+([nci_metaproject_Instance_1] of  Group
+
+	(member
+		[nci_metaproject_Instance_10001]
+		[nci_metaproject_Instance_10006]
+		[nci_metaproject_Instance_4])
+	(name "NCI_Administrator"))
+
+([nci_metaproject_Instance_10000] of  NCIPluginOperations
+
+	(name "DeleteClass"))
+
+([nci_metaproject_Instance_100002] of  User
+
+	(group
+		[nci_metaproject_Instance_60003]
+		[projects_00022])
+	(name "Guest Reviewer")
+	(password "guest"))
+
+([nci_metaproject_Instance_100003] of  GroupOperation
+
+	(allowedGroup [nci_metaproject_Instance_60003])
+	(allowedOperation
+		[nci_metaproject_Instance_60015]
+		[nci_metaproject_Instance_60017]
+		[nci_metaproject_Instance_60018]
+		[nci_metaproject_Instance_60019]
+		[nci_metaproject_Instance_70003]
+		[nci_metaproject_Instance_60022]
+		[nci_metaproject_Instance_70001]
+		[nci_metaproject_Instance_60029]))
+
+([nci_metaproject_Instance_10001] of  User
+
+	(group
+		[nci_metaproject_Instance_1]
+		[projects_00022])
+	(name "Gilberto Fragoso Ad")
+	(password "gilberto"))
+
+([nci_metaproject_Instance_10003] of  Group
+
+	(member
+		[nci_metaproject_Instance_90017]
+		[nci_metaproject_Instance_90022]
+		[nci_metaproject_Instance_50000]
+		[nci_metaproject_Instance_50001]
+		[nci_metaproject_Instance_50002]
+		[nci_metaprojectLLroot_Instance_10002]
+		[nci_metaproject_Instance_90025]
+		[metaproject_Class10000])
+	(name "Software_Developer"))
+
+([nci_metaproject_Instance_10004] of  GroupOperation
+
+	(allowedGroup [nci_metaproject_Instance_10003])
+	(allowedOperation
+		[nci_metaproject_Instance_60016]
+		[nci_metaproject_Instance_10000]
+		[nci_metaproject_Instance_60015]
+		[nci_metaproject_Instance_70007]
+		[nci_metaproject_Instance_60031]
+		[nci_metaproject_Instance_60017]
+		[nci_metaproject_Instance_70009]
+		[nci_metaproject_Instance_60018]
+		[nci_metaproject_Instance_70008]
+		[nci_metaproject_Instance_20001]
+		[nci_metaproject_Instance_60019]
+		[nci_metaproject_Instance_60030]
+		[nci_metaproject_Instance_60020]
+		[nci_metaproject_Instance_60021]
+		[nci_metaproject_Instance_70003]
+		[nci_metaproject_Instance_70004]
+		[nci_metaproject_Instance_60022]
+		[nci_metaproject_Instance_60023]
+		[nci_metaproject_Instance_60024]
+		[nci_metaproject_Instance_70001]
+		[nci_metaproject_Instance_70002]
+		[nci_metaproject_Instance_60027]
+		[nci_metaproject_Instance_60028]
+		[nci_metaproject_Instance_60029]
+		[nci_metaproject_Instance_60009]))
+
+([nci_metaproject_Instance_10005] of  User
+
+	(group
+		[nci_metaproject_Instance_0]
+		[projects_00022])
+	(name "Guest Editor")
+	(password "guest"))
+
+([nci_metaproject_Instance_10006] of  User
+
+	(group
+		[nci_metaproject_Instance_1]
+		[projects_00022])
+	(name "Guest Administrator")
+	(password "guest"))
+
+([nci_metaproject_Instance_20001] of  NCIPluginOperations
+
+	(name "EditRetiredClass"))
+
+([nci_metaproject_Instance_4] of  User
+
+	(group
+		[nci_metaproject_Instance_1]
+		[projects_00022])
+	(name "Gilberto Fragoso")
+	(password "gilberto"))
+
+([nci_metaproject_Instance_5] of  User
+
+	(group
+		[nci_metaproject_Instance_0]
+		[projects_00022])
+	(name "Sherri DeCoronado")
+	(password "sherri"))
+
+([nci_metaproject_Instance_50000] of  User
+
+	(group
+		[nci_metaproject_Instance_10003]
+		[projects_00022])
+	(name "Timothy Redmond")
+	(password "troglodyte"))
+
+([nci_metaproject_Instance_50001] of  User
+
+	(group
+		[nci_metaproject_Instance_10003]
+		[projects_00022])
+	(name "Tania Tudorache")
+	(password "tania"))
+
+([nci_metaproject_Instance_50002] of  User
+
+	(group
+		[nci_metaproject_Instance_10003]
+		[projects_00022])
+	(name "Chris Callendar")
+	(password "chris"))
+
+([nci_metaproject_Instance_60000] of  Group
+
+	(name "NCI_Priviledged_Editor"))
+
+([nci_metaproject_Instance_60001] of  Group
+
+	(name "NCI_Domain_Expert"))
+
+([nci_metaproject_Instance_60002] of  Group
+
+	(member
+		[nci_metaprojectLLroot_Instance_10002]
+		[metaproject_Class10000])
+	(name "NCI_Workflow_Manager"))
+
+([nci_metaproject_Instance_60003] of  Group
+
+	(member [nci_metaproject_Instance_100002])
+	(name "Reviewer"))
+
+([nci_metaproject_Instance_60008] of  CoreProtegeOperations
+
+	(name "EditMetaProject"))
+
+([nci_metaproject_Instance_60009] of  CoreProtegeOperations
+
+	(name "Read"))
+
+([nci_metaproject_Instance_60010] of  CoreProtegeOperations
+
+	(name "Write"))
+
+([nci_metaproject_Instance_60013] of  CoreProtegeOperations
+
+	(name "Shutdown"))
+
+([nci_metaproject_Instance_60015] of  NCIPluginOperations
+
+	(name "EditBasicRead"))
+
+([nci_metaproject_Instance_60016] of  NCIPluginOperations
+
+	(name "BatchLoad"))
+
+([nci_metaproject_Instance_60017] of  NCIPluginOperations
+
+	(name "EditPropertiesRead"))
+
+([nci_metaproject_Instance_60018] of  NCIPluginOperations
+
+	(name "EditRelationsRead"))
+
+([nci_metaproject_Instance_60019] of  NCIPluginOperations
+
+	(name "GenerateReport"))
+
+([nci_metaproject_Instance_60020] of  NCIPluginOperations
+
+	(name "Merge"))
+
+([nci_metaproject_Instance_60021] of  NCIPluginOperations
+
+	(name "NCICopy"))
+
+([nci_metaproject_Instance_60022] of  NCIPluginOperations
+
+	(name "Partonomize"))
+
+([nci_metaproject_Instance_60023] of  NCIPluginOperations
+
+	(name "PreMerge"))
+
+([nci_metaproject_Instance_60024] of  NCIPluginOperations
+
+	(name "PreRetire"))
+
+([nci_metaproject_Instance_60027] of  NCIPluginOperations
+
+	(name "Retire"))
+
+([nci_metaproject_Instance_60028] of  NCIPluginOperations
+
+	(name "Split"))
+
+([nci_metaproject_Instance_60029] of  NCIPluginOperations
+
+	(name "WriteReport"))
+
+([nci_metaproject_Instance_60030] of  NCIPluginOperations
+
+	(name "LoadBatch"))
+
+([nci_metaproject_Instance_60031] of  NCIPluginOperations
+
+	(name "EditBatch"))
+
+([nci_metaproject_Instance_60036] of  GroupOperation
+
+	(allowedGroup [nci_metaproject_Instance_1])
+	(allowedOperation
+		[nci_metaproject_Instance_60016]
+		[nci_metaproject_Instance_10000]
+		[nci_metaproject_Instance_60015]
+		[nci_metaproject_Instance_70007]
+		[nci_metaproject_Instance_60031]
+		[nci_metaproject_Instance_60017]
+		[nci_metaproject_Instance_70009]
+		[nci_metaproject_Instance_60018]
+		[nci_metaproject_Instance_70008]
+		[nci_metaproject_Instance_20001]
+		[nci_metaproject_Instance_60019]
+		[nci_metaproject_Instance_60030]
+		[nci_metaproject_Instance_60020]
+		[nci_metaproject_Instance_60021]
+		[nci_metaproject_Instance_70003]
+		[nci_metaproject_Instance_70004]
+		[nci_metaproject_Instance_60022]
+		[nci_metaproject_Instance_60023]
+		[nci_metaproject_Instance_60024]
+		[nci_metaproject_Instance_70001]
+		[nci_metaproject_Instance_70002]
+		[nci_metaproject_Instance_60027]
+		[nci_metaproject_Instance_60028]
+		[nci_metaproject_Instance_60029]))
+
+([nci_metaproject_Instance_60037] of  GroupOperation
+
+	(allowedGroup [nci_metaproject_Instance_60002])
+	(allowedOperation
+		[nci_metaproject_Instance_60016]
+		[nci_metaproject_Instance_10000]
+		[nci_metaproject_Instance_60015]
+		[nci_metaproject_Instance_70007]
+		[nci_metaproject_Instance_60031]
+		[nci_metaproject_Instance_60017]
+		[nci_metaproject_Instance_70009]
+		[nci_metaproject_Instance_60018]
+		[nci_metaproject_Instance_70008]
+		[nci_metaproject_Instance_20001]
+		[nci_metaproject_Instance_60019]
+		[nci_metaproject_Instance_60030]
+		[nci_metaproject_Instance_60020]
+		[nci_metaproject_Instance_60021]
+		[nci_metaproject_Instance_70003]
+		[nci_metaproject_Instance_60022]
+		[nci_metaproject_Instance_60023]
+		[nci_metaproject_Instance_60024]
+		[nci_metaproject_Instance_70001]
+		[nci_metaproject_Instance_60027]
+		[nci_metaproject_Instance_60028]
+		[nci_metaproject_Instance_60029]
+		[nci_metaproject_Instance_70004]
+		[nci_metaproject_Instance_70002]
+		[metaproject_Instance_4]
+		[metaproject_Instance_3]
+		[metaproject_Instance_2]
+		[metaproject_Instance_6]
+		[metaproject_Instance_5]))
+
+([nci_metaproject_Instance_70000] of  GroupOperation
+
+	(allowedGroup [nci_metaproject_Instance_0])
+	(allowedOperation
+		[nci_metaproject_Instance_60015]
+		[nci_metaproject_Instance_70007]
+		[nci_metaproject_Instance_60031]
+		[nci_metaproject_Instance_60017]
+		[nci_metaproject_Instance_70009]
+		[nci_metaproject_Instance_60018]
+		[nci_metaproject_Instance_70008]
+		[nci_metaproject_Instance_60019]
+		[nci_metaproject_Instance_60030]
+		[nci_metaproject_Instance_60021]
+		[nci_metaproject_Instance_70003]
+		[nci_metaproject_Instance_60022]
+		[nci_metaproject_Instance_60023]
+		[nci_metaproject_Instance_60024]
+		[nci_metaproject_Instance_70001]
+		[nci_metaproject_Instance_60027]
+		[nci_metaproject_Instance_60028]
+		[nci_metaproject_Instance_60029]))
+
+([nci_metaproject_Instance_70001] of  NCIPluginOperations
+
+	(name "PropertyTabRead"))
+
+([nci_metaproject_Instance_70002] of  NCIPluginOperations
+
+	(name "PropertyTabWrite"))
+
+([nci_metaproject_Instance_70003] of  NCIPluginOperations
+
+	(name "OntologyTabRead"))
+
+([nci_metaproject_Instance_70004] of  NCIPluginOperations
+
+	(name "OntologyTabWrite"))
+
+([nci_metaproject_Instance_70005] of  GroupOperation
+
+	(allowedGroup [nci_metaproject_Instance_60000]))
+
+([nci_metaproject_Instance_70007] of  NCIPluginOperations
+
+	(name "EditBasicWrite"))
+
+([nci_metaproject_Instance_70008] of  NCIPluginOperations
+
+	(name "EditRelationsWrite"))
+
+([nci_metaproject_Instance_70009] of  NCIPluginOperations
+
+	(name "EditPropertiesWrite"))
+
+([nci_metaproject_Instance_80000] of  CoreProtegeOperations
+
+	(description "An operation to generate lucene indicies.\nA reasonable policy is not to allow anyone to generate lucene indicies so that generating indicies can only be done in standalone mode.")
+	(name "Generate Lucene Indices"))
+
+([nci_metaproject_Instance_90017] of  User
+
+	(group
+		[nci_metaproject_Instance_10003]
+		[projects_00022])
+	(name "Maleh Hernandez")
+	(password "maleh"))
+
+([nci_metaproject_Instance_90019] of  Group
+
+	(name "Administrator"))
+
+([nci_metaproject_Instance_90022] of  User
+
+	(group
+		[nci_metaproject_Instance_10003]
+		[projects_00022])
+	(name "Tracy Safran")
+	(password "tracy"))
+
+([nci_metaproject_Instance_90025] of  User
+
+	(group
+		[nci_metaproject_Instance_10003]
+		[metaproject_Instance_0]
+		[projects_00022])
+	(name "Kim Ong")
+	(password "kim"))
+
+([nci_metaprojectLL_Instance_10000] of  GroupOperation
+
+	(allowedGroup [projects_00022])
+	(allowedOperation
+		[nci_metaproject_Instance_60009]
+		[nci_metaproject_Instance_60010]))
+
+([nci_metaprojectLLroot_Instance_10002] of  User
+
+	(group
+		[nci_metaproject_Instance_10003]
+		[nci_metaproject_Instance_60002]
+		[projects_00022])
+	(name "Bob Dionne")
+	(password "bob"))
+
+([projects_00022] of  Group
+
+	(description "A special group that implicitly contains all people")
+	(member
+		[nci_metaprojectLLroot_Instance_10002]
+		[nci_metaproject_Instance_50002]
+		[nci_metaproject_Instance_4]
+		[nci_metaproject_Instance_10001]
+		[nci_metaproject_Instance_10006]
+		[nci_metaproject_Instance_10005]
+		[nci_metaproject_Instance_100002]
+		[nci_metaproject_Instance_90025]
+		[nci_metaproject_Instance_90017]
+		[nci_metaproject_Instance_5]
+		[nci_metaproject_Instance_50001]
+		[nci_metaproject_Instance_50000]
+		[nci_metaproject_Instance_90022]
+		[metaproject_Class10000])
+	(name "World"))
+
+([SmallBase3byName] of  Project
+
+	(allowedGroupOperation
+		[metaproject_Instance_7]
+		[nci_metaproject_Instance_100003]
+		[nci_metaproject_Instance_60037]
+		[nci_metaproject_Instance_10004]
+		[nci_metaproject_Instance_70005]
+		[metaproject_Class10001]
+		[nci_metaprojectLL_Instance_10000]
+		[nci_metaproject_Instance_60036]
+		[nci_metaproject_Instance_70000])
+	(annotationProject [Do+not+edit+-+SmallBase3byName+annotations])
+	(location "examples/SmallBase3byName-db.pprj")
+	(name "SmallBase3byName"))

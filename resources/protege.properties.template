@@ -1,0 +1,23 @@
+#Protege Properties
+#Fri Jun 13 17:33:40 EDT 2008
+use.protege.read.only.flag=false
+query.export.slots.delimiter=,
+edu.stanford.smi.protegex.owl.jena.reasoner.URL=@OWL_JENA_REASONER_URL@
+query.export.browser.text=false
+query.export.slot.values.delimiter=|
+mainframe.rectangle=90 98 1152 672
+edu.stanford.smi.protege.server.ServerPanel.host_name=@PROTEGE_SERVER_PANEL_HOST@
+project_chooser.selected_card=Server
+edu.stanford.smi.protege.server.ServerPanel.user_name=_test_editor
+query.export.slots.delimiter=,
+query.export.slot.values.delimiter=|
+query.export.browser.text=false
+query.export.metadata=true
+query_plugin.default.search_slot=Preferred_Name
+lucene.search.properties=false
+lucene.search.classes=true
+lucene.use.phonetix.index=true
+lucene.use.standard.index=false
+edu.stanford.smi.protegex.prompt.ignored.slots.0=:ROLE
+server.framecalculator.priority=25
+server.framecalculator.wait.for.ready.nanoseconds=200

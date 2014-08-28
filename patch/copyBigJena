@@ -1,0 +1,20 @@
+#/bin/bash
+
+if test x$1 == x
+then
+   echo The first argument should be the name of existing branch
+   exit
+fi
+if test x$2 == x
+then
+   echo The second argument should be the name of new branch which
+   echo receives the BigJenaCreator
+   exit
+fi
+
+protege_base_url=http://smi-protege.stanford.edu/repos/protege
+big_jena_creator_dir=src/edu/stanford/smi/protegex/owl/jena/creator
+
+svn copy -m "copy the BigJenaCreator" \
+       ${protege_base_url}/nci-branches/$1/owl/${big_jena_creator_dir}/BigJenaCreator.java \
+       ${protege_base_url}/nci-branches/$2/owl/${big_jena_creator_dir}

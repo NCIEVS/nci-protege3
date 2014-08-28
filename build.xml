@@ -1,0 +1,686 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<project name = "NCI Installer" default = "usage" basedir = ".">    
+  <description>Ant file for building the nci server and clients </description>  
+
+  <property name="version.file" location="./version.info"/>
+  <property file="${version.file}"/>
+
+  
+
+  <property name="projects"          location="./projects"/>
+  <property name="deps"          location="./NCITabDependents143"/>
+
+  
+  <property name="build.properties" location="./build.properties"/>
+  <property file="${build.properties}"/>
+
+  <property name="protege.base.url" 
+            value="http://smi-protege.stanford.edu/repos/protege"/>
+
+  <property name="nci.base.url" 
+            value="https://ncisvn.nci.nih.gov/svn/protegegui/collaborativedevterminologytools"/>
+
+  
+
+  <property name="full.build"        location="./build"/>
+  <property name="full.dist"         location="${full.build}/dist"/>
+  <property name="full.archive"      location="${full.build}/archive"/>
+  <property name="resources"            location="./resources"/>
+  
+  <property name="protege.client"    location="${full.dist}/Protege.Client-${version}"/>
+  <property name="protege.server"    location="${full.dist}/Protege.Server-${version}"/>
+  <property name="explanation.server" location="${full.dist}/Explanation.Server-${version}"/>
+
+  <!-- === === === === project locations === === === === -->
+ 
+
+  <!-- === === === === === === === === === === === === -->
+
+  <property name="protege.home" location="${full.build}/dist/Protege"/>
+
+  <path id = "svn.classpath">
+    <pathelement location="./lib/svnant.jar"/>
+    <pathelement location="./lib/svnjavahl.jar"/>
+    <pathelement location="./lib/svnClientAdapter.jar"/>
+  </path>
+
+  <!-- === === === === === === === === === === === === -->
+  <!-- Note: Need to set data.dir and deploy.dir for   -->
+  <!--    deploy target to work properly.              -->
+  <!-- === === === === === === === === === === === === -->
+  <property name="data.dir" location="./build/data"/>
+  <property name="deploy.dir" location="./build/deploy"/>
+  <property name="deploy.protege.client.dir"
+    location="${deploy.dir}/Protege.Client-${version}"/>
+  <property name="deploy.protege.server.dir"
+    location="${deploy.dir}/Protege.Server-${version}"/>
+  <property name="deploy.explanation.server.dir"
+    location="${deploy.dir}/Explanation.Server-${version}"/>
+
+  <!-- === === === === === === === === === === === === === === === -->
+  <!--                      Development Functions                  -->
+  <!-- === === === === === === === === === === === === === === === -->
+
+<target name="checkBuildPropsExist">
+<condition property="build.props.exist">
+  <available file="${build.properties}" type="file"/>
+</condition>
+</target>
+
+<target name="config" depends="checkBuildPropsExist" unless="build.props.exist">
+<ant antfile="config.xml"/>
+<copy file="${build.properties}" tofile="${build.properties}-${version}" overwrite="true"/>
+</target>
+
+
+  <target name="init" depends="config">
+    <property file="${build.properties}"/>
+    <property file="${svn-url.properties.file}"/>
+    <mkdir dir="${full.build}"/>
+    <mkdir dir="${full.dist}"/>
+    <mkdir dir="${full.archive}"/>
+    <mkdir dir="${protege.home}"/>
+    <mkdir dir="${projects}"/>
+    <taskdef resource="svntask.properties" classpathref="svn.classpath"/>
+    <condition property="clark.parsia.db.project.exists">
+      <isset property="clark.parsia.db.project" />
+    </condition>
+    <condition property="serverStats.project.exists">
+      <isset property="serverStats.project"/>
+    </condition>
+  </target>
+
+  <target name="filters">
+    <filter token="OWL_JENA_REASONER_URL" value="${edu.stanford.smi.protegex.owl.jena.reasoner.URL}" />
+    <filter token="PROTEGE_SERVER_PANEL_HOST" value="${edu.stanford.smi.protege.server.ServerPanel.host_name}" />
+     <filter token="MAX_MEMORY" value="${client.max.memory}"/>
+     <filter token="SERVER_MAX_MEMORY" value="${server.max.memory}"/>
+     <filter token="SERVER_HOST_NAME" value="${server.host.name}"/>
+  </target>
+
+  <!-- === === === === checkout === === === === -->
+
+  <target name="checkout" depends="init">
+    <copy file="javacc/local.properties" todir="${protege.core.project}"/>
+    <svn>
+      <checkout url="${ncitab.url}" destPath="${ncitab.project}"/>
+      <checkout url="${nciconcepthistory.url}" destPath="${nciconcepthistory.project}"/>
+      <checkout url="${ncievshistory.url}" destPath="${ncievshistory.project}"/>
+      <checkout url="${codegen.url}" destPath="${codegen.project}"/>
+      <checkout url="${protegeworkflow.url}" destPath="${protegeworkflow.project}"/>
+    </svn>
+  </target>
+
+  <!-- The revisions target can be found in svn revision 125 of this project -->
+  <!-- If you want to resurrect it look for the word revision in that file   -->
+
+  <!-- === === === === === === === === === === === -->
+
+  <!-- === === === === installing the three versions === === === === -->
+
+
+
+
+  <target name="install.nci.prompt.config">
+      <copy todir="${protege.home}" file="PromptNCIPlugin.properties"/>
+  </target>
+
+  <target name="install.core" depends="init">
+    <ant antfile="${protege.core.project}/build.xml" 
+         dir="${protege.core.project}"
+         target="install"/>
+    <ant antfile="${protege.owl.project}/build.xml" 
+         dir="${protege.owl.project}"
+         target="install"/>
+    <antcall target="install.clark.parsia.db.project"/>
+    <ant antfile="${rdfbackend.project}/build.xml" 
+         dir="${rdfbackend.project}"
+         target="install"/>
+    <antcall target="install.serverStats.project"/>
+    <ant antfile="${changes.project}/build.xml" 
+         dir="${changes.project}"
+         target="install"/>
+    <ant antfile="${standard.extensions.project}/build.xml"
+         dir="${standard.extensions.project}"
+         target="install"/>
+    <ant antfile="${chat.project}/build.xml" 
+         dir="${chat.project}"
+         target="install"/>
+    <ant antfile="${collab.project}/build.xml" 
+         dir="${collab.project}"
+         target="install"/>
+    <copy file="${resources}/mysql-connector-java-5.0.0-beta-bin.jar" 
+          todir="${protege.home}"/>
+    
+    
+    <copy todir="${protege.home}" file="${version.file}"/>
+    <copy todir="${protege.home}" file="${protege.core.project}/logging.properties"/>
+    
+  </target>
+
+
+  <target name="install.clark.parsia.db.project" if="clark.parsia.db.project.exists">
+    <ant antfile="${clark.parsia.db.project}/build.xml" 
+         dir="${clark.parsia.db.project}"
+         target="install"/>
+  </target>
+
+  <target name="install.serverStats.project" if="serverStats.project.exists">
+    <ant antfile="${serverStats.project}/build.xml" 
+         dir="${serverStats.project}"
+         target="install"/>
+  </target>
+
+  
+
+
+  <target name="install.client" depends="init, filters">
+    <echo message="================================Building Client"/>
+    <delete dir="${protege.home}" failonerror="false"/>
+    <delete dir="${protege.client}" failonerror="false"/>
+    <antcall target="install.core"/>
+    <!-- delete scripts from core build nic will install custom versions-->
+    <delete failonerror="false">
+      <fileset dir="${protege.home}" includes="*.sh,*.bat"/>
+    </delete>
+    <echo message="install.core done"/>
+    <ant antfile="${prompt.project}/build.xml" 
+         dir="${prompt.project}"
+         target="install"/>
+    <ant antfile="${nciconcepthistory.project}/build.xml" 
+         dir="${nciconcepthistory.project}"
+         target="install"/>
+    <ant antfile="${ncievshistory.project}/build.xml" 
+         dir="${ncievshistory.project}"
+         target="install"/>
+    <ant antfile="${advancedQuery.project}/build.xml" 
+         dir="${advancedQuery.project}"
+         target="install"/>
+    <ant antfile="${protegeLoad.project}/build.xml" 
+         dir="${protegeLoad.project}"
+         target="install"/>
+    <ant antfile="${codegen.project}/build.xml" 
+         dir="${codegen.project}"
+         target="install-client"/>
+    <ant antfile="${protegeworkflow.project}/build.xml" 
+         dir="${protegeworkflow.project}"
+         target="install"/>   
+    <ant antfile="${ncitab.project}/build.xml" 
+         dir="${ncitab.project}"
+         target="install"/>
+    <ant antfile="${classificationui.project}/build.xml" 
+         dir="${classificationui.project}"
+         target="deploy">
+        <property name="protege.path" value="${protege.home}"/>
+    </ant>
+    <!-- override core logging.properties with ncitab version that supresses system warnings -->
+    <copy todir="${protege.home}"
+          file="${ncitab.project}/logging.properties" 
+          overwrite="true"/>
+    <copy filtering="true" 
+          tofile="${protege.home}/protege.properties" 
+          file="${resources}/protege.properties.template"
+          overwrite="true" />   
+    <copy filtering="true" 
+          tofile="${protege.home}/run_protege.sh" 
+          file="${resources}/run_protege.sh.template" 
+          overwrite="true"/>
+    <copy filtering="true" 
+          tofile="${protege.home}/run_protege.bat" 
+          file="${resources}/run_protege.bat.template" 
+          overwrite="true"/>
+      
+    <antcall target="install.nci.prompt.config"/>
+    <echo message="install.nci.prompt.config done"/>
+    <!-- remove server side scripts from client that were copied in by the core target -->
+    <delete>
+       <fileset dir="${protege.home}" includes="*server*.*, *rmi*"/>
+    </delete>
+    <chmod dir="${protege.home}" perm="ugo+x" includes="**/*.sh"/>
+    <chmod dir="${protege.home}" perm="ugo+x" includes="**/*.bat"/>
+    <move todir="${protege.client}">
+       <fileset dir="${protege.home}"/>
+    </move>
+    <unzip src="${resources}/jre-win.zip" dest="${protege.client}"/>
+  </target>
+
+  <target name="install.server.ontologies">
+    <copy todir="${protege.server}/examples">
+       <fileset dir="examples"/>
+    </copy>
+  </target>
+
+  <target name="install.server" depends="init, filters">
+    <echo message="================================Building Server"/>
+    <delete dir="${protege.home}" failonerror="false"/>
+    <delete dir="${protege.server}" failonerror="false"/>
+    <antcall target="install.core"/>
+    <echo message="install.core done"/>
+    <!-- delete bat files from core build-->
+    <delete failonerror="false">
+      <fileset dir="${protege.home}" includes="*.bat, *.sh"/>
+    </delete>
+    <ant antfile="${advancedQuery.project}/build.xml" 
+         dir="${advancedQuery.project}"
+         target="install"/>
+    <ant antfile="${classificationui.project}/build.xml" 
+         dir="${classificationui.project}"
+         target="deploy">
+      <property name="protege.path" value="${protege.home}"/>
+    </ant>
+
+      <ant antfile="${codegen.project}/build.xml" 
+         dir="${codegen.project}"
+         target="install"/>
+    <ant antfile="${protegeworkflow.project}/build.xml" 
+         dir="${protegeworkflow.project}"
+         target="install"/>
+    <ant antfile="${ncievshistory.project}/build.xml" 
+         dir="${ncievshistory.project}"
+         target="install"/>
+    <copy filtering="true" 
+          tofile="${protege.home}/protege.properties" 
+          file="${resources}/protege.properties.template"
+          overwrite="true" />   
+    <antcall target="install.nci.prompt.config"/>
+    <echo message="install.nci.prompt.config done"/>
+    <!-- copy server scripts using filters -->
+     <copy filtering="true" 
+          tofile="${protege.home}/run_protege_server_nci.sh" 
+          file="${resources}/run_protege_server_nci.sh.template" 
+          overwrite="true"/>
+     <copy file="${resources}/run_protege_server.sh"
+           todir="${protege.home}"/>
+      <copy file="${resources}/run_rmiregistry.sh"
+           todir="${protege.home}"/>
+       <copy file="${resources}/shutdown_protege_server.sh"
+           todir="${protege.home}"/>
+    <chmod dir="${protege.home}" perm="ugo+x" includes="**/*.sh"/>
+    <chmod dir="${protege.home}" perm="ugo+x" includes="**/*.bat"/>
+    <move todir="${protege.server}">
+      <fileset dir="${protege.home}"/>
+    </move>
+    <delete dir="${protege.server}/examples" failonerror="false"/>
+    <antcall target="install.server.ontologies"/>
+    <echo message="install.server.ontologies done"/>
+  </target>
+
+  <target name="install.expserver" depends="init">
+    <echo message="================================Building Explanation Server"/>
+    <delete dir="${protege.home}" failonerror="false"/>
+    <delete dir="${explanation.server}" failonerror="false"/>
+    <antcall target="install.core"/>
+     <!-- delete scripts from core build nic will install custom versions-->
+    <delete failonerror="false">
+      <fileset dir="${protege.home}" includes="*.sh,*.bat"/>
+    </delete>
+    <echo message="install.core done"/>
+    <ant antfile="${classification.project}/build.xml" 
+         dir="${classification.project}"
+         target="deploy">
+      <property name="protege.path" value="${protege.home}"/>
+    </ant>
+    <!-- =================================================================== -->
+    <!-- Note: install.core target installs a version from ${tier.bin.dir}.  -->
+    <!--       ${classification.project} deploy target overrides it.         -->
+    <!--       The following command restores it back.                       -->
+    <!-- =================================================================== -->
+  	<copy todir="${protege.home}" file="${resources}/start_explanation_server.sh" overwrite="true"/>
+    <delete dir="${protege.home}/plugins" failonerror="false"/>
+    <delete dir="${protege.home}" includes="*.jar" failonerror="false"/>
+    <delete dir="${protege.home}" includes="run_protege*.sh" failonerror="false"/>
+    <delete dir="${protege.home}" includes="run_protege*.bat" failonerror="false"/>
+    <delete dir="${protege.home}" includes="run_rmiregistry.sh" failonerror="false"/>
+    <delete dir="${protege.home}" includes="shutdown_protege*.sh" failonerror="false"/>
+    <chmod dir="${protege.home}" perm="ugo+x" includes="**/*.sh"/>
+    <chmod dir="${protege.home}" perm="ugo+x" includes="**/*.bat"/>
+    <move todir="${explanation.server}">
+      <fileset dir="${protege.home}"/>
+    </move>
+  </target>
+
+  <target name="install" 
+          depends="install.client,install.server, install.expserver, init"/>
+
+  <!-- === === === === === === === === === === === === === === === -->
+
+  <!-- === === === === === === server project configuuration === === === === === === === === -->
+
+  <path id="configurer.classpath">
+      <pathelement location="${protege.client}/protege.jar"/>
+      <pathelement location="${protege.client}/looks.jar"/>
+      <pathelement location="${protege.client}/unicode_panel.jar"/>
+      <pathelement location="${protege.client}/mysql-connector-java-5.0.0-beta-bin.jar"/>
+      <fileset
+           dir="${protege.client}/plugins/edu.stanford.smi.protegex.owl"
+           includes="*.jar"/>
+      <fileset
+           dir="${protege.client}/plugins/edu.stanford.smi.protegex.standard_extensions"
+           includes="*.jar"/>
+      <fileset
+           dir="${protege.client}/plugins/com.clarkparsia.protege3.database"
+           includes="*.jar"/>
+      <fileset
+           dir="${protege.client}/plugins/edu.stanford.smi.protegex.rdf_backend"
+           includes="*.jar"/>
+      <fileset
+         dir="${protege.client}/plugins/edu.stanford.smi.protegex.changes"
+         includes="*.jar"/>
+      <pathelement
+           location="${protege.client}/plugins/edu.stanford.smi.protegex.changes"/>
+      <fileset
+           dir="${protege.client}/plugins/edu.stanford.smi.protegex.query.lucene"
+           includes="*.jar"/>
+      <fileset
+           dir="${protege.client}/plugins/gov.nih.nci.protegex.ui.nciedittab"
+           includes="*.jar"/>
+      <fileset
+           dir="${protege.client}/plugins/gov.nih.nci.protegex.workflow"
+           includes="*.jar"/>
+      <fileset
+           dir="${protege.client}/plugins/gov.nih.nci.protegex.codegen"
+           includes="*.jar"/>
+  </path>
+
+  <target name="configure.server.compile" depends="init">
+      <mkdir dir="${full.build}/classes"/>
+      <javac srcdir="./src" destdir="${full.build}/classes" debug="on"
+             includeAntRuntime="false">
+          <classpath refid="configurer.classpath"/>
+      </javac>
+  </target>
+
+  <target name="configure.server.update.properties">
+      <replaceregexp byline="true"
+        file="${build.properties}">
+        <regexp pattern="ontology.prefix=.*"/>
+        <substitution expression="ontology.prefix=${ontology.prefix}"/>
+      </replaceregexp>
+      <replaceregexp byline="true"
+        file="${build.properties}">
+        <regexp pattern="db.host=.*"/>
+        <substitution expression="db.host=${db.host}"/>
+      </replaceregexp>
+      <replaceregexp byline="true"
+        file="${build.properties}">
+        <regexp pattern="db.database=.*"/>
+        <substitution expression="db.database=${db.database}"/>
+      </replaceregexp>
+      <replaceregexp byline="true"
+        file="${build.properties}">
+        <regexp pattern="db.table=.*"/>
+        <substitution expression="db.table=${db.table}"/>
+      </replaceregexp>
+      <replaceregexp byline="true"
+        file="${build.properties}">
+        <regexp pattern="db.user=.*"/>
+        <substitution expression="db.user=${db.user}"/>
+      </replaceregexp>
+      <replaceregexp byline="true"
+        file="${build.properties}">
+        <regexp pattern="db.password=.*"/>
+        <substitution expression="db.password=${db.password}"/>
+      </replaceregexp>
+  </target>
+
+  <target name="configure.server.projects" depends="configure.server.compile, configure.server.update.properties">
+      <java fork="true" dir="./examples"
+            classname="gov.nih.nci.protege.builder.Main">
+        <jvmarg value="-Xmx${memory}"/>
+        <jvmarg value="-Dprotege.dir=${protege.server}"/>
+        <arg value="${build.properties}"/>
+        <classpath>
+          <path refid="configurer.classpath"/>
+          <pathelement location="${full.build}/classes"/>
+        </classpath>
+      </java>
+      <antcall target="install.server.ontologies"/>
+      <echo message="install.server.ontologies done"/>
+  </target>
+
+  <!-- === === === === clean === === === === -->
+
+  <target name="clean.projects" depends="init">
+    <ant antfile="${protege.core.project}/build.xml" 
+         dir="${protege.core.project}"
+         target="clean"/>
+    <ant antfile="${protege.owl.project}/build.xml" 
+         dir="${protege.owl.project}"
+         target="clean"/>
+    <antcall target="clean.clark.parsia.db.project"/>
+    <ant antfile="${rdfbackend.project}/build.xml" 
+         dir="${rdfbackend.project}"
+         target="clean"/>
+    <ant antfile="${changes.project}/build.xml" 
+         dir="${changes.project}"
+         target="clean"/>
+    <ant antfile="${standard.extensions.project}/build.xml" 
+         dir="${standard.extensions.project}"
+         target="clean"/>
+    <ant antfile="${chat.project}/build.xml" 
+         dir="${chat.project}"
+         target="clean"/>
+    <ant antfile="${prompt.project}/build.xml" 
+         dir="${prompt.project}"
+         target="clean"/>
+    <ant antfile="${nciconcepthistory.project}/build.xml" 
+         dir="${nciconcepthistory.project}"
+         target="clean"/>
+    <ant antfile="${ncievshistory.project}/build.xml" 
+         dir="${ncievshistory.project}"
+         target="clean"/>
+    <ant antfile="${advancedQuery.project}/build.xml" 
+         dir="${advancedQuery.project}"
+         target="clean"/>
+    <antcall target="clean.serverStats.project"/>
+    <ant antfile="${protegeLoad.project}/build.xml" 
+         dir="${protegeLoad.project}"
+         target="clean"/>
+    <ant antfile="${ncitab.project}/build.xml" 
+         dir="${ncitab.project}"
+         target="clean"/>
+    <ant antfile="${codegen.project}/build.xml" 
+         dir="${codegen.project}"
+         target="clean"/>
+    <ant antfile="${protegeworkflow.project}/build.xml" 
+         dir="${protegeworkflow.project}"
+         target="clean"/>
+    <ant antfile="${classificationui.project}/build.xml" 
+         dir="${classificationui.project}"
+         target="clean"/>
+    <ant antfile="${classification.project}/build.xml" 
+         dir="${classification.project}"
+         target="clean"/>
+  </target>
+
+
+  <target name="clean.clark.parsia.db.project" if="clark.parsia.db.project.exists">
+    <ant antfile="${clark.parsia.db.project}/build.xml" 
+         dir="${clark.parsia.db.project}"
+         target="clean"/>
+  </target>
+
+  <target name="clean.serverStats.project"
+         if="serverStats.project.exists">
+    <ant antfile="${serverStats.project}/build.xml" 
+         dir="${serverStats.project}"
+         target="clean"/>
+  </target>
+
+  <target name="clean" depends="clean.projects">
+    <ant antfile="config.xml"
+         target="clean"/>
+    <delete>
+      <fileset dir="${full.build}"
+               followsymlinks="false"/>
+    </delete>
+
+  </target>
+
+
+  <!-- === === === === === === === === === -->
+
+  <!-- === === === === archive === === === === -->
+
+
+  <target name="archive">
+    <antcall target="clean.projects"/>
+    <echo message="clean.projects done"/>
+    <zip destfile="${full.archive}/ncibuilder-${version}.zip"
+         basedir="."
+         defaultexcludes="no"
+        excludes="build/**"/>
+    <zip destfile="${full.archive}/ProtegeClient-${version}.zip"
+         basedir="${full.dist}"
+         includes="Protege.Client-${version}/**"/>
+    <zip destfile="${full.archive}/ProtegeServer-${version}.zip"
+         basedir="${full.dist}"
+         includes="Protege.Server-${version}/**"/>
+     <zip destfile="${full.archive}/ExplanationServer-${version}.zip"
+         basedir="${full.dist}"
+         includes="Explanation.Server-${version}/**"/>
+  </target>
+
+  <!-- === === === === === === === === === === === === === === === -->
+  <!--                      Admin Functions                        -->
+  <!-- === === === === === === === === === === === === === === === -->
+
+  <path id="server.classpath">
+      <pathelement location="${protege.server}/protege.jar"/>
+      <pathelement location="${protege.server}/looks.jar"/>
+      <pathelement location="${protege.server}/unicode_panel.jar"/>
+      <pathelement location="${protege.server}/mysql-connector-java-5.0.0-beta-bin.jar"/>
+      <pathelement location="${protege.server}/plugins/edu.stanford.smi.protegex.changes/change-model.jar"/>
+  </path>
+
+
+  <target name="server.start">
+     <java fork="true" dir="${protege.server}"
+           classname="edu.stanford.smi.protege.server.Server">
+       <jvmarg value="-Xmx${memory}"/>
+       <jvmarg value="-Dprotege.dir=${protege.server}"/>
+       <jvmarg value="-Djava.rmi.server.codebase=file:${protege.server}/protege.jar"/>
+       <classpath>
+         <path refid="server.classpath"/>
+       </classpath>
+       <arg value="examples/metaproject.pprj"/>
+     </java>
+  </target>
+
+  <target name="server.stop">
+     <java fork="true" dir="${protege.server}"
+           classname="edu.stanford.smi.protege.server.Shutdown">
+       <jvmarg value="-Xmx${memory}"/>
+       <jvmarg value="-Dprotege.dir=${protege.server}"/>
+       <jvmarg value="-Djava.rmi.server.codebase=file:${protege.server}/protege.jar"/>
+       <classpath>
+         <path refid="server.classpath"/>
+       </classpath>
+     </java>
+  </target>
+  
+  <!--======================================================================-->
+  <!-- Deploys Protege applications to deployment directory:                -->
+  <!--======================================================================-->
+  <target name="deploy.protege">
+    <copy todir="${deploy.dir}">
+      <fileset dir="${full.dist}"/>
+    </copy>
+    <delete dir="${deploy.protege.client.dir}/jre" />
+  </target>
+
+  <!--======================================================================-->
+  <!-- Updates deployed Explanation.Server's script file:                   -->
+  <!--======================================================================-->
+  <target name="update.deploy.explanation.server.script.file">
+    <replaceregexp byline="true"
+      file="${deploy.explanation.server.dir}/start_explanation_server.sh">
+      <regexp pattern="protege_install=.*"/>
+      <substitution expression="protege_install=${deploy.protege.server.dir}"/>
+    </replaceregexp>
+  </target>
+
+  <!--======================================================================-->
+  <!-- Creates data symbolic links (lucene and worklow directories)         -->
+  <!--   for deployed Protege.Server directory.                             -->
+  <!--======================================================================-->
+  <target name="create.data.symlinks.for.deploy.protege.server.dir">
+  <!-- <symlink link="${deploy.protege.server.dir}/lucene"
+      resource="${data.dir}/lucene"/>-->
+    <symlink link="${deploy.protege.server.dir}/workflow"
+      resource="${data.dir}/workflow"/>
+  </target>
+
+  <!--======================================================================-->
+  <!-- Deploys Protege.                                                     -->
+  <!-- Note: Main deployment target:                                        -->
+  <!--======================================================================-->
+  <target name="deploy" depends="deploy.protege,
+    update.deploy.explanation.server.script.file,
+    create.data.symlinks.for.deploy.protege.server.dir"/>
+
+  <!-- === === === === === === === === === === === === === === === -->
+  <!--                          Usage                              -->
+  <!-- === === === === === === === === === === === === === === === -->
+
+  <!-- === === === === usage === === === === === -->
+
+  <target name="usage">
+    <echo message="======================================================="/>
+    <echo message="                Developer Functions"/>
+    <echo message="======================================================="/>
+    <echo message="checkout - checks out the sources"/>
+    <echo message="install.client - installs the Protege client from sources"/>
+    <echo message="install.server - installs the Protege server from sources"/>
+    <echo message="install.expserver - installs the Explanation Server from sources"/>
+    <echo message="install - does install.client, install.server, install.expserver"/>
+    <echo message="clean.projects - Runs ant clean for each of these projects"/>
+    <echo message="archive - makes an archive suitable for gforge."/>
+    <echo message="deploy - deploys protege to a specific location."/>
+    <echo message="clean - removes the build dir and cleans all the projects"/>
+    <echo message="======================================================="/>
+    <echo message="                Ontology Configuration"/>
+    <echo message="======================================================="/>
+    <echo message="install.server.ontologies - installs the server ontologies."/>
+    <echo message="configure.server.projects -  configures the server projects"/>
+    <echo message="                             based on configured owl file"/>
+    <echo message="======================================================="/>
+    <echo message="                Admin Functions"/>
+    <echo message="======================================================="/>
+    <echo message="server.start - start the server"/>
+    <echo message="server.stop - stop the server cleanly"/>
+  </target>
+
+  <target name="display.properties">
+    <echoproperties/>
+  </target>
+
+  <target name="update.properties">
+    <replaceregexp byline="true"
+      file="version.info">
+      <regexp pattern="version=.*"/>
+      <substitution expression="version=${version}"/>
+    </replaceregexp>
+    <replaceregexp byline="true"
+      file="${build.properties}">
+      <regexp pattern="db.user=.*"/>
+      <substitution expression="db.user=${db.user}"/>
+    </replaceregexp>
+    <replaceregexp byline="true"
+      file="${build.properties}">
+      <regexp pattern="db.password=.*"/>
+      <substitution expression="db.password=${db.password}"/>
+    </replaceregexp>
+    <replaceregexp byline="true"
+      file="PromptNCIPlugin.properties">
+      <regexp pattern="userName=.*"/>
+      <substitution expression="userName=${db.user}"/>
+    </replaceregexp>
+    <replaceregexp byline="true"
+      file="PromptNCIPlugin.properties">
+      <regexp pattern="password=.*"/>
+      <substitution expression="password=${db.password}"/>
+    </replaceregexp>
+  </target>
+
+</project>

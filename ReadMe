@@ -1,0 +1,233 @@
+
+1. Quick Start:
+
+   Building
+
+      set properties in local.properties file
+      ant checkout
+      ant install
+      copy owl file to be provided by server into examples directory
+      ant configure.server.projects if you don't already have a
+                                    configuration for the server
+
+   Running the server
+
+      start rmiregistry
+      ./run_protege_server.sh in build/dist/Protege.Server
+
+   Running the client 
+
+       ./run_protege.sh in  build/dist/Protege.Client
+       connect
+
+   Creating Archives for GForge
+
+       set the version in version.info
+       ant clean
+       ant install
+       ant archive
+       upload the three archives to GForge
+
+            --------------------------------------------------------
+            --------------------------------------------------------
+
+-commit check - GF, ignore
+    What's this about??
+
+
+2. Prerequisites
+   Install Java, Ant, CVS, SVN
+
+3. Longer version
+
+   Building
+
+ 1. Set the NCI cvs user in the loal.properties and do ant checkout.
+ 
+     BobD: this property is at the top of the build. We should probably prompt for it,
+           but since the same person will probably always do the builds this isn't needed
+
+    This is a tricky step because all the projects need to checkout
+    automatically with no user intervention.  So the user needs to
+    have done all the cvs/svn login's and needs to have accepted the
+    gforge svn certificate.
+
+
+ 2. ant install
+
+ 3. setup the server projects
+
+    This step configures a set of ontologies for use by the server.
+    The user supplies an OWL File.  The ant script then
+      - creates a file project for the OWL file.  This is useful for
+        testing the NCI Prompt.
+      - creates lucene search indicies for the owl project
+      - creates a database project for the OWL File.  This project
+        will be served up by the server.  It will be preconfigured to
+        have the tabs used by NCI.
+      - creates a changes annotation project for the database project
+        above.
+      - sets the server configuration file to tell the server to serve
+        the database project file and the changes annotation file.
+      - copies the resulting files to the server configuration
+        directory. The server will then be ready to start.
+      - installs a PromptNCIPlugin.properties file in the server and
+        the admin client based on the assumption that the evs and
+        concept history will go in the same database where the owl
+        projects are stored.
+
+    This process is slower than it should be but a more efficient
+    process will be used when we next merge with the head of protege
+    development. 
+
+    The examples directory already comes with a minimal example
+    Thesaurus-pizza-baseline.pprj.  It may be worth trying this
+    example before trying a bigger one.
+
+    This has to be done after "ant install".
+
+    You will also need to have write access to some mysql database.
+
+    Configure the database to be used and the other settings in
+    local.properties
+
+    Run the ant target configure.server.projects.
+
+    Answer the series of questions it asks about the OWL project that
+    the server will serve.  You will need to know
+
+       The name of the owl project (after dropping the .owl suffix -
+       e.g NCIThesaurus)
+
+       The database host (usually localhost)
+
+       The database that you have write access to
+
+       The name of the table that you want Protege to use for the
+       server project (this will be overwritten).
+
+       The user that has access to the database
+
+       The password for this user.  For now this is echoed on the screen.
+
+
+ 4. start rmiregistry
+
+ 5. In build/dist/Protege.Server execute the run_protege_server.sh (or
+    bat)
+    
+ 6. In the build/dist/Protege.Client execute the run_protege.sh or
+    (bat) and connect to the server.
+    
+    BobD: Note the default rmi port is 1099 so specify localhost:1099
+          (actually just localhost also works) when connecting. There
+          is also a user/pwd Guest/guest that can be used, otherwise a 
+          user/pwd needs to be added using the metaproject as in 2.6 above
+          
+
+  7. Additional files:  If you want code generation started the client
+     needs to have the file codegen-client.cfg which looks something
+     like this:
+
+IP:	ncievs4.nci.nih.gov
+PORT:	1525
+
+
+
+
+People accessing the NCI server (doesn't exist yet with this version):
+
+  1. download ProtegeClient.zip from gforge and use this to connect
+     to the server
+
+
+People doing debug while accessing the NCI server (doesn't exist yet
+with this version):
+
+  1. get projects.zip from gforge
+
+  2. expand this into the projects directory
+
+  3. ant install.client
+
+  4. run and debug in build/dist/Protege.Client
+  
+
+
+-----------------------------------------------------------
+This project contains files and utilities needed to quickly produce an
+NCI installation.  When fully built the project will have the
+following directory structure:
+
+    build.xml - the build file for the project
+    build
+      archive
+        This directory contains files that should be placed on gforge.
+        All the files in this directory should be placed on gforge
+        together.  This will allow developers and testers to obtain
+        the code that was used for a particular release.  Included in
+        this directory are the zipped versions of the protege client,
+        server and administrative protege.
+      dist
+        Protege.Client - a version of Protege to be used by clients
+        Protege.Server - a version of Protege to be run the server
+        Protege.Admin  - a version of Protege for administrative tasks
+                         such as prompt and such
+    lib       - some libraries used by the build script
+    projects
+        Contains the sources for Protege and all the plugins used by Protege
+
+The build targets of interest are 
+
+  - checkout
+  - install
+  - archive
+  - clean
+  - clean.projects
+
+
+=== checkout ===
+
+In order to use this target you must configure the cvs.user at the top
+of the build file.
+
+Ant checkout will checkout all the projects needed to build the NCI
+server and client into the projects tree.  It is useful for somebody
+who wants to install and configure an NCI server.  It should not be
+used by somebody who wants to connect to an existing instance of the
+protege server.  Such a developer or tester should obtain the sources
+for the projects from the adminstrator of the NCI server.
+
+Many things can go wrong during checkout.  In particular, svn and cvs
+need to be configured so that they can checkout the sources
+automatically.  So the user needs to be logged in with svn and cvs and
+svn needs to know that it can trust the NCI edit tab certificate.
+
+=== install ===
+
+The install target takes the sources in the projects directory and
+uses them to build the protege server, client and administrative
+variant.
+
+=== archive ===
+
+Makes archives of the projects directory and the server,
+client and adminstrative versions of Protege.  These files will go on
+gforge.
+
+=== clean ===
+
+Removes the build and projects directories.
+
+=== clean.projects ===
+
+Runs clean in each project.
+
+
+=== Areas of incompleteness ===
+
+The version number is not yet indicated in any about box.
+
+We don't have a Protege.exe yet.
+
+There is a prompt plugin that is important to NCI which is missing.

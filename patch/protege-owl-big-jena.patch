@@ -1,0 +1,24 @@
+Index: src/edu/stanford/smi/protegex/owl/ui/subsumption/InferredSubsumptionTreePanel.java
+===================================================================
+--- src/edu/stanford/smi/protegex/owl/ui/subsumption/InferredSubsumptionTreePanel.java	(revision 17537)
++++ src/edu/stanford/smi/protegex/owl/ui/subsumption/InferredSubsumptionTreePanel.java	(working copy)
+@@ -28,7 +28,7 @@
+ import edu.stanford.smi.protege.util.SelectableTree;
+ import edu.stanford.smi.protegex.owl.jena.Jena;
+ import edu.stanford.smi.protegex.owl.jena.JenaOWLModel;
+-import edu.stanford.smi.protegex.owl.jena.creator.JenaCreator;
++import edu.stanford.smi.protegex.owl.jena.creator.BigJenaCreator;
+ import edu.stanford.smi.protegex.owl.model.OWLModel;
+ import edu.stanford.smi.protegex.owl.model.OWLNamedClass;
+ import edu.stanford.smi.protegex.owl.model.OWLNames;
+@@ -170,8 +170,8 @@
+             if (baseURI.endsWith("#")) {
+                 baseURI = baseURI.substring(0, baseURI.length() - 1);
+             }
+-            JenaCreator jenaCreator = new JenaCreator(owlModel, false, true, clses,
+-                                                      new ModalProgressBarManager("Preparing File"));
++            BigJenaCreator jenaCreator = new BigJenaCreator(owlModel, clses,
++                                                            new ModalProgressBarManager("Preparing File"));
+             OntModel ontModel = jenaCreator.createOntModel();
+             try {
+                 //engine.run();

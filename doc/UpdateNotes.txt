@@ -1,0 +1,37 @@
+On a software update in the server, re lucene indexing, if a database doesn't need to be rebuilt, just copy the lucene directory.  If the database is rebuilt, then re-index.  The pprj files would remain the same.  
+
+- If the name of the pprj changes, then re-index or rename the subdirectory under lucene?  Or is there an absolute path somewhere and we definitely need to regenerate the indices?
+
+- copying lucene index after update from 1.1.x to 1.1.y works (as long as the pprjs are the same)
+
+- on QA build copy from a previous running QA instance
+	examples/NCIThesaurus, 
+	examples/NCIPizza, 
+	examples/server
+
+- on QA build update from previous running QA instance
+	run_rmiregistry.sh
+	run_protege_server_nci.sh
+	shutdown_protege_server.sh
+
+
+include run_rmiregistry.sh as a separate script?
+
+
+-------------------------
+
+Production from "stage"
+
+- copy "stage" to a sibling directory of production, includes Client, Admin, Server, and Explanation
+- on new build update Server files from previous running prod instance
+	run_rmiregistry.sh
+	run_protege_server_nci.sh
+	shutdown_protege_server.sh
+	PromptNCIPlugin.properties
+- on new build copy the start script from the previous Explanation server instance, edit it to point to the correct Protege build
+- on new build copy examples/server and examples/NCIThesaurus directory/files from previous running prod
+- on new build copy "lucene" from previous running prod unless there has been a database load, then you'll need to re-index from the AQP
+
+
+
+

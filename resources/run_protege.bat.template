@@ -1,0 +1,10 @@
+@echo off
+set JARS=protege.jar;looks.jar;unicode_panel.jar;mysql-connector-java-5.0.0-beta-bin.jar
+set MAIN_CLASS=edu.stanford.smi.protege.Application
+
+set MAX_MEMORY=@MAX_MEMORY@ 
+set LOG4J_OPT=-Dlog4j.configuration=file:./log4j.xml
+set OPTIONS=%MAX_MEMORY% %LOG4J_OPT%
+
+
+jre\bin\java %OPTIONS% -cp %JARS% %MAIN_CLASS% %1

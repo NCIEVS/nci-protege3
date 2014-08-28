@@ -1,0 +1,214 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<project name = "NCI Installer Config" default="all" basedir=".">    
+  <description>Ant file for configuring build properties for the nci server and clients </description>  
+
+<target name="nci.prompt.ip" unless="nci.prompt.ipAddress">
+<input
+    message="Please enter the ip address for prompt:"
+    addproperty="nci.prompt.ipAddress"
+    defaultvalue="localhost"
+/>
+<!--
+<antcall target="prompt.for.prop">
+  <param name="prompt.for" value="nci.prompt.ipAddress" />
+</antcall>
+-->
+
+</target>
+
+<target name="nci.prompt.dbname" unless="nci.prompt.dataBaseName">
+<input
+    message="Please enter the database name for prompt:"
+    addproperty="nci.prompt.dataBaseName"
+    defaultvalue="protege"
+/>
+</target>
+
+<target name="evs.history.table" unless="nci.prompt.evsHistoryTableName">
+<input
+    message="Please enter the evs history table name for prompt:"
+    addproperty="nci.prompt.evsHistoryTableName"
+    defaultvalue="evs_history"
+/>
+</target>
+
+<target name="nci.prompt.user" unless="nci.prompt.userName">
+<input
+    message="Please enter the user name for prompt:"
+    addproperty="nci.prompt.userName"
+    defaultvalue="protege"
+/>
+</target>
+
+<target name="nci.prompt.pass" unless="nci.prompt.password">
+<input
+    message="Please enter the password for prompt:"
+    addproperty="nci.prompt.password"
+    defaultvalue="protege"
+/>
+</target>
+
+<target name="check.prompt.props" 
+        depends="nci.prompt.ip,
+        nci.prompt.dbname, 
+        evs.history.table, 
+        nci.prompt.user,
+        nci.prompt.pass"/>
+
+
+<target name="check.src.branch" unless="svn-url.version">
+<input
+    message="Please enter branch to build:"
+    validargs="1.4.1,1.4.2,1.4.3,1.4.2.locks,trunk"
+    addproperty="svn-url.version"
+    defaultvalue="trunk"
+/>
+</target>
+<target name="check.ncitab.config" unless="ncitab.config.file">
+<input
+    message="Please enter an ncitab xml config file:"
+    addproperty="ncitab.config.file"
+    defaultvalue="ncitab_byName.xml"
+/>
+</target>
+<target name="check.client.max.mem" unless="client.max.mem">
+<input
+    message="Please enter an integer for the client max memory:"
+    addproperty="client.max.mem"
+    defaultvalue="600"
+/>
+</target>
+<target name="check.server.max.mem" unless="server.max.mem">
+<input
+    message="Please enter and integer for the server max memory:"
+    addproperty="server.max.mem"
+    defaultvalue="7000"
+/>
+</target>
+<target name="check.server.host.name" unless="server.host.name">
+<input
+    message="Please enter the server host name:"
+    addproperty="server.host.name"
+    defaultvalue="localhost"
+/>
+</target>
+<target name="check.jena.url" unless="edu.stanford.smi.protegex.owl.jena.reasoner.URL">
+<input
+    message="Please enter value for edu.stanford.smi.protegex.owl.jena.reasoner.URL: "
+    addproperty="edu.stanford.smi.protegex.owl.jena.reasoner.URL"
+    defaultvalue="localhost:8090\/explain"
+/>
+</target>
+<target name="check.panel.host" unless="edu.stanford.smi.protege.server.ServerPanel.host_name">
+<input
+    message="Please enter value for edu.stanford.smi.protege.server.ServerPanel.host_name:"
+    addproperty="edu.stanford.smi.protege.server.ServerPanel.host_name"
+    defaultvalue="localhost\/:2633"
+/>
+</target>
+
+<target name="check.build.props" 
+        depends="check.src.branch,
+        check.ncitab.config,
+        check.client.max.mem,
+        check.server.max.mem,
+        check.server.host.name,
+        check.jena.url,
+        check.panel.host"/>
+
+
+<target name="install.nci.prompt.config">
+  <echo file="PromptNCIPlugin.properties">
+ipAddress=${nci.prompt.ipAddress}
+dataBaseName=${nci.prompt.dataBaseName}
+dbEvsHistoryTable=${nci.prompt.evsHistoryTableName}
+userName=${nci.prompt.userName}
+password=${nci.prompt.password}
+  </echo>
+</target>
+
+ <target name="install.build.props">
+      <echo file="build.properties">
+#
+# This is a template for build properties that can be changed locally.
+# If any of these are not set locally 
+# then the build will prompt for them
+#
+# which branch to build, default is trunk
+svn-url.properties.file=svn-url-${svn-url.version}.properties
+#
+#
+# which config file to use for EditTab
+config.file=${ncitab.config.file}
+#
+client.max.memory=-Xmx${client.max.mem}M
+server.max.memory=-Xmx${server.max.mem}M
+server.host.name=${server.host.name}
+#
+# these are props for protege.properties file for both client/server
+edu.stanford.smi.protegex.owl.jena.reasoner.URL=${edu.stanford.smi.protegex.owl.jena.reasoner.URL}
+edu.stanford.smi.protege.server.ServerPanel.host_name=${edu.stanford.smi.protege.server.ServerPanel.host_name}
+#
+# Settings for configure.server.projects target
+#
+# properties for the ontology and database that will be used by the 
+# server to serve the ontology.   The ontology.prefix indicates just the 
+# ontology file without the ".owl" suffix.
+#
+memory=700M
+ontology.prefix=SmallBase3byName
+db.host=${nci.prompt.ipAddress}
+db.database=${nci.prompt.dataBaseName}
+db.table=SmallBase3byName
+db.user=${nci.prompt.userName}
+db.password=${nci.prompt.password}
+    </echo>
+</target>
+
+<target name="all" depends="check.prompt.props, check.build.props, install.nci.prompt.config, install.build.props">
+<echo>build.properties and PromptNCIPlugin.properties configured</echo>
+</target>
+
+
+
+ 
+  <!-- === === === === clean === === === === -->
+
+  <target name="clean">
+    <delete file="build.properties"/>
+    <delete file="PromptNCIPlugin.properties"/> 
+  </target>
+
+
+
+  <target name="usage">
+    <echo message="======================================================="/>
+    <echo message="                Developer Functions"/>
+    <echo message="======================================================="/>
+    <echo message="checkout - checks out the sources"/>
+    <echo message="install.client - installs the Protege client from sources"/>
+    <echo message="install.server - installs the Protege server from sources"/>
+    <echo message="install.expserver - installs the Explanation Server from sources"/>
+    <echo message="install - does install.client, install.server, install.expserver"/>
+    <echo message="clean.projects - Runs ant clean for each of these projects"/>
+    <echo message="archive - makes an archive suitable for gforge."/>
+    <echo message="deploy - deploys protege to a specific location."/>
+    <echo message="clean - removes the build dir and cleans all the projects"/>
+    <echo message="======================================================="/>
+    <echo message="                Ontology Configuration"/>
+    <echo message="======================================================="/>
+    <echo message="install.server.ontologies - installs the server ontologies."/>
+    <echo message="configure.server.projects -  configures the server projects"/>
+    <echo message="                             based on configured owl file"/>
+    <echo message="======================================================="/>
+    <echo message="                Admin Functions"/>
+    <echo message="======================================================="/>
+    <echo message="server.start - start the server"/>
+    <echo message="server.stop - stop the server cleanly"/>
+  </target>
+
+  <target name="display.properties">
+    <echoproperties/>
+  </target>
+
+</project>
