@@ -98,19 +98,6 @@
      <filter token="SERVER_HOST_NAME" value="${server.host.name}"/>
   </target>
 
-  <!-- === === === === checkout === === === === -->
-
-  <target name="checkout" depends="init">
-    <copy file="javacc/local.properties" todir="${protege.core.project}"/>
-    <svn>
-      <checkout url="${ncitab.url}" destPath="${ncitab.project}"/>
-      <checkout url="${nciconcepthistory.url}" destPath="${nciconcepthistory.project}"/>
-      <checkout url="${ncievshistory.url}" destPath="${ncievshistory.project}"/>
-      <checkout url="${codegen.url}" destPath="${codegen.project}"/>
-      <checkout url="${protegeworkflow.url}" destPath="${protegeworkflow.project}"/>
-    </svn>
-  </target>
-
   <!-- The revisions target can be found in svn revision 125 of this project -->
   <!-- If you want to resurrect it look for the word revision in that file   -->
 
@@ -187,26 +174,14 @@
     <ant antfile="${prompt.project}/build.xml" 
          dir="${prompt.project}"
          target="install"/>
-    <ant antfile="${nciconcepthistory.project}/build.xml" 
-         dir="${nciconcepthistory.project}"
-         target="install"/>
-    <ant antfile="${ncievshistory.project}/build.xml" 
-         dir="${ncievshistory.project}"
-         target="install"/>
     <ant antfile="${advancedQuery.project}/build.xml" 
          dir="${advancedQuery.project}"
          target="install"/>
     <ant antfile="${protegeLoad.project}/build.xml" 
          dir="${protegeLoad.project}"
          target="install"/>
-    <ant antfile="${codegen.project}/build.xml" 
-         dir="${codegen.project}"
-         target="install-client"/>
-    <ant antfile="${protegeworkflow.project}/build.xml" 
-         dir="${protegeworkflow.project}"
-         target="install"/>   
-    <ant antfile="${ncitab.project}/build.xml" 
-         dir="${ncitab.project}"
+    <ant antfile="${protegegui.project}/build.xml" 
+         dir="${protegegui.project}"
          target="install"/>
     <ant antfile="${classificationui.project}/build.xml" 
          dir="${classificationui.project}"
@@ -215,7 +190,7 @@
     </ant>
     <!-- override core logging.properties with ncitab version that supresses system warnings -->
     <copy todir="${protege.home}"
-          file="${ncitab.project}/logging.properties" 
+          file="${protegegui.project}/logging.properties" 
           overwrite="true"/>
     <copy filtering="true" 
           tofile="${protege.home}/protege.properties" 
@@ -260,30 +235,25 @@
     <delete failonerror="false">
       <fileset dir="${protege.home}" includes="*.bat, *.sh"/>
     </delete>
-    <ant antfile="${advancedQuery.project}/build.xml" 
+   <ant antfile="${prompt.project}/build.xml" 
+         dir="${prompt.project}"
+         target="install"/>
+   <ant antfile="${advancedQuery.project}/build.xml" 
          dir="${advancedQuery.project}"
+         target="install"/>
+    <ant antfile="${protegegui.project}/build.xml" 
+         dir="${protegegui.project}"
          target="install"/>
     <ant antfile="${classificationui.project}/build.xml" 
          dir="${classificationui.project}"
          target="deploy">
       <property name="protege.path" value="${protege.home}"/>
     </ant>
-
-      <ant antfile="${codegen.project}/build.xml" 
-         dir="${codegen.project}"
-         target="install"/>
-    <ant antfile="${protegeworkflow.project}/build.xml" 
-         dir="${protegeworkflow.project}"
-         target="install"/>
-    <ant antfile="${ncievshistory.project}/build.xml" 
-         dir="${ncievshistory.project}"
-         target="install"/>
     <copy filtering="true" 
           tofile="${protege.home}/protege.properties" 
           file="${resources}/protege.properties.template"
           overwrite="true" />   
-    <antcall target="install.nci.prompt.config"/>
-    <echo message="install.nci.prompt.config done"/>
+    
     <!-- copy server scripts using filters -->
      <copy filtering="true" 
           tofile="${protege.home}/run_protege_server_nci.sh" 
@@ -374,12 +344,6 @@
       <fileset
            dir="${protege.client}/plugins/gov.nih.nci.protegex.ui.nciedittab"
            includes="*.jar"/>
-      <fileset
-           dir="${protege.client}/plugins/gov.nih.nci.protegex.workflow"
-           includes="*.jar"/>
-      <fileset
-           dir="${protege.client}/plugins/gov.nih.nci.protegex.codegen"
-           includes="*.jar"/>
   </path>
 
   <target name="configure.server.compile" depends="init">
@@ -463,12 +427,6 @@
     <ant antfile="${prompt.project}/build.xml" 
          dir="${prompt.project}"
          target="clean"/>
-    <ant antfile="${nciconcepthistory.project}/build.xml" 
-         dir="${nciconcepthistory.project}"
-         target="clean"/>
-    <ant antfile="${ncievshistory.project}/build.xml" 
-         dir="${ncievshistory.project}"
-         target="clean"/>
     <ant antfile="${advancedQuery.project}/build.xml" 
          dir="${advancedQuery.project}"
          target="clean"/>
@@ -476,14 +434,8 @@
     <ant antfile="${protegeLoad.project}/build.xml" 
          dir="${protegeLoad.project}"
          target="clean"/>
-    <ant antfile="${ncitab.project}/build.xml" 
-         dir="${ncitab.project}"
-         target="clean"/>
-    <ant antfile="${codegen.project}/build.xml" 
-         dir="${codegen.project}"
-         target="clean"/>
-    <ant antfile="${protegeworkflow.project}/build.xml" 
-         dir="${protegeworkflow.project}"
+    <ant antfile="${protegegui.project}/build.xml" 
+         dir="${protegegui.project}"
          target="clean"/>
     <ant antfile="${classificationui.project}/build.xml" 
          dir="${classificationui.project}"
