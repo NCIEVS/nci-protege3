@@ -7,18 +7,12 @@
 
   
 
-  <property name="projects"          location="./projects"/>
-  <property name="deps"          location="./NCITabDependents143"/>
-
+  <property name="deps" location="./NCITabDependents143"/>
+  <property name="protegegui.project" location="./protegegui"/>
   
+    
   <property name="build.properties" location="./build.properties"/>
   <property file="${build.properties}"/>
-
-  <property name="protege.base.url" 
-            value="http://smi-protege.stanford.edu/repos/protege"/>
-
-  <property name="nci.base.url" 
-            value="https://ncisvn.nci.nih.gov/svn/protegegui/collaborativedevterminologytools"/>
 
   
 
@@ -80,7 +74,7 @@
     <mkdir dir="${full.dist}"/>
     <mkdir dir="${full.archive}"/>
     <mkdir dir="${protege.home}"/>
-    <mkdir dir="${projects}"/>
+    <copy file="javacc/local.properties" todir="${protege.core.project}"/>
     <taskdef resource="svntask.properties" classpathref="svn.classpath"/>
     <condition property="clark.parsia.db.project.exists">
       <isset property="clark.parsia.db.project" />
