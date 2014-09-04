@@ -1,0 +1,176 @@
+****************************************************
+Version: 0.2.3
+Author: Sean Falconer
+Date: November 07, 2008
+Features:
+	- Rebuilt using Java 1.5 dependency instead of 1.6.
+	
+Known Issues:
+	- Removing an accepted mapping only works for the simple ontology plugin.
+****************************************************
+****************************************************
+Version: 0.2.2
+Author: Sean Falconer
+Date: September 16, 2008
+Features:
+	- Added a standalone mode where CogZ can be run independent of Protege.
+	- Added support for converting ecore into OWL into Protege.
+	- Added in tree slot mapping support.
+	- Integrated with ATLEMFModel project for generating transformations between models.
+
+Known Issues:
+	- Removing an accepted mapping only works for the simple ontology plugin.
+****************************************************
+****************************************************
+Version: 0.2.1
+Author: Sean Falconer
+Date: August 18, 2008
+Features:
+	- Fixed many issues with filtering trees.
+	- Added model caching to the trees to speed up operations with larger ontologies.
+	- Added a completed mappings tab to the bottom panel.
+	- Added slot mapping support.
+
+Known Issues:
+	- Removing an accepted mapping only works for the simple ontology plugin.
+****************************************************
+****************************************************
+Version: 0.2.0
+Author: Sean Falconer
+Date: April 22, 2008
+Features:
+	- Added a [# filtered] indicator to nodes with filtered children.
+	- Added a survey request dialog that is displayed after X number of uses of CogZ.
+	- Fixed a lot of different performance issues.
+	- Fixed various bugs with filters, graphing, etc.
+	- Moved the suggestion list to the main tab.
+	- Added scroll wheel support for scrolling both trees at the same time.
+	- Added composite mapping arc support.
+
+Known Issues:
+	- Removing an accepted mapping only works for the simple ontology plugin.
+****************************************************
+****************************************************
+Version: 0.1.9
+Author: Sean Falconer
+Date: April 10, 2008
+Features:
+	- Changed "Show branch" menu item to be "Pin branch".
+	- Changed this function to only bring in direct subclasses.
+	- Changed tree menu to only display "Pin branch" if the node has filtered children.
+	- Added a tree menu item to remove a pinned item.
+
+Known Issues:
+	- Removing an accepted mapping only works for the simple ontology plugin.
+****************************************************
+
+****************************************************
+Version: 0.1.8
+Author: Sean Falconer
+Date: April 07, 2008
+Features:
+	- Added a new filter to only show exact name matches.
+	- Added global filter buttons to the CogZ menu.
+	- Added a tree based filter to filter entire branches of the ontology from display.
+	- Added a tree menu item to show specific branches in the ontology that are currently partially filtered.
+	- Added a new menu item that allows the user to execute all exact name matches in bulk.
+
+Known Issues:
+	- Removing an accepted mapping only works for the simple ontology plugin.
+****************************************************
+
+****************************************************
+Version: 0.1.7
+Author: Sean Falconer
+Date: March 20, 2008
+Features:
+	- Fixed a critical bug with deselecting items in the source/target ontologies.
+	- Moved the suggestion list tab to the bottom of the screen and synchronized it with the ontology trees.
+
+Known Issues:
+	- Removing an accepted mapping only works for the simple ontology plugin.
+****************************************************
+
+****************************************************
+Version: 0.1.6
+Author: Sean Falconer
+Date: March 17, 2008
+Features:
+	- Added filter for filtering trees to display only the hierarchy necessary to display a potential/verified mapping.
+	- Added filter to filter background mapping lines on selection of an existing mapping line.
+	- Moved the candidate mapping tree filter to be the default tree filter.
+	- Re-factored and cleaned up code.
+
+Known Issues:
+	- Removing an accepted mapping only works for the simple ontology plugin.
+****************************************************
+
+****************************************************
+Version: 0.1.5
+Author: Sean Falconer
+Date: March 4, 2008
+Features:
+	- Added hiearchy mapping reports.
+	- Fixed issues with browser for reports not launching in Windows and OS X.
+	- Added code to restore CogZ slider locations in between mapping sessions.
+
+Known Issues:
+	- Removing an accepted mapping only works for the simple ontology plugin.
+****************************************************
+
+****************************************************
+Version: 0.1.4
+Author: Sean Falconer
+Date: Feb. 6, 2008
+Features:
+	- Added mapping status report.  More reports to come.
+	- Added functionality to detach the neighborhood views by right-clicking on the tab.
+
+Known Issues:
+	- Removing an accepted mapping only works for the simple ontology plugin.
+****************************************************
+
+****************************************************
+Version: 0.1.3
+Author: Sean Falconer
+Date: Jan. 28, 2008
+Features:
+	- Implemented CogZ as an alternate perspective to the Prompt mapping UI rather than a UI extension.
+	- Removed dependency on Jambalaya and replaced graph views with Cajun graphing framework.
+	- Fixed many bugs.
+
+Known Issues:
+	- Removing an accepted mapping only works for the simple ontology plugin.
+****************************************************
+
+****************************************************
+Version: 0.1.2
+Author: Sean Falconer
+Date: Dec. 5, 2007
+Features:
+	- Added candidate mappings to the mapping visualization view.
+	- Added tree filtering for verified mappings, temporary, and candidate mappings.
+	- Added global mapping type filtering under the View menu.
+	- Fixed a performance issue with rendering slowing down when 20+ mappings are shown.
+	- Fixed known issue with fish-eye zooming not always updating the size of the trees. 
+
+Known Issues:
+	- Removing an accepted mapping only works for the simple ontology plugin.
+****************************************************
+
+****************************************************
+Version: 0.1.1
+Author: Sean Falconer
+Date: Nov. 1, 2007
+Features:
+	- Integrated the latest version of Jambalaya for the neighborhood view.
+	- Added a temporary mapping feature.
+	- Added a visualization component for viewing existing and temporary mappings.
+	- Added support for manual creation and deletion of mappings.
+	- Added functionality to allow the user to extract the treemap or neighborhood views into a
+	separate window.
+
+Known Issues:
+	- Removing an accepted mapping only works for the simple ontology plugin.
+	- In the mapping visualization view, sometimes the semantic zooming does not update the size of the trees.
+****************************************************

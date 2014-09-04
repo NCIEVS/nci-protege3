@@ -1,0 +1,63 @@
+Axiom: SubClassOf(Cystic_Partially_Differentiated_Nephroblastoma Childhood_Wilms_Tumor)
+Explanation: 
+   EquivalentClasses(Childhood_Wilms_Tumor And(Childhood_Renal_Neoplasm Some(Disease_May_Have_Molecular_Abnormality WT-1_Tumor-Suppressor_Gene_Inactivation) Renal_Wilms_Tumor))
+   EquivalentClasses(Childhood_Multilocular_Cystic_Renal_Neoplasm And(Childhood_Renal_Neoplasm All(Disease_Has_Finding Cystic_Changes)))
+   EquivalentClasses(Cystic_Partially_Differentiated_Nephroblastoma And(Childhood_Multilocular_Cystic_Renal_Neoplasm Some(Disease_May_Have_Molecular_Abnormality WT-1_Tumor-Suppressor_Gene_Inactivation) Renal_Wilms_Tumor))
+
+Axiom: SubClassOf(Diffuse_Pulmonary_Lymphangiomatosis Benign_Soft_Tissue_Neoplasm)
+Explanation: 
+   EquivalentClasses(Lymphangiomatosis And(Benign_Lymphatic_Vessel_Neoplasm All(Disease_Has_Finding Diffuse_Lesion)))
+   EquivalentClasses(Lung_Soft_Tissue_Neoplasm And(Lung_Neoplasm All(Disease_Has_Normal_Tissue_Origin Soft_Tissue) All(Disease_Has_Primary_Anatomic_Site Lung) Soft_Tissue_Neoplasm))
+   EquivalentClasses(Benign_Soft_Tissue_Neoplasm And(Benign_Connective_and_Soft_Tissue_Neoplasm Soft_Tissue_Neoplasm))
+   EquivalentClasses(Diffuse_Pulmonary_Lymphangiomatosis And(Lung_Soft_Tissue_Neoplasm Lymphangiomatosis))
+   EquivalentClasses(Benign_Vascular_Neoplasm And(Benign_Connective_and_Soft_Tissue_Neoplasm Vascular_Neoplasm))
+   EquivalentClasses(Benign_Lymphatic_Vessel_Neoplasm And(Benign_Vascular_Neoplasm Lymphatic_Vessel_Neoplasm))
+
+Axiom: SubClassOf(Anaplastic_Giant_Cell_Thyroid_Carcinoma Undifferentiated_Carcinoma_with_Osteoclast-Like_Giant_Cells)
+Explanations (2): 
+1) EquivalentClasses(Undifferentiated_Carcinoma_with_Osteoclast-Like_Giant_Cells And(All(Disease_Has_Abnormal_Cell Non-Neoplastic_Osteoclast-Like_Giant_Cell) Undifferentiated_Carcinoma))
+   EquivalentClasses(Anaplastic_Thyroid_Carcinoma And(Large_Cell_Carcinoma All(Disease_Has_Abnormal_Cell Anaplastic_Carcinoma_Cell) All(Disease_Has_Abnormal_Cell Malignant_Epithelial_Spindle_Cell) All(Disease_Has_Abnormal_Cell Malignant_Epithelioid_Cell) All(Disease_Has_Finding High_Mitotic_Activity) All(Disease_Has_Finding Rapidly_Enlarging_Mass) Some(Disease_May_Have_Finding Aggressive_Clinical_Course) Some(Disease_May_Have_Finding Coagulative_Necrosis) Some(Disease_May_Have_Finding Dysphagia) Some(Disease_May_Have_Finding Dyspnea) Some(Disease_May_Have_Finding Hoarseness) Some(Disease_May_Have_Finding Vocal_Cord_Paralysis) Some(Disease_May_Have_Molecular_Abnormality PTEN_Tumor-Suppressor_Gene_Inactivation) Some(Disease_May_Have_Molecular_Abnormality TP53_Tumor-Suppressor_Gene_Inactivation) Thyroid_Carcinoma Undifferentiated_Carcinoma))
+   EquivalentClasses(Anaplastic_Giant_Cell_Thyroid_Carcinoma And(Anaplastic_Thyroid_Carcinoma Giant_Cell_Carcinoma All(Disease_Has_Abnormal_Cell Non-Neoplastic_Osteoclast-Like_Giant_Cell)))
+2) EquivalentClasses(Undifferentiated_Carcinoma_with_Osteoclast-Like_Giant_Cells And(All(Disease_Has_Abnormal_Cell Non-Neoplastic_Osteoclast-Like_Giant_Cell) Undifferentiated_Carcinoma))
+   EquivalentClasses(Giant_Cell_Carcinoma And(Large_Cell_Carcinoma Malignant_Giant_Cell_Neoplasm All(Disease_Has_Abnormal_Cell Anaplastic_Carcinoma_Cell) Undifferentiated_Carcinoma))
+   EquivalentClasses(Anaplastic_Giant_Cell_Thyroid_Carcinoma And(Anaplastic_Thyroid_Carcinoma Giant_Cell_Carcinoma All(Disease_Has_Abnormal_Cell Non-Neoplastic_Osteoclast-Like_Giant_Cell)))
+
+Axiom: SubClassOf(Transplant-Related_Malignant_Neoplasm Immunodeficiency-Related_Malignant_Neoplasm)
+Explanations (2): 
+1) EquivalentClasses(Therapy_Related_Malignant_Neoplasm And(Malignant_Neoplasm Therapy-Related_Neoplasm))
+   EquivalentClasses(Immunodeficiency-Related_Malignant_Neoplasm And(Immunodeficiency-Related_Neoplasm Malignant_Neoplasm))
+   SubClassOf(Transplant-Related_Disorder Immunodeficiency-Related_Disorder)
+   EquivalentClasses(Immunodeficiency-Related_Neoplasm And(Immunodeficiency-Related_Disorder Neoplasm_by_Cause))
+   SubClassOf(Transplant-Related_Malignant_Neoplasm Transplant-Related_Disorder)
+   SubClassOf(Transplant-Related_Malignant_Neoplasm Therapy_Related_Malignant_Neoplasm)
+   EquivalentClasses(Therapy-Related_Neoplasm And(Neoplasm_by_Cause All(Disease_Has_Finding Therapy-Related_Toxicity)))
+2) SubClassOf(Transplant-Related_Malignant_Neoplasm Immunodeficiency-Related_Malignant_Neoplasm)
+
+Axiom: SubClassOf(Fenretinide_Lipid_Matrix Fenretinide)
+Explanation: 
+   SubClassOf(Fenretinide_Lipid_Matrix Some(Chemical_Or_Drug_Has_Mechanism_Of_Action Retinoic_Acid_Receptor_Activation))
+   SubClassOf(Fenretinide_Lipid_Matrix Some(Chemical_Or_Drug_Has_Physiologic_Effect Apoptosis))
+   SubClassOf(Fenretinide_Lipid_Matrix Retinoic_Acid_Agent)
+   SubClassOf(Fenretinide_Lipid_Matrix Some(Chemical_Or_Drug_Affects_Gene_Product Retinoic_Acid_Receptor))
+   SubClassOf(Fenretinide_Lipid_Matrix Some(Chemical_Or_Drug_Has_Physiologic_Effect Angiogenic_Inhibition))
+   EquivalentClasses(Fenretinide And(Some(Chemical_Or_Drug_Affects_Gene_Product Retinoic_Acid_Receptor) Some(Chemical_Or_Drug_Has_Mechanism_Of_Action Retinoic_Acid_Receptor_Activation) Some(Chemical_Or_Drug_Has_Physiologic_Effect Angiogenic_Inhibition) Some(Chemical_Or_Drug_Has_Physiologic_Effect Apoptosis) Some(Chemical_Or_Drug_Has_Physiologic_Effect Cell_Differentiation_Induction) Retinoic_Acid_Agent))
+   SubClassOf(Fenretinide_Lipid_Matrix Some(Chemical_Or_Drug_Has_Physiologic_Effect Cell_Differentiation_Induction))
+
+Axiom: SubClassOf(Oral_Ixabepilone Ixabepilone)
+Explanations (2): 
+1) SubClassOf(Oral_Ixabepilone Some(Chemical_Or_Drug_Affects_Gene_Product Tubulin))
+   SubClassOf(Oral_Ixabepilone Some(Chemical_Or_Drug_Has_Physiologic_Effect G2-M_Arrest))
+   SubClassOf(Oral_Ixabepilone Epothilone_B_Analogue)
+   SubClassOf(Oral_Ixabepilone Some(Chemical_Or_Drug_Has_Physiologic_Effect Mitosis_Inhibition))
+   EquivalentClasses(Ixabepilone And(Epothilone_B_Analogue Some(Chemical_Or_Drug_Affects_Gene_Product Tubulin) Some(Chemical_Or_Drug_Has_Mechanism_Of_Action Microtubule_Dynamic_Alteration) Some(Chemical_Or_Drug_Has_Physiologic_Effect G2-M_Arrest) Some(Chemical_Or_Drug_Has_Physiologic_Effect Induction_of_Apoptosis) Some(Chemical_Or_Drug_Has_Physiologic_Effect Mitosis_Inhibition)))
+   SubClassOf(Oral_Ixabepilone Some(Chemical_Or_Drug_Has_Mechanism_Of_Action Microtubule_Dynamic_Alteration))
+   SubClassOf(Oral_Ixabepilone Some(Chemical_Or_Drug_Has_Physiologic_Effect Induction_of_Apoptosis))
+2) SubClassOf(Tubulin_Binding_Agent Some(Chemical_Or_Drug_Has_Mechanism_Of_Action Microtubule_Dynamic_Alteration))
+   SubClassOf(Epothilone_B_Analogue Epothilone_Compound)
+   SubClassOf(Oral_Ixabepilone Some(Chemical_Or_Drug_Affects_Gene_Product Tubulin))
+   SubClassOf(Oral_Ixabepilone Some(Chemical_Or_Drug_Has_Physiologic_Effect G2-M_Arrest))
+   SubClassOf(Oral_Ixabepilone Epothilone_B_Analogue)
+   SubClassOf(Oral_Ixabepilone Some(Chemical_Or_Drug_Has_Physiologic_Effect Mitosis_Inhibition))
+   SubClassOf(Epothilone_Compound Tubulin_Binding_Agent)
+   EquivalentClasses(Ixabepilone And(Epothilone_B_Analogue Some(Chemical_Or_Drug_Affects_Gene_Product Tubulin) Some(Chemical_Or_Drug_Has_Mechanism_Of_Action Microtubule_Dynamic_Alteration) Some(Chemical_Or_Drug_Has_Physiologic_Effect G2-M_Arrest) Some(Chemical_Or_Drug_Has_Physiologic_Effect Induction_of_Apoptosis) Some(Chemical_Or_Drug_Has_Physiologic_Effect Mitosis_Inhibition)))
+   SubClassOf(Oral_Ixabepilone Some(Chemical_Or_Drug_Has_Physiologic_Effect Induction_of_Apoptosis))

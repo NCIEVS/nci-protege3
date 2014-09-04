@@ -1,0 +1,194 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<project name = "prompt" default = "init" basedir = ".">
+
+	<property name = "project.name" value = "prompt"/>
+	<property name = "build.dir" value = "./build"/>
+	<property name = "build.src" value = "${build.dir}/src"/>
+	<property name = "build.dest" value = "${build.dir}/classes"/>
+	<property name = "docs.dir" value = "./docs"/>
+	<property name = "projects.dir" value = "./projects"/>
+	<property name = "plugins.dir" value = "./plugins"/>
+	<property name = "lib.dir" value = "./lib"/>
+	<property name = "includeAntRuntime" value = "no"/>
+	<property name = "optimize" value = "on"/>
+	<property name = "packages" value = "edu.*"/>
+	<property name = "dist.dir" value = "./dist"/>
+
+	<property file = "../global.properties"/>
+	
+	<path id = "prompt.classpath">
+		<pathelement path = "${protege.jar}"/>
+		<pathelement path = "${protege-owl.jar}"/>
+		<pathelement path = "${rdf-backend.jar}"/>
+		<pathelement path = "${change-management.jar}"/>
+		<pathelement path = "${change-model.jar}"/>
+		<fileset dir = "${lib.dir}">
+			<include name = "**/*.jar"/>
+		</fileset>
+	</path>
+	
+	<path id = "prompt.plugins.classpath">
+		<pathelement path = "${protege.jar}"/>
+		<dirset dir = "${build.dest}"/>
+	</path>
+
+	<path id = "prompt.plugin.umls.classpath">
+		<pathelement path = "${protege.jar}"/>
+		<pathelement path = "${plugins.dir}/umls/lib/kss-api-5.0.jar"/>
+		<dirset dir = "${build.dest}"/>
+	</path>
+
+	<!-- =================================================================== -->
+	<!-- INIT -->
+	<!-- =================================================================== -->
+	<target name = "init">
+		<tstamp/>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- PREPARE-SRC -->
+	<!-- =================================================================== -->
+	<target name = "prepare-src" depends = "init">
+		<mkdir dir = "${build.src}"/>
+		<mkdir dir = "${build.dest}"/>
+		<mkdir dir = "${dist.dir}"/>
+
+		<!-- get source code from subversion repository -->
+		<exec executable = "cmd.exe" dir = "${batch.files}" os = "${os}">
+			<arg line = "/c checkout ${svn.core.url}/${project.name}/trunk ../${project.name} --non-recursive"/>
+		</exec>
+		<exec executable = "cmd.exe" dir = "${batch.files}" os = "${os}">
+			<arg line = "/c checkout ${svn.core.url}/${project.name}/trunk/src ../${project.name}/build/src"/>
+		</exec>
+		<exec executable = "cmd.exe" dir = "${batch.files}" os = "${os}">
+			<arg line = "/c checkout ${svn.core.url}/${project.name}/trunk/docs ../${project.name}/docs"/>
+		</exec>
+		<exec executable = "cmd.exe" dir = "${batch.files}" os = "${os}">
+			<arg line = "/c checkout ${svn.core.url}/${project.name}/trunk/lib ../${project.name}/lib"/>
+		</exec>
+		<exec executable = "cmd.exe" dir = "${batch.files}" os = "${os}">
+			<arg line = "/c checkout ${svn.core.url}/${project.name}/trunk/projects ../${project.name}/projects"/>
+		</exec>
+		<exec executable = "cmd.exe" dir = "${batch.files}" os = "${os}">
+			<arg line = "/c checkout ${svn.core.url}/${project.name}/trunk/plugins ../${project.name}/plugins"/>
+		</exec>
+
+		<!-- add license text to top of source files -->
+		<exec executable = "cmd.exe" dir = "${batch.files}" os = "${os}">
+			<arg line = "/c merge_license_with_source ../${project.name}/build/src"/>
+		</exec>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- COMPILE -->
+	<!-- =================================================================== -->
+	<target name = "compile" depends = "prepare-src">
+		<!-- compile source code -->
+		<javac srcdir = "${build.src}" destdir = "${build.dest}" optimize = "${optimize}" includeAntRuntime = "${includeAntRuntime}" debug = "on" debuglevel = "lines">
+			<classpath refid = "prompt.classpath"/>
+		</javac>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- COMPILE-PLUGINS - compile the stanford-maintained prompt plug-ins from source code -->
+	<!-- (some of the prompt plug-ins are maintained by the university of victoria) -->
+	<!-- =================================================================== -->
+	<target name = "compile-plugins">
+		
+		<!-- mappingDomainPSM -->
+		<mkdir dir = "${build.dir}/classes-psm"/>
+		<javac srcdir = "${plugins.dir}/mappingDomainPSM/src" destdir = "${build.dir}/classes-psm" optimize = "${optimize}" includeAntRuntime = "${includeAntRuntime}">
+			<classpath refid = "prompt.plugins.classpath"/>
+		</javac>
+
+		<!-- simpleMappingStorage -->
+		<mkdir dir = "${build.dir}/classes-mapping"/>
+		<javac srcdir = "${plugins.dir}/simpleMappingStorage/src" destdir = "${build.dir}/classes-mapping" optimize = "${optimize}" includeAntRuntime = "${includeAntRuntime}">
+			<classpath refid = "prompt.plugins.classpath"/>
+		</javac>
+
+		<!-- synonyms -->
+		<mkdir dir = "${build.dir}/classes-syn"/>
+		<javac srcdir = "${plugins.dir}/synonyms/src" destdir = "${build.dir}/classes-syn" optimize = "${optimize}" includeAntRuntime = "${includeAntRuntime}">
+			<classpath refid = "prompt.plugins.classpath"/>
+		</javac>
+
+		<!-- umls -->
+		<mkdir dir = "${build.dir}/classes-umls"/>
+		<javac srcdir = "${plugins.dir}/umls/src" destdir = "${build.dir}/classes-umls" optimize = "${optimize}" includeAntRuntime = "${includeAntRuntime}">
+			<classpath refid = "prompt.plugin.umls.classpath"/>
+		</javac>
+	
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- JAR -->
+	<!-- =================================================================== -->
+	<target name = "jar" depends = "compile">
+		
+		<copy todir = "${build.dest}/edu/stanford/smi/protegex/prompt/ui/images">
+			<fileset dir = "${build.src}/edu/stanford/smi/protegex/prompt/ui/images"/>
+		</copy>
+
+		<copy todir = "${build.dest}/projects">
+			<fileset dir = "${projects.dir}"/>
+		</copy>
+
+		<jar jarfile = "${dist.dir}/${project.name}.jar" manifest = "${build.src}/META-INF/MANIFEST.MF">
+			<fileset dir = "${build.dest}"/>
+		</jar>
+
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- JAR-PLUGINS -->
+	<!-- =================================================================== -->
+	<target name = "jar-plugins" depends = "compile-plugins">
+		
+		<!-- mappingDomainPSM -->
+		<copy todir = "${build.dir}/classes-psm/projects">
+			<fileset dir = "${plugins.dir}/mappingDomainPSM/projects"/>
+		</copy>
+
+		<jar jarfile = "${dist.dir}/mappingDomainPSM.jar" manifest = "${plugins.dir}/mappingDomainPSM/src/META-INF/MANIFEST.MF">
+			<fileset dir = "${build.dir}/classes-psm"/>
+		</jar>
+
+		<!-- simpleMappingStorage -->
+		<copy todir = "${build.dir}/classes-mapping/projects">
+			<fileset dir = "${plugins.dir}/simpleMappingStorage/projects"/>
+		</copy>
+
+		<jar jarfile = "${dist.dir}/simpleMappingStorage.jar" manifest = "${plugins.dir}/simpleMappingStorage/src/META-INF/MANIFEST.MF">
+			<fileset dir = "${build.dir}/classes-mapping"/>
+		</jar>
+		
+		<!-- synonyms -->
+		<jar jarfile = "${dist.dir}/synonyms.jar" manifest = "${plugins.dir}/synonyms/src/META-INF/MANIFEST.MF">
+			<fileset dir = "${build.dir}/classes-syn"/>
+		</jar>
+
+		<!-- umls -->
+		<jar jarfile = "${dist.dir}/umls.jar" manifest = "${plugins.dir}/umls/src/META-INF/MANIFEST.MF">
+			<fileset dir = "${build.dir}/classes-umls"/>
+		</jar>
+
+	</target>
+	
+	<!-- =================================================================== -->
+	<!-- CLEAN -->
+	<!-- =================================================================== -->
+	<target name = "clean" depends = "init">
+		<delete dir = "${build.dir}"/>
+		<delete dir = "${docs.dir}"/>
+		<delete dir = "${dist.dir}"/>
+		<delete dir = "${projects.dir}"/>
+		<delete dir = "${plugins.dir}"/>
+		<delete dir = "${lib.dir}"/>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- ALL -->
+	<!-- =================================================================== -->
+	<target name = "all" depends = "jar, jar-plugins"/>
+</project>

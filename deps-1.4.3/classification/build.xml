@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<project name="ExplanationServer" default="dist" basedir=".">
+    <description>
+        Explanation
+    </description>
+
+    <!-- Global Properties -->
+    <property name="src" location="src" />
+    <property name="test.src" location="test/src" />
+    <property name="build" location="build" />
+    <property name="dist" location="dist" />
+
+    <property name="project.name" value="explanation" />
+    <property name="mainclass" value="com.clarkparsia.explanation.TestExplanation"/>
+
+    <!-- Read user specified properties -->
+    <property file="build.properties"/>
+
+    <property environment="env"/>
+    <property name="protege.path" value="${env.PROTEGE_HOME}"/>
+
+    <path id="project.class.path">
+        <pathelement location="lib/" />
+        <pathelement location="${build}" />
+        <pathelement location="${protege.path}/protege.jar" />
+        <pathelement location="${protege.path}/plugins/edu.stanford.smi.protegex.owl/protege-owl.jar" />
+    	<pathelement location="${protege.path}/plugins/edu.stanford.smi.protegex.owl/jena.jar" />
+        <fileset dir="lib">
+            <include name="**/*.jar"/>
+            <exclude name="**/${project.name}*.jar"/>
+        	<exclude name="**/jena/*.jar"/>
+        	<exclude name="**/owlapiv3/*.jar"/>
+        </fileset>
+    </path>
+
+    <target name="init" depends="clean">
+        <pathconvert targetos="unix" property="classpath" refid="project.class.path" />
+        <echo>CLASSPATH=${classpath}</echo>
+        <!-- Create the time stamp -->
+        <tstamp/>
+        <!-- Create the build directory structure used by compile -->
+        <mkdir dir="${build}"/>
+    </target>
+
+    <target name="compile" depends="init"
+            description="Compile source files." >
+        <javac source="1.5" target="1.5" srcdir="${src}" destdir="${build}" debug="yes" deprecation="no">
+            <classpath refid="project.class.path"/>
+        </javac>
+        <javac source="1.5" target="1.5" srcdir="${test.src}" destdir="${build}" debug="yes" deprecation="no">
+            <classpath refid="project.class.path"/>
+        </javac>    	
+    </target>
+
+
+    <target name="build" depends="compile"
+            description="Compile sources and copy data files into build directory.">
+        <copy todir="${build}">
+            <fileset dir="${src}">
+                <exclude name="**/*.java" />
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="dist" depends="build">
+        <!-- Copy in lib files -->
+        <mkdir dir="${dist}" />
+
+        <copy todir="${dist}">
+            <fileset dir=".">
+                <include name="README.txt" />
+                <include name="restart_explanation_server.sh" />
+                <include name="start_explanation_server.sh" />
+                <include name="stop_explanation_server.sh" />
+            </fileset>
+	    <fileset dir="${build}">
+		<include name="logging.properties" />
+	    </fileset>
+        </copy>
+
+        <copy todir="${dist}/lib" flatten="true">
+            <fileset dir="lib">
+                <include name="**/*.jar" />
+                <exclude name="**/${project.name}*.jar"/>
+            	<exclude name="**/jena/*.jar"/>
+            	<exclude name="**/owlapiv3/*.jar"/>
+            </fileset>
+        </copy>
+
+        <jar jarfile="${dist}/lib/${project.name}.jar"
+             basedir="${build}" />
+    </target>
+	
+    <target name="corefiles" depends="clean">
+        <copy todir="${dist}">
+        	<fileset dir="">
+        		<include name="src/**"/>
+        		<exclude name="**/dig20/**"/>
+        		<exclude name="**/http/**"/>
+        		<exclude name="**/io/html/**"/>
+        		<exclude name="**/test/**"/>
+        		<exclude name="**/SaveClassification.java"/>
+        	</fileset>
+        </copy>
+    </target>
+
+    <target name="zipfile" depends="dist">
+	<zip destfile="${dist}/${project.name}.zip">
+            <zipfileset dir="dist" prefix="${project.name}"
+                excludes="${project.name}.zip"/>
+	</zip>
+    </target>
+	
+	<!-- Needed for NCI master build - Bob Dionne  -->
+	<target name="deploy" depends="dist">
+		<copy todir="${protege.path}">
+			<fileset dir="${dist}"/>
+		</copy>
+	</target>
+	
+    <target name="test" depends="build">
+      <junit maxmemory="500m" fork="yes" haltonfailure="false" dir="${basedir}"
+        failureproperty="build.junit.failure">
+        <test name="com.clarkparsia.test.ExplanationTestSuite" />
+        <formatter type="plain" usefile="false" />
+        <formatter type="xml" usefile="true" if="build.junit.formatter.xml"/>
+        <classpath refid="project.class.path"/>
+      </junit>
+      <fail if="build.junit.failure" message="JUnit test failure."/>
+    </target>
+
+    <target name="clean" description="Clean up build files">
+        <delete dir="${build}" />
+        <delete dir="${dist}" />
+    </target>
+
+</project>

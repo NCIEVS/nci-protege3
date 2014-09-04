@@ -1,0 +1,43 @@
+/**
+ * 
+ */
+package gov.nih.nci.protegex.util;
+
+import edu.stanford.smi.protegex.owl.model.*;
+import edu.stanford.smi.protegex.owl.*;
+
+/**
+ * @author Bob Dionne
+ *
+ */
+public class OWLEditRecorder extends EditRecorder {
+
+	/**
+	 * 
+	 */
+	public OWLEditRecorder(OWLNamedClass oc) {
+		currentState = oc;
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Object clone(Object obj) {
+		return null;
+	}
+	
+	public void addPropertyValue(RDFProperty prop, String value) {
+		prepare();
+		((OWLNamedClass) currentState).addPropertyValue(prop, value);
+	}
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		
+		OWLModel model = ProtegeOWL.createJenaOWLModel();
+		
+		// TODO Auto-generated method stub
+
+	}
+
+}

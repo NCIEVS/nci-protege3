@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE admin [
+    <!ENTITY dig20 "http://dl.kr.org/dig/lang/schema#" >
+]>
+
+<admin xmlns="http://dl.kr.org/dig/lang/schema#">
+     <shutdown/>
+</admin>

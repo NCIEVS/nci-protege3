@@ -1,0 +1,1 @@
+select * from smallthesaurus as soleStmt where not exists ( select * from smallthesaurus where frame = soleStmt.frame and slot != 2002 );

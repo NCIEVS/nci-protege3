@@ -1,0 +1,149 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<project name = "Developer Plugins" default = "dist" basedir = ".">  
+   <property file="local.properties"/>
+   <property environment="env"/>
+   <property name="protege.home" value="${env.PROTEGE_HOME}"/>
+
+   <property name = "src"     location = "./src"/>  
+   <property name = "build"   location = "./build"/>
+   <property name = "classes" location = "${build}/classes"/>  
+   <property name = "dist"    location = "${build}/dist"/>
+   <property name = "lib"     location = "./lib"/>
+   <property name = "plugin_dir" value = "edu.stanford.smi.protegex.prompt"/>
+   <property name = "pluginName" value = "prompt"/>
+	
+    <target name="checkProtegeHome">
+        <condition property="protege.home.set">
+            <available file="${protege.home}/protege.jar" type="file"/>
+        </condition>
+    </target>
+	
+    <target name="useProtegeHome" depends="checkProtegeHome" if="protege.home.set">
+      <echo message="Using Protege Home = ${protege.home} to find protege jars"/>
+      <property name="protege.lib"     location="${protege.home}/protege.jar"/>
+      <property name="owl.lib"         location="${protege.home}/plugins/edu.stanford.smi.protegex.owl/protege-owl.jar"/>
+      <property name="rdf.lib"         location="${protege.home}/plugins/edu.stanford.smi.protegex.rdf_backend/rdf-backend.jar"/>
+
+      <property name="changes.lib.dir"    location="${protege.home}/plugins/edu.stanford.smi.protegex.changes"/>
+      <property name="changes.lib"        location="${changes.lib.dir}/change-management.jar"/>
+    </target>
+
+
+    <target name = "checkProtegeLibs" depends="useProtegeHome">
+      <condition property="libs.found">
+        <and>
+          <available file="${protege.lib}" type = "file"/>
+          <available file="${owl.lib}" type = "file"/>
+          <available file="${rdf.lib}" type = "file"/>
+          <available file="${changes.lib}" type = "file"/>
+        </and>
+      </condition>
+      <path id = "project.classpath"> 
+        <pathelement location = "${protege.lib}"/>
+        <pathelement location = "${owl.lib}"/>
+        <pathelement location = "${rdf.lib}"/>
+        <pathelement location = "${changes.lib}"/>
+        <pathelement location = "${lib}/jacl.jar"/>
+        <pathelement location = "${lib}/jython.jar"/>
+        <pathelement location = "${lib}/tcljava.jar"/>
+        <pathelement location = "${lib}/vkbc.jar"/>
+      </path>
+    </target>
+
+    <target name="checkProtegeLibsAndReport" depends="checkProtegeLibs"
+            unless="libs.found">
+      <echo message="Missing protege libraries.  You can either "/>
+      <echo message="set the PROTEGE_HOME environment variable to a"/>
+      <echo message="protege installation directory where the"/>
+      <echo message="appropriate plugins have been installed or put the "/>
+      <echo message="locations of the needed jars in the local.properties file"/>
+      <echo message="Use the ant -v option to ant to see what jars are missing."/>
+      <fail message="Missing Protege libraries"/>
+    </target>
+      
+   <!-- 
+     #  ********** Finding Protege Libraries Done. *************
+     -->
+
+
+   <target name = "init">
+     <mkdir dir = "${classes}"/>
+     <mkdir dir = "${dist}"/>
+     <mkdir dir = "${dist}/${plugin_dir}"/>
+   </target>  
+
+
+   <target name = "compile" depends = "init, checkProtegeLibsAndReport">    
+     <javac srcdir = "${src}" destdir = "${classes}" debug="on" includeAntRuntime="false">
+       <classpath refid = "project.classpath"/>    
+     </javac>
+     <copy todir = "${classes}">
+       <fileset dir = "${src}">
+         <include name = "**/*.gif"/>
+         <include name = "**/*.jpg"/>
+       </fileset>
+     </copy>
+     <copy todir = "${classes}/projects">
+        <fileset dir="projects"/>
+     </copy>
+     <copy todir = "${classes}/edu/stanford/smi/protegex/prompt/ui/images/">      
+        <fileset dir = "${src}/edu/stanford/smi/protegex/prompt/ui/images/"/>
+     </copy>    
+   </target>
+
+   <target name = "jar" depends = "compile">
+     <jar jarfile = "${dist}/${plugin_dir}/${pluginName}.jar" 
+          basedir = "${classes}" 
+          manifest = "${src}/META-INF/MANIFEST.MF"/>  
+
+     <copy todir = "${dist}/${plugin_dir}">
+        <fileset dir="docs"/>
+     </copy>
+   </target>
+
+   <target name = "dist" depends = "jar">
+     <zip basedir = "${dist}"
+          includes = "${plugin_dir}/**"
+          destfile = "${dist}/${pluginName}.zip"/>
+   </target>
+
+   <target name="foam" depends = "jar">
+     <ant antfile ="./plugins/foam/build.xml" target="dist" inheritAll="false"/>
+   </target>
+   
+    <target name = "update" depends = "jar">
+      <fail message = "The Protege Home variable must be set for an install">
+         <condition>
+            <not>
+               <and>
+                  <isset property="protege.home.set"/>
+               </and>
+            </not>
+         </condition>
+      </fail>
+      <copy file="${dist}/${plugin_dir}/${pluginName}.jar"
+            todir = "${protege.home}/plugins/${plugin_dir}"
+            overwrite = "true"/>
+   </target>
+
+    <target name = "install" depends = "checkProtegeHome, dist">
+      <fail message = "set the protege.home variable to do an install">
+         <condition>
+            <not>
+              <isset property="protege.home.set"/>
+            </not>
+         </condition>
+      </fail>
+      <unzip src="${dist}/${pluginName}.zip" 
+             dest = "${protege.home}/plugins"
+             overwrite = "true"/>
+   </target>
+
+
+
+   <target name = "clean">
+     <ant antfile = "./plugins/foam/build.xml" target = "clean" inheritAll="false"/>
+     <delete dir = "${build}"/>
+   </target>
+
+</project>

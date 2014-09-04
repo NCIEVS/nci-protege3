@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Created-By: 1.4.2_01 (Sun Microsystems Inc.)
+
+Name: com/clarkparsia/protege3/storage/database/owl/CPOWLDatabaseKnowledgeBaseFactory.class
+Storage-Factory: True
+
+Name: com/clarkparsia/protege3/storage/database/owl/CPDatabaseRepositoryFactoryPlugin.class
+RepositoryFactoryPlugin: True
+
+Name: com/clarkparsia/protege3/storage/database/owl/ui/CPDatabaseRepositoryCreatorWizardPlugin
+RepositoryCreatorWizardPlugin: True
+
+Name: com/clarkparsia/protege3/storage/database/CPDatabaseKnowledgeBaseFactory.class
+Storage-Factory: True
+
+
+

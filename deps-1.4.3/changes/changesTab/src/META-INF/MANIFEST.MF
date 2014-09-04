@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Created-By: 1.5.0_01 (Sun Microsystems Inc.)
+
+Name: edu/stanford/smi/protegex/changes/ChangesTab.class
+Tab-Widget: True
+
+Name: edu/stanford/smi/protegex/server_changes/ChangesProject.class
+Project-Plugin: True
+
+Name: edu/stanford/smi/protegex/server_changes/prompt/UsersTab.class
+Tab-Widget: True
+
+Name: edu.stanford.smi.protegex.changes.changesKBViewTab.ChangesKBViewTab.class
+Tab-Widget: True
+
+Name: edu.stanford.smi.protegex.changes.stats.ChangeStatisticsTab.class
+Tab-Widget: True
+

@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<project name="ServerTestCoverage" default="coverage" basedir=".">
+
+	<import file="build.xml" optional="false" />
+
+
+	<!--
+	  Cobertura for test coverage analysis
+	  + cobertura.libdir must be set to directory with all cobertura jars
+	  -->
+
+	<property name="instrumented.class" location="instrumented" />
+	<property name="coverage.html.dir" location="coverage-report" />
+	<property name="cobertura.datafile" location="${basedir}/cobertura.ser" />
+
+	<path id="cobertura.class.path">
+		<fileset dir="${cobertura.libdir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<taskdef classpathref="cobertura.class.path" resource="tasks.properties" />
+
+	<target name="instrument" depends="build">
+
+		<delete file="${cobertura.datafile}" />
+
+		<cobertura-instrument todir="${instrumented.class}">
+			<fileset dir="${build}">
+				<exclude name="**/test/*.class" />
+				<include name="**/*.class" />
+			</fileset>
+		</cobertura-instrument>
+	</target>
+
+	<target name="coverage" depends="instrument">
+		
+		<junit maxmemory="500m" haltonfailure="false" fork="yes" forkmode="once" dir="${basedir}">
+
+			<sysproperty key="net.sourceforge.cobertura.datafile" file="${cobertura.datafile}" />
+
+			<classpath location="${instrumented.class}" />
+			<classpath refid="project.class.path" />
+			<classpath refid="cobertura.class.path" />
+
+			<formatter type="plain" usefile="false" />
+			<test name="com.clarkparsia.dig20.test.Dig20TestSuite" />
+			<test name="com.clarkparsia.explanation.test.FileBasedExplanationTest" />
+		</junit>
+
+		<cobertura-report destdir="${coverage.html.dir}">
+			<fileset dir="${src}">
+				<include name="**/*.java" />
+			</fileset>
+		</cobertura-report>
+
+	</target>
+
+	<target name="clean-coverage">
+		<delete quiet="true" includeEmptyDirs="true">
+			<fileset dir="${instrumented.class}" />
+			<fileset dir="${coverage.html.dir}" />
+		</delete>
+	</target>
+
+
+
+	<!--
+	  FindBugs for static analysis
+	  + findbugs.home must be set to unzipped distribution directory
+	  -->
+
+	<property name="findbugs.dir" location="${basedir}/findbugs-report" />
+
+	<path id="findbugs.class.path">
+		<path refid="project.class.path" />
+		<fileset dir="${findbugs.home}/lib">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<taskdef classpathref="findbugs.class.path" name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" />
+
+	<target name="fb-mkoutput">
+		<mkdir dir="${findbugs.dir}" />
+	</target>
+
+	<target name="findbugs" depends="dist">
+		<findbugs home="${findbugs.home}" effort="max" output="text" >
+			<class location="${dist}/lib/${project.name}.jar" />
+			<sourcepath location="${src}" />
+			<auxClasspath refid="project.class.path" />
+		</findbugs>
+
+	</target>
+
+	<target name="findbugs-html" depends="dist,fb-mkoutput">
+		<findbugs home="${findbugs.home}" effort="max" output="html" outputFile="${findbugs.dir}/output.html" >
+			<class location="${dist}/lib/${project.name}.jar" />
+			<sourcepath location="${src}" />
+			<auxClasspath refid="project.class.path" />
+		</findbugs>
+
+	</target>
+
+	<target name="findbugs-xml" depends="dist,fb-mkoutput">
+		<findbugs home="${findbugs.home}" effort="max" output="xml:withMessages" outputFile="${findbugs.dir}/output.xml" >
+			<class location="${dist}/lib/${project.name}.jar" />
+			<sourcepath location="${src}" />
+			<auxClasspath refid="project.class.path" />
+		</findbugs>
+
+	</target>
+
+	<target name="clean-findbugs">
+		<delete quiet="true" includeEmptyDirs="true">
+			<fileset dir="${findbugs.dir}" />
+		</delete>
+	</target>
+
+
+	<!-- override clean target to get all analysis artifacts -->
+
+	<target name="clean" depends="clean-coverage,clean-findbugs" />
+
+
+	<!-- default target outputs all html reports -->
+
+	<target name="html" depends="coverage,findbugs-html" />
+
+</project>

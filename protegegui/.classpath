@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/xercesImpl.jar"/>
+	<classpathentry kind="lib" path="lib/workflow.jar" sourcepath="/ProtegeWorkflow/src"/>
+	<classpathentry kind="lib" path="lib/NCIRemoteCodeGenerator.jar" sourcepath="/codegen/src"/>
+	<classpathentry kind="lib" path="lib/jena.jar"/>
+	<classpathentry kind="lib" path="lib/jcalendar.jar"/>
+	<classpathentry kind="lib" path="lib/commons-codec-1.3.jar"/>
+	<classpathentry kind="lib" path="lib/xpp3-1.1.4c.jar"/>
+	<classpathentry kind="lib" path="lib/iri.jar"/>
+	<classpathentry kind="lib" path="lib/icu4j_3_4.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-api-1.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-adapters-1.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-httpclient-3.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/junit.jar"/>
+	<classpathentry kind="lib" path="lib/standard-extensions.jar"/>
+	<classpathentry kind="lib" path="lib/protegeowlexport-lib.jar"/>
+	<classpathentry kind="lib" path="/Users/bitdiddle/nci/build/dist/Protege.Client-1.1.0/protege.jar" sourcepath="/Users/bitdiddle/nci/projects/protege-core/src"/>
+	<classpathentry kind="lib" path="/Users/bitdiddle/nci/build/dist/Protege.Client-1.1.0/plugins/edu.stanford.smi.protegex.owl/protege-owl.jar" sourcepath="/Users/bitdiddle/nci/projects/protege-owl/src"/>
+	<classpathentry kind="lib" path="/Users/bitdiddle/nci/build/dist/Protege.Client-1.1.0/plugins/edu.stanford.smi.protegex.NCIEVSHistory/NCIEVSHistory.jar"/>
+	<classpathentry kind="lib" path="/Users/bitdiddle/nci/build/dist/Protege.Client-1.1.0/plugins/edu.stanford.smi.protegex.query.lucene/luceneQueryPlugin.jar" sourcepath="/Users/bitdiddle/nci/projects/advancedQuery/src"/>
+	<classpathentry kind="lib" path="/Users/bitdiddle/nci/build/dist/Protege.Client-1.1.0/looks.jar"/>
+	<classpathentry kind="output" path="classes"/>
+</classpath>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:xsd="http://www.w3.org/2001/XMLSchema#" xmlns="http://example.org/ont/">
+  <owl:Class rdf:about="http://example.org/ont/C">
+    <owl:unionOf>
+      <rdf:Description>
+        <rdf:first rdf:resource="http://example.org/ont/C1"/>
+        <rdf:rest>
+          <rdf:Description>
+            <rdf:first rdf:resource="http://example.org/ont/C2"/>
+            <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+          </rdf:Description>
+        </rdf:rest>
+      </rdf:Description>
+    </owl:unionOf>
+  </owl:Class>
+  <owl:Class rdf:about="http://example.org/ont/C1">
+    <rdfs:subClassOf rdf:resource="http://example.org/ont/C"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://example.org/ont/C2">
+    <rdfs:subClassOf rdf:resource="http://example.org/ont/C"/>
+  </owl:Class>
+</rdf:RDF>

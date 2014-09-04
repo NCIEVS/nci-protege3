@@ -1,0 +1,87 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<project name = "protege-pellet-reasoner" default = "init" basedir = ".">
+
+	<property name = "project.name" value = "protege-pellet-reasoner"/>
+	<property name = "jar.file.name" value = "protege-pellet"/>
+
+	<property name = "build.dir" value = "./build"/>
+	<property name = "build.src" value = "${build.dir}/src"/>
+	<property name = "build.dest" value = "${build.dir}/classes"/>
+	<property name = "etc.dir" value = "./etc"/>
+	<property name = "dist.dir" value = "./dist"/>
+	<property name = "lib.dir" value = "./lib"/>
+
+	<property file = "../global.properties"/>
+
+	<target name = "init">
+		<tstamp/>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- PREPARE-SRC -->
+	<!-- =================================================================== -->
+	<target name = "prepare-src" depends = "init">
+		<mkdir dir = "${build.src}"/>
+		<mkdir dir = "${build.dest}"/>
+		<mkdir dir = "${dist.dir}"/>
+
+		<!-- get source code from subversion repository -->
+		<exec executable = "cmd.exe" dir = "${batch.files}" os = "${os}">
+			<arg line = "/c checkout ${svn.core.url}/${project.name}/trunk ../${project.name} --non-recursive"/>
+		</exec>
+		<exec executable = "cmd.exe" dir = "${batch.files}" os = "${os}">
+			<arg line = "/c checkout ${svn.core.url}/${project.name}/trunk/src ../${project.name}/build/src"/>
+		</exec>
+		<exec executable = "cmd.exe" dir = "${batch.files}" os = "${os}">
+			<arg line = "/c checkout ${svn.core.url}/${project.name}/trunk/lib ../${project.name}/lib"/>
+		</exec>
+		<exec executable = "cmd.exe" dir = "${batch.files}" os = "${os}">
+			<arg line = "/c checkout ${svn.core.url}/${project.name}/trunk/etc ../${project.name}/etc"/>
+		</exec>
+
+		<!-- add license text to top of source files -->
+		<exec executable = "cmd.exe" dir = "${batch.files}" os = "${os}">
+			<arg line = "/c merge_license_with_source ../${project.name}/build/src"/>
+		</exec>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- COMPILE -->
+	<!-- =================================================================== -->
+	<target name = "compile" depends = "prepare-src">
+		<javac srcdir = "${build.src}" destdir = "${build.dest}" deprecation = "off" debug = "off" optimize = "on" includeAntRuntime = "no">
+			<classpath>
+				<pathelement path = "${jena.jar}"/>
+				<pathelement path = "${protege.jar}"/>
+				<pathelement path = "${protege-owl.jar}"/>
+				<fileset dir = "${lib.dir}">
+					<include name = "**/*.jar"/>
+				</fileset>
+			</classpath>
+		</javac>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- JAR -->
+	<!-- =================================================================== -->
+	<target name = "jar" depends = "compile">
+		<jar jarfile = "${dist.dir}/${jar.file.name}.jar" manifest = "${build.src}/META-INF/MANIFEST.MF">
+			<fileset dir = "${build.dest}"/>
+		</jar>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- CLEAN -->
+	<!-- =================================================================== -->
+	<target name = "clean" depends = "init">
+		<delete dir = "${build.dir}"/>
+		<delete dir = "${etc.dir}"/>
+		<delete dir = "${dist.dir}"/>
+		<delete dir = "${lib.dir}"/>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- ALL -->
+	<!-- =================================================================== -->
+	<target name = "all" depends = "jar"/>
+</project>

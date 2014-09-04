@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE admin [
+    <!ENTITY dig20 "http://dl.kr.org/dig/lang/schema#" >
+]>
+
+<admin xmlns="http://dl.kr.org/dig/lang/schema#">
+     <load user="grover" password="" url="jdbc:mysql://192.168.255.243/grover" driver="com.mysql.jdbc.Driver" table="pizza"/>
+</admin>

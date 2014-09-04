@@ -1,0 +1,9 @@
+To install, copy the ca.uvic.cs.cogz folder into the following location:
+
+<Protege_install_directory>/plugins/edu.stanford.smi.protegex.prompt/plugins
+
+Requirements:
+- You must have the latest release of Prompt, which is available in the Protege 3.4 beta download.
+  http://protege.stanford.edu/download/prerelease/full/
+
+- You must have Java 1.5 or higher.

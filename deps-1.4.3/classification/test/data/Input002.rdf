@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
+xmlns:owl="http://www.w3.org/2002/07/owl#" 
+xmlns:test="http://a#" 
+xml:base="http://a">
+    <owl:Ontology rdf:about=""/>
+    <owl:Class rdf:ID="File">
+        <owl:unionOf rdf:parseType="Collection">
+            <owl:Class rdf:about="#TextFile"/>
+            <owl:Class rdf:about="#BinaryFile"/>
+        </owl:unionOf>
+    </owl:Class>
+    <owl:Class rdf:ID="TextFile">
+        <rdfs:subClassOf rdf:resource="#File"/>
+    </owl:Class>
+    <owl:Class rdf:ID="WebPage">
+        <rdfs:subClassOf rdf:resource="#File"/>
+    </owl:Class>
+    <test:WebPage rdf:ID="MyHomePage"/>   
+    <owl:Class rdf:ID="HomePage">
+        <rdfs:subClassOf rdf:resource="#WebPage"/>
+    </owl:Class>
+    <owl:Class rdf:ID="HTMLFile">
+        <rdfs:subClassOf rdf:resource="#TextFile"/>
+        <owl:equivalentClass rdf:resource="#WebPage"/>
+        <owl:equivalentClass rdf:resource="#WebDocument"/>
+    </owl:Class>
+    <owl:Class rdf:ID="WebDocument"/>
+    <owl:Class rdf:ID="AudioFile">
+        <rdfs:subClassOf rdf:resource="#File"/>
+    </owl:Class>
+    <owl:Class rdf:ID="Mp3File">
+        <rdfs:subClassOf rdf:resource="#AudioFile"/>
+    </owl:Class>
+    <test:Mp3File rdf:ID="MySong"/>
+    <owl:Class rdf:ID="WaveFile">
+        <rdfs:subClassOf rdf:resource="#AudioFile"/>
+    </owl:Class>
+    <owl:Class rdf:ID="VideoFile">
+        <rdfs:subClassOf rdf:resource="#File"/>
+    </owl:Class>
+    <owl:Class rdf:ID="ImageFile">
+        <rdfs:subClassOf rdf:resource="#File"/>
+    </owl:Class>
+    <owl:Class rdf:ID="MultimediaFile">
+        <rdfs:subClassOf rdf:resource="#BinaryFile"/>
+        <owl:unionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#AudioFile"/>
+            <rdf:Description rdf:about="#VideoFile"/>
+            <rdf:Description rdf:about="#ImageFile"/>
+        </owl:unionOf>
+    </owl:Class>
+    <rdf:Description rdf:about="#AudioFile">
+        <owl:disjointWith rdf:resource="#VideoFile"/>
+        <owl:disjointWith rdf:resource="#ImageFile"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="#ImageFile">
+        <owl:disjointWith rdf:resource="#VideoFile"/>
+    </rdf:Description>
+    <test:Mp3File rdf:ID="MyMp3"/>
+    <owl:Class rdf:ID="ViewableMultimediaFile">
+        <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#MultimediaFile"/>
+            <owl:Class>
+                <owl:complementOf rdf:resource="#AudioFile"/>
+            </owl:Class>
+        </owl:intersectionOf>
+    </owl:Class>
+    <owl:Class rdf:ID="ViewableFile">
+        <owl:unionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#WebPage"/>
+            <rdf:Description rdf:about="#ViewableMultimediaFile"/>
+        </owl:unionOf>
+    </owl:Class>
+</rdf:RDF>

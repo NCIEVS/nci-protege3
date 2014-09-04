@@ -1,0 +1,8 @@
+#
+# default properties used in the build, they can be customized as needed
+#
+# Location of protege home, determines where to install plugin
+#protege.home=/Users/bitdiddle/nci/build/dist/Protege.Client-1.1.0
+#
+# config file for EditTab
+#config.file=ncitab_byName.xml

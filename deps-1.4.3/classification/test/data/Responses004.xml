@@ -1,0 +1,667 @@
+<?xml version="1.0"?>
+<responses:responses
+	xmlns="http://dl.kr.org/dig/lang/schema#"
+	xmlns:owl2xml="http://www.w3.org/2006/12/owl2-xml#"
+	xmlns:dig20="http://dl.kr.org/dig/lang/schema#"
+	xmlns:responses="http://dl.kr.org/dig/lang/responses-schema#"
+	xmlns:explanations="http://dl.kr.org/dig/lang/explanation-schema#">
+	<explanations:explanations id="1">
+		<axioms>
+			<owl2xml:SubClassOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#cow"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#vegetarian"/>
+			</owl2xml:SubClassOf>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#animal"/>
+					<owl2xml:ObjectAllValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#eats"/>
+						<owl2xml:ObjectComplementOf>
+							<owl2xml:ObjectSomeValuesFrom>
+								<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#part_of"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#animal"/>
+							</owl2xml:ObjectSomeValuesFrom>
+						</owl2xml:ObjectComplementOf>
+					</owl2xml:ObjectAllValuesFrom>
+					<owl2xml:ObjectAllValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#eats"/>
+						<owl2xml:ObjectComplementOf>
+							<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#animal"/>
+						</owl2xml:ObjectComplementOf>
+					</owl2xml:ObjectAllValuesFrom>
+				</owl2xml:ObjectIntersectionOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#vegetarian"/>
+			</owl2xml:EquivalentClasses>
+			<owl2xml:SubClassOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#sheep"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#animal"/>
+			</owl2xml:SubClassOf>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#mad_cow"/>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:ObjectSomeValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#eats"/>
+						<owl2xml:ObjectIntersectionOf>
+							<owl2xml:ObjectSomeValuesFrom>
+								<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#part_of"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#sheep"/>
+							</owl2xml:ObjectSomeValuesFrom>
+							<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#brain"/>
+						</owl2xml:ObjectIntersectionOf>
+					</owl2xml:ObjectSomeValuesFrom>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#cow"/>
+				</owl2xml:ObjectIntersectionOf>
+			</owl2xml:EquivalentClasses>
+		</axioms>
+	</explanations:explanations>
+	<explanations:explanations id="2">
+		<axioms>
+			<owl2xml:SubClassOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#dog"/>
+				<owl2xml:ObjectSomeValuesFrom>
+					<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#eats"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#bone"/>
+				</owl2xml:ObjectSomeValuesFrom>
+			</owl2xml:SubClassOf>
+			<owl2xml:ObjectPropertyDomain>
+				<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#eats"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#animal"/>
+			</owl2xml:ObjectPropertyDomain>
+		</axioms>
+	</explanations:explanations>
+	<explanations:explanations id="3">
+		<axioms>
+			<owl2xml:ObjectPropertyRange>
+				<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#has_pet"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#animal"/>
+			</owl2xml:ObjectPropertyRange>
+			<owl2xml:InverseObjectProperties>
+				<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#is_pet_of"/><owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#has_pet"/>
+			</owl2xml:InverseObjectProperties>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:ObjectSomeValuesFrom>
+					<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#is_pet_of"/><owl2xml:Class owl2xml:URI="http://www.w3.org/2002/07/owl#Thing"/>
+				</owl2xml:ObjectSomeValuesFrom>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#pet"/>
+			</owl2xml:EquivalentClasses>
+		</axioms>
+	</explanations:explanations>
+	<explanations:explanations id="4">
+		<axioms>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#cat_liker"/>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+					<owl2xml:ObjectSomeValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#likes"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#cat"/>
+					</owl2xml:ObjectSomeValuesFrom>
+				</owl2xml:ObjectIntersectionOf>
+			</owl2xml:EquivalentClasses>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+					<owl2xml:ObjectSomeValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#has_pet"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#cat"/>
+					</owl2xml:ObjectSomeValuesFrom>
+				</owl2xml:ObjectIntersectionOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#cat_owner"/>
+			</owl2xml:EquivalentClasses>
+			<owl2xml:SubObjectPropertyOf>
+				<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#has_pet"/><owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#likes"/>
+			</owl2xml:SubObjectPropertyOf>
+		</axioms>
+	</explanations:explanations>
+	<explanations:explanations id="5">
+		<axioms>
+			<owl2xml:SubClassOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#old_lady"/>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:ObjectAllValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#has_pet"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#cat"/>
+					</owl2xml:ObjectAllValuesFrom>
+					<owl2xml:ObjectSomeValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#has_pet"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#animal"/>
+					</owl2xml:ObjectSomeValuesFrom>
+				</owl2xml:ObjectIntersectionOf>
+			</owl2xml:SubClassOf>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+					<owl2xml:ObjectSomeValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#has_pet"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#cat"/>
+					</owl2xml:ObjectSomeValuesFrom>
+				</owl2xml:ObjectIntersectionOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#cat_owner"/>
+			</owl2xml:EquivalentClasses>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#elderly"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#female"/>
+				</owl2xml:ObjectIntersectionOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#old_lady"/>
+			</owl2xml:EquivalentClasses>
+		</axioms>
+		<axioms>
+			<owl2xml:SubClassOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#old_lady"/>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:ObjectAllValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#has_pet"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#cat"/>
+					</owl2xml:ObjectAllValuesFrom>
+					<owl2xml:ObjectSomeValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#has_pet"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#animal"/>
+					</owl2xml:ObjectSomeValuesFrom>
+				</owl2xml:ObjectIntersectionOf>
+			</owl2xml:SubClassOf>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+					<owl2xml:ObjectSomeValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#has_pet"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#cat"/>
+					</owl2xml:ObjectSomeValuesFrom>
+				</owl2xml:ObjectIntersectionOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#cat_owner"/>
+			</owl2xml:EquivalentClasses>
+			<owl2xml:ObjectPropertyDomain>
+				<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#has_pet"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+			</owl2xml:ObjectPropertyDomain>
+		</axioms>
+	</explanations:explanations>
+	<explanations:explanations id="6">
+		<axioms>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:ObjectSomeValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#has_pet"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#dog"/>
+					</owl2xml:ObjectSomeValuesFrom>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+				</owl2xml:ObjectIntersectionOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#dog_owner"/>
+			</owl2xml:EquivalentClasses>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#dog_liker"/>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:ObjectSomeValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#likes"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#dog"/>
+					</owl2xml:ObjectSomeValuesFrom>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+				</owl2xml:ObjectIntersectionOf>
+			</owl2xml:EquivalentClasses>
+			<owl2xml:SubObjectPropertyOf>
+				<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#has_pet"/><owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#likes"/>
+			</owl2xml:SubObjectPropertyOf>
+		</axioms>
+	</explanations:explanations>
+	<explanations:explanations id="7">
+		<axioms>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#grownup"/>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#adult"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+				</owl2xml:ObjectIntersectionOf>
+			</owl2xml:EquivalentClasses>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#man"/>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#adult"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#male"/>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+				</owl2xml:ObjectIntersectionOf>
+			</owl2xml:EquivalentClasses>
+		</axioms>
+	</explanations:explanations>
+	<explanations:explanations id="8">
+		<axioms>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#adult"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#female"/>
+				</owl2xml:ObjectIntersectionOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#woman"/>
+			</owl2xml:EquivalentClasses>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#grownup"/>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#adult"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+				</owl2xml:ObjectIntersectionOf>
+			</owl2xml:EquivalentClasses>
+		</axioms>
+	</explanations:explanations>
+	<explanations:explanations id="9">
+		<axioms>
+			<owl2xml:SubClassOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#driver"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#adult"/>
+			</owl2xml:SubClassOf>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#driver"/>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+					<owl2xml:ObjectSomeValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#drives"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#vehicle"/>
+					</owl2xml:ObjectSomeValuesFrom>
+				</owl2xml:ObjectIntersectionOf>
+			</owl2xml:EquivalentClasses>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#grownup"/>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#adult"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+				</owl2xml:ObjectIntersectionOf>
+			</owl2xml:EquivalentClasses>
+		</axioms>
+	</explanations:explanations>
+	<explanations:explanations id="10">
+		<axioms>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#adult"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#female"/>
+				</owl2xml:ObjectIntersectionOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#woman"/>
+			</owl2xml:EquivalentClasses>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#elderly"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#female"/>
+				</owl2xml:ObjectIntersectionOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#old_lady"/>
+			</owl2xml:EquivalentClasses>
+			<owl2xml:SubClassOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#elderly"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#adult"/>
+			</owl2xml:SubClassOf>
+		</axioms>
+	</explanations:explanations>
+	<explanations:explanations id="11">
+		<axioms>
+			<owl2xml:SubClassOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#lorry"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#vehicle"/>
+			</owl2xml:SubClassOf>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#driver"/>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+					<owl2xml:ObjectSomeValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#drives"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#vehicle"/>
+					</owl2xml:ObjectSomeValuesFrom>
+				</owl2xml:ObjectIntersectionOf>
+			</owl2xml:EquivalentClasses>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#lorry_driver"/>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:ObjectSomeValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#drives"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#lorry"/>
+					</owl2xml:ObjectSomeValuesFrom>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+				</owl2xml:ObjectIntersectionOf>
+			</owl2xml:EquivalentClasses>
+		</axioms>
+	</explanations:explanations>
+	<explanations:explanations id="12">
+		<axioms>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#haulage_truck_driver"/>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:ObjectSomeValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#works_for"/>
+						<owl2xml:ObjectSomeValuesFrom>
+							<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#part_of"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#haulage_company"/>
+						</owl2xml:ObjectSomeValuesFrom>
+					</owl2xml:ObjectSomeValuesFrom>
+					<owl2xml:ObjectSomeValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#drives"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#truck"/>
+					</owl2xml:ObjectSomeValuesFrom>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+				</owl2xml:ObjectIntersectionOf>
+			</owl2xml:EquivalentClasses>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#driver"/>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+					<owl2xml:ObjectSomeValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#drives"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#vehicle"/>
+					</owl2xml:ObjectSomeValuesFrom>
+				</owl2xml:ObjectIntersectionOf>
+			</owl2xml:EquivalentClasses>
+			<owl2xml:SubClassOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#truck"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#vehicle"/>
+			</owl2xml:SubClassOf>
+		</axioms>
+	</explanations:explanations>
+	<explanations:explanations id="13">
+		<axioms>
+			<owl2xml:SubClassOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#bus"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#vehicle"/>
+			</owl2xml:SubClassOf>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#driver"/>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+					<owl2xml:ObjectSomeValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#drives"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#vehicle"/>
+					</owl2xml:ObjectSomeValuesFrom>
+				</owl2xml:ObjectIntersectionOf>
+			</owl2xml:EquivalentClasses>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+					<owl2xml:ObjectSomeValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#drives"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#bus"/>
+					</owl2xml:ObjectSomeValuesFrom>
+				</owl2xml:ObjectIntersectionOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#bus_driver"/>
+			</owl2xml:EquivalentClasses>
+		</axioms>
+	</explanations:explanations>
+	<explanations:explanations id="14">
+		<axioms>
+			<owl2xml:SubClassOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#van"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#vehicle"/>
+			</owl2xml:SubClassOf>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#driver"/>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+					<owl2xml:ObjectSomeValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#drives"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#vehicle"/>
+					</owl2xml:ObjectSomeValuesFrom>
+				</owl2xml:ObjectIntersectionOf>
+			</owl2xml:EquivalentClasses>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+					<owl2xml:ObjectSomeValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#drives"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#van"/>
+					</owl2xml:ObjectSomeValuesFrom>
+				</owl2xml:ObjectIntersectionOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#van_driver"/>
+			</owl2xml:EquivalentClasses>
+		</axioms>
+	</explanations:explanations>
+	<explanations:explanations id="15">
+		<axioms>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#man"/>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#adult"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#male"/>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+				</owl2xml:ObjectIntersectionOf>
+			</owl2xml:EquivalentClasses>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+					<owl2xml:ObjectSomeValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#drives"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#van"/>
+					</owl2xml:ObjectSomeValuesFrom>
+				</owl2xml:ObjectIntersectionOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#van_driver"/>
+			</owl2xml:EquivalentClasses>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:ObjectSomeValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#drives"/>
+						<owl2xml:ObjectIntersectionOf>
+							<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#van"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#white_thing"/>
+						</owl2xml:ObjectIntersectionOf>
+					</owl2xml:ObjectSomeValuesFrom>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#man"/>
+				</owl2xml:ObjectIntersectionOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#white_van_man"/>
+			</owl2xml:EquivalentClasses>
+		</axioms>
+	</explanations:explanations>
+	<explanations:explanations id="16">
+		<axioms>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+					<owl2xml:ObjectSomeValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#has_pet"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#animal"/>
+					</owl2xml:ObjectSomeValuesFrom>
+				</owl2xml:ObjectIntersectionOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#pet_owner"/>
+			</owl2xml:EquivalentClasses>
+			<owl2xml:ObjectPropertyRange>
+				<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#has_pet"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#animal"/>
+			</owl2xml:ObjectPropertyRange>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#animal_lover"/>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+					<owl2xml:ObjectMinCardinality owl2xml:cardinality="3">
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#has_pet"/><owl2xml:Class owl2xml:URI="http://www.w3.org/2002/07/owl#Thing"/>
+					</owl2xml:ObjectMinCardinality>
+				</owl2xml:ObjectIntersectionOf>
+			</owl2xml:EquivalentClasses>
+		</axioms>
+	</explanations:explanations>
+	<explanations:explanations id="17">
+		<axioms>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+					<owl2xml:ObjectSomeValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#has_pet"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#animal"/>
+					</owl2xml:ObjectSomeValuesFrom>
+				</owl2xml:ObjectIntersectionOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#pet_owner"/>
+			</owl2xml:EquivalentClasses>
+			<owl2xml:ObjectPropertyRange>
+				<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#has_pet"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#animal"/>
+			</owl2xml:ObjectPropertyRange>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+					<owl2xml:ObjectSomeValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#has_pet"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#cat"/>
+					</owl2xml:ObjectSomeValuesFrom>
+				</owl2xml:ObjectIntersectionOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#cat_owner"/>
+			</owl2xml:EquivalentClasses>
+		</axioms>
+		<axioms>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+					<owl2xml:ObjectSomeValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#has_pet"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#animal"/>
+					</owl2xml:ObjectSomeValuesFrom>
+				</owl2xml:ObjectIntersectionOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#pet_owner"/>
+			</owl2xml:EquivalentClasses>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+					<owl2xml:ObjectSomeValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#has_pet"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#cat"/>
+					</owl2xml:ObjectSomeValuesFrom>
+				</owl2xml:ObjectIntersectionOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#cat_owner"/>
+			</owl2xml:EquivalentClasses>
+			<owl2xml:SubClassOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#cat"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#animal"/>
+			</owl2xml:SubClassOf>
+		</axioms>
+	</explanations:explanations>
+	<explanations:explanations id="18">
+		<axioms>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+					<owl2xml:ObjectSomeValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#has_pet"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#animal"/>
+					</owl2xml:ObjectSomeValuesFrom>
+				</owl2xml:ObjectIntersectionOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#pet_owner"/>
+			</owl2xml:EquivalentClasses>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:ObjectSomeValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#has_pet"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#dog"/>
+					</owl2xml:ObjectSomeValuesFrom>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+				</owl2xml:ObjectIntersectionOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#dog_owner"/>
+			</owl2xml:EquivalentClasses>
+			<owl2xml:ObjectPropertyRange>
+				<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#has_pet"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#animal"/>
+			</owl2xml:ObjectPropertyRange>
+		</axioms>
+		<axioms>
+			<owl2xml:SubClassOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#dog"/>
+				<owl2xml:ObjectSomeValuesFrom>
+					<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#eats"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#bone"/>
+				</owl2xml:ObjectSomeValuesFrom>
+			</owl2xml:SubClassOf>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+					<owl2xml:ObjectSomeValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#has_pet"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#animal"/>
+					</owl2xml:ObjectSomeValuesFrom>
+				</owl2xml:ObjectIntersectionOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#pet_owner"/>
+			</owl2xml:EquivalentClasses>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:ObjectSomeValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#has_pet"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#dog"/>
+					</owl2xml:ObjectSomeValuesFrom>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+				</owl2xml:ObjectIntersectionOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#dog_owner"/>
+			</owl2xml:EquivalentClasses>
+			<owl2xml:ObjectPropertyDomain>
+				<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#eats"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#animal"/>
+			</owl2xml:ObjectPropertyDomain>
+		</axioms>
+	</explanations:explanations>
+	<explanations:explanations id="19">
+		<axioms>
+			<owl2xml:DisjointClasses>
+				<owl2xml:ObjectUnionOf>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#animal"/>
+					<owl2xml:ObjectSomeValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#part_of"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#animal"/>
+					</owl2xml:ObjectSomeValuesFrom>
+				</owl2xml:ObjectUnionOf>
+				<owl2xml:ObjectUnionOf>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#plant"/>
+					<owl2xml:ObjectSomeValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#part_of"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#plant"/>
+					</owl2xml:ObjectSomeValuesFrom>
+				</owl2xml:ObjectUnionOf>
+			</owl2xml:DisjointClasses>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#animal"/>
+					<owl2xml:ObjectAllValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#eats"/>
+						<owl2xml:ObjectComplementOf>
+							<owl2xml:ObjectSomeValuesFrom>
+								<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#part_of"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#animal"/>
+							</owl2xml:ObjectSomeValuesFrom>
+						</owl2xml:ObjectComplementOf>
+					</owl2xml:ObjectAllValuesFrom>
+					<owl2xml:ObjectAllValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#eats"/>
+						<owl2xml:ObjectComplementOf>
+							<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#animal"/>
+						</owl2xml:ObjectComplementOf>
+					</owl2xml:ObjectAllValuesFrom>
+				</owl2xml:ObjectIntersectionOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#vegetarian"/>
+			</owl2xml:EquivalentClasses>
+			<owl2xml:SubClassOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#sheep"/>
+				<owl2xml:ObjectAllValuesFrom>
+					<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#eats"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#grass"/>
+				</owl2xml:ObjectAllValuesFrom>
+			</owl2xml:SubClassOf>
+			<owl2xml:SubClassOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#sheep"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#animal"/>
+			</owl2xml:SubClassOf>
+			<owl2xml:SubClassOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#grass"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#plant"/>
+			</owl2xml:SubClassOf>
+		</axioms>
+	</explanations:explanations>
+	<explanations:explanations id="20">
+		<axioms>
+			<owl2xml:DisjointClasses>
+				<owl2xml:ObjectUnionOf>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#animal"/>
+					<owl2xml:ObjectSomeValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#part_of"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#animal"/>
+					</owl2xml:ObjectSomeValuesFrom>
+				</owl2xml:ObjectUnionOf>
+				<owl2xml:ObjectUnionOf>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#plant"/>
+					<owl2xml:ObjectSomeValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#part_of"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#plant"/>
+					</owl2xml:ObjectSomeValuesFrom>
+				</owl2xml:ObjectUnionOf>
+			</owl2xml:DisjointClasses>
+			<owl2xml:SubClassOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#giraffe"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#animal"/>
+			</owl2xml:SubClassOf>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#animal"/>
+					<owl2xml:ObjectAllValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#eats"/>
+						<owl2xml:ObjectComplementOf>
+							<owl2xml:ObjectSomeValuesFrom>
+								<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#part_of"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#animal"/>
+							</owl2xml:ObjectSomeValuesFrom>
+						</owl2xml:ObjectComplementOf>
+					</owl2xml:ObjectAllValuesFrom>
+					<owl2xml:ObjectAllValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#eats"/>
+						<owl2xml:ObjectComplementOf>
+							<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#animal"/>
+						</owl2xml:ObjectComplementOf>
+					</owl2xml:ObjectAllValuesFrom>
+				</owl2xml:ObjectIntersectionOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#vegetarian"/>
+			</owl2xml:EquivalentClasses>
+			<owl2xml:SubClassOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#leaf"/>
+				<owl2xml:ObjectSomeValuesFrom>
+					<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#part_of"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#tree"/>
+				</owl2xml:ObjectSomeValuesFrom>
+			</owl2xml:SubClassOf>
+			<owl2xml:SubClassOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#tree"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#plant"/>
+			</owl2xml:SubClassOf>
+			<owl2xml:SubClassOf>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#giraffe"/>
+				<owl2xml:ObjectAllValuesFrom>
+					<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#eats"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#leaf"/>
+				</owl2xml:ObjectAllValuesFrom>
+			</owl2xml:SubClassOf>
+		</axioms>
+	</explanations:explanations>
+	<explanations:explanations id="21">
+		<axioms>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:ObjectSomeValuesFrom>
+					<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#works_for"/>
+					<owl2xml:ObjectUnionOf>
+						<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#haulage_company"/>
+						<owl2xml:ObjectSomeValuesFrom>
+							<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#part_of"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#haulage_company"/>
+						</owl2xml:ObjectSomeValuesFrom>
+					</owl2xml:ObjectUnionOf>
+				</owl2xml:ObjectSomeValuesFrom>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#haulage_worker"/>
+			</owl2xml:EquivalentClasses>
+			<owl2xml:EquivalentClasses>
+				<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#haulage_truck_driver"/>
+				<owl2xml:ObjectIntersectionOf>
+					<owl2xml:ObjectSomeValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#works_for"/>
+						<owl2xml:ObjectSomeValuesFrom>
+							<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#part_of"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#haulage_company"/>
+						</owl2xml:ObjectSomeValuesFrom>
+					</owl2xml:ObjectSomeValuesFrom>
+					<owl2xml:ObjectSomeValuesFrom>
+						<owl2xml:ObjectProperty owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#drives"/><owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#truck"/>
+					</owl2xml:ObjectSomeValuesFrom>
+					<owl2xml:Class owl2xml:URI="http://cohse.semanticweb.org/ontologies/people#person"/>
+				</owl2xml:ObjectIntersectionOf>
+			</owl2xml:EquivalentClasses>
+		</axioms>
+	</explanations:explanations>
+</responses:responses>

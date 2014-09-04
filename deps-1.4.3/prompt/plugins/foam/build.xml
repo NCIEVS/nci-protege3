@@ -1,0 +1,120 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<project name = "Developer Plugins" default = "dist" basedir = "../..">    
+   <property environment="env"/>
+   <property name="protege.home" value="${env.PROTEGE_HOME}"/>
+
+   <property name = "pluginName" value = "foam"/>
+   <property name = "root" value = "./plugins/foam"/>
+   <property name = "src" value = "${root}/src"/> 
+   <property name = "classes" value = "./classes_${pluginName}"/>  
+   <property name = "dist" value = "./dist"/>
+   <property name = "lib" value = "plugins/foam/lib"/>
+   <property name = "prompt_plugin_dir" value = "edu.stanford.smi.protegex.prompt"/>
+   <property name = "my_plugin_dir" value = "edu.stanford.smi.protegex.promptx.foam"/>
+   <property name = "full_plugin_dir" value = "${dist}/${prompt_plugin_dir}/plugins/${my_plugin_dir}"/>
+	
+    <!-- 
+       #  ********** Finding Protege Libraries. *************
+       # 
+       #  We are using an approach that allows developers to decide
+       #  whether to hand copy the needed jars into the lib directory or
+       #  to point them to a protege installation.
+      -->
+    <target name="checkProtegeHome">
+      <condition property="protege.home.set">
+        <available file="${protege.home}/protege.jar" type="file"/>
+      </condition>
+    </target>
+    
+    <target name="useProtegeHome" depends="checkProtegeHome" 
+            if="protege.home.set">
+      <echo message="Using Protege Home = ${protege.home} to find protege jars"/>
+      <property name="protege.lib" value="${protege.home}/protege.jar"/>
+      <property name="owl.lib"     value="${protege.home}/plugins/edu.stanford.smi.protegex.owl/protege-owl.jar"/>
+    </target>
+    
+    <target name="useLibDir" depends="checkProtegeHome" 
+            unless="protege.home.set">
+       <echo message="Using lib dir to find protege jars"/>
+      <property name="protege.lib" value="${lib}/protege.jar"/>
+      <property name="owl.lib" value="${lib}/protege-owl.jar"/>
+    </target>
+
+
+    <target name = "checkProtegeLibs" depends="useProtegeHome, useLibDir">
+      <condition property="libs.found">
+        <and>
+          <available file="${protege.lib}" type = "file"/>
+          <available file="${owl.lib}" type = "file"/>
+        </and>
+      </condition>
+      <path id = "project.classpath"> 
+        <pathelement location = "./dist/${prompt_plugin_dir}/prompt.jar"/>
+        <pathelement location = "${protege.lib}"/>
+        <pathelement location = "${owl.lib}"/>
+        <pathelement location = "${lib}/align.jar"/>
+        <pathelement location = "${lib}/commons-logging.jar"/>
+        <pathelement location = "${lib}/googleapi.jar"/>
+        <pathelement location = "${lib}/jwnl.jar"/>
+        <pathelement location = "${lib}/kaon2.jar"/>
+        <pathelement location = "${lib}/weka.jar"/>
+        <pathelement location = "${lib}/xercesImpl.jar"/>
+      </path>
+    </target>
+
+    <target name="checkProtegeLibsAndReport" depends="checkProtegeLibs"
+            unless="libs.found">
+      <echo message="Missing protege libraries.  You can either "/>
+      <echo message="set the PROTEGE_HOME environment variable to a"/>
+      <echo message="protege installation directory where the"/>
+      <echo message="appropriate plugins have been installed or copy the"/>
+      <echo message="needed jars into the lib directory"/>
+      <echo message="The jar files in question are protege.jar and protege-owl.jar"/>
+      <fail message="build aborted."/>
+    </target>
+      
+   <!-- 
+     #  ********** Finding Protege Libraries Done. *************
+     -->
+
+
+   <target name = "init">
+     <mkdir dir = "${classes}"/>
+     <mkdir dir = "${dist}"/>
+     <mkdir dir = "${full_plugin_dir}"/>
+   </target>  
+
+
+   <target name = "compile" depends = "init,checkProtegeLibsAndReport">
+     <javac srcdir = "${src}" destdir = "${classes}" debug="on" includeAntRuntime="false">
+       <classpath refid = "project.classpath"/>    
+     </javac>    
+   </target>
+
+   <target name = "jar" depends = "compile">
+     <jar jarfile = "${full_plugin_dir}/${pluginName}.jar" 
+          basedir = "${classes}" 
+          manifest = "${src}/META-INF/MANIFEST.MF"/>  
+
+     <copy todir = "${full_plugin_dir}/config">
+        <fileset dir="${root}/${my_plugin_dir}/config"/>
+     </copy>
+     <copy todir="${full_plugin_dir}">
+       <fileset dir="${lib}">
+         <include name="*.jar"/>
+       </fileset>
+     </copy>
+   </target>
+
+   <target name = "dist" depends = "jar">
+     <zip basedir = "${dist}"
+          includes = "${prompt_plugin_dir}/**"
+          destfile = "${dist}/${pluginName}.zip"/>
+   </target>
+
+   <target name = "clean">
+     <delete dir = "${classes}"/>
+     <delete dir = "${dist}"/>
+   </target>
+
+</project>

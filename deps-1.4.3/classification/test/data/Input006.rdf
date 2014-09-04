@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:xsd="http://www.w3.org/2001/XMLSchema#" xmlns="http://example.org/">
+  <owl:ObjectProperty rdf:about="http://example.org/p">
+    <rdfs:domain rdf:resource="http://example.org/TopEquivalent"/>
+  </owl:ObjectProperty>
+  <owl:Class rdf:about="http://example.org/TopEquivalent"/>
+  <owl:Class rdf:about="http://example.org/Sub">
+    <rdfs:subClassOf rdf:resource="http://example.org/TopEquivalent"/>
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:allValuesFrom rdf:resource="http://example.org/C"/>
+        <owl:onProperty rdf:resource="http://example.org/p"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:about="http://example.org/C"/>
+</rdf:RDF>

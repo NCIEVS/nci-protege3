@@ -7,7 +7,7 @@
 
   
 
-  <property name="deps" location="./NCITabDependents143"/>
+  <property name="deps" location="./deps-1.4.3"/>
   <property name="protegegui.project" location="./protegegui"/>
   
     

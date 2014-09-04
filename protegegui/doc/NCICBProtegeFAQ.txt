@@ -1,0 +1,16 @@
+Developer documentation for the protege tool can be found at
+
+	http://protege.stanford.edu/doc/dev.html.
+
+There are many other resources that can help a person study the Protege system including
+
+    the user documentation (http://protege.stanford.edu/doc/users.html)
+
+and
+
+    the protege wiki (http://protege.cim3.net/cgi-bin/wiki.pl/)
+
+The protege sources can be checked out through svn from
+
+	http://smi-protege/repos/protege/protege-core/branches/nci_june15
+	http://smi-protege.stanford.edu/repos/protege/owl/branches/nci_june15

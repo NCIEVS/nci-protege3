@@ -1,0 +1,219 @@
+<?xml version="1.0"?>
+<project name="ExplanationTab" default="dist" basedir=".">
+	<description>
+        Protege Explanation Tab
+    </description>
+
+	<!-- Global Properties -->
+	<property name="src" location="src" />
+	<property name="build" location="build" />
+	<property name="dist" location="dist" />
+	<property name="test-src" location="test" />
+	<property name="test-build" location="build-test" />
+	<property name="test.db.home" location="${basedir}/test-db" />
+
+	<property name="app.package" value="com.clarkparsia.protege.explanation"/>
+	<property name="app.class" value="${app.package}.ExplanationTab"/>
+	<property name="app.class.path" value="com/clarkparsia/protege/explanation/ExplanationTab"/>
+    <property name="project.plugin.class.path" value="com/clarkparsia/protege/reasoner/CustomReasonerProjectPlugin"/>
+    <property name="reasoner.plugin.class.path" value="com/clarkparsia/protege/reasoner/CustomProtegeOWLReasoner"/>
+    <property name="project.name" value="explanation-tab" />
+
+
+    <!-- Read user specified properties -->
+    <property file="build.properties"/>
+
+    <property environment="env"/>
+    <condition property="protege.path" value="${env.PROTEGE_HOME}">
+      <isset property="env.PROTEGE_HOME"/>
+    </condition>
+    <condition property="protege.path" value="lib/protege">
+      <not>
+        <isset property="env.PROTEGE_HOME"/>
+      </not>
+    </condition>
+
+	<path id="project.class.path">
+		<pathelement location="lib/" />
+		<pathelement location="${build}" />
+        	<pathelement location="${protege.path}/protege.jar" />
+        	<pathelement location="${protege.path}/plugins/edu.stanford.smi.protegex.owl/protege-owl.jar" />
+		<fileset dir="lib">
+			<include name="**/*.jar"/>
+			<exclude name="**/${project.name}*.jar"/>
+			<exclude name="derby/"/>
+        	<exclude name="**/owlapiv3/*.jar"/>
+		</fileset>
+	</path>
+
+	<target name="init">
+		<pathconvert targetos="unix" property="classpath" refid="project.class.path" />
+		<echo>CLASSPATH=${classpath}</echo>
+		<!-- Create the time stamp -->
+		<tstamp/>
+		<!-- Create the build directory structure used by compile -->
+		<mkdir dir="${build}"/>
+		<mkdir dir="${test-build}"/>
+	</target>
+
+	<target name="compile" depends="init"
+            description="Compile source files." >
+		<javac source="1.5" target="1.5" srcdir="${src}" destdir="${build}" debug="yes" deprecation="yes">
+			<classpath refid="project.class.path"/>
+		</javac>
+	</target>
+
+
+	<target name="build" depends="compile"
+            description="Compile sources and copy data files into build directory.">
+		<copy todir="${build}">
+			<fileset dir="${src}">
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="dist" depends="build">
+		<!-- Copy in lib files -->
+		<mkdir dir="${dist}" />
+
+		<copy todir="${dist}">
+			<fileset dir=".">
+				<include name="plugin.properties" />
+			</fileset>
+		</copy>
+
+		<copy todir="${dist}" flatten="true">
+			<fileset dir="lib">
+				<include name="**/*.jar"/>
+				<exclude name="**/${project.name}*.jar"/>
+				<exclude name="**/protege*.jar"/>
+				<exclude name="derby/"/>
+				<exclude name="**/owlapiv3/*.jar"/>					
+			</fileset>
+		</copy>
+
+		<!--<property name="rlib" location="${dist}/lib/"/>-->
+		<!--<pathconvert dirsep="/" pathsep=" " property="Class-Path">-->
+		<!--<map from="${rlib}/" to=""/>-->
+		<!--<map from="${rlib}\" to=""/>-->
+		<!--<path>-->
+		<!--<fileset dir="${rlib}">-->
+		<!--<include name="**/*.jar" />-->
+		<!--</fileset>-->
+		<!--</path>-->
+		<!--</pathconvert>-->
+
+		<!--<echo>${Class-Path}</echo>-->
+		<!-- Make Jar file. -->
+		<jar jarfile="${dist}/${project.name}.jar"
+             basedir="${build}">
+			<!--manifest = "manifest.mf">-->
+
+			<manifest>
+                <!-- explanation tab plugin, which at a minimum depends on the reasoner plugin, but the change tracking
+                     plugin is desireable if you are going to be editing the ontology and want the ontology and reasoner
+                     to stay in-sync -->
+				<section name="${app.class.path}.class">
+					<attribute name="Tab-Widget" value="true" />
+				</section>
+
+                <!-- change tracking plugin, which depends on the reasoner plugin -->
+				<section name="${project.plugin.class.path}.class">
+					<attribute name="Project-Plugin" value="true" />
+				</section>
+
+                <!-- these two things are part of a single reasoner "plugin" -->
+                <section name="${reasoner.plugin.class.path}.class">
+                    <attribute name="ReasonerPlugin" value="true"/>
+                </section>
+                <section name="com.clarkparsia.protege.reasoner.ShowReasonerPreferencesAction">
+                    <attribute name="OWLModelAction" value="true"/>
+                </section>
+            </manifest>
+
+		</jar>
+	</target>
+
+	<target name="clean" description="Clean up build files">
+		<delete quiet="true" includeEmptyDirs="true">
+			<fileset dir="${build}"/>
+			<fileset dir="${test-build}"/>
+			<fileset dir="${dist}"/>
+			<fileset dir="logs"/>
+			<fileset dir="${test.db.home}"/>
+			<fileset dir="">
+				<include name="TEST-*.xml"/>
+				<include name="TEST-*.txt"/>
+			</fileset>
+		</delete>
+	</target>
+
+	<target name="zipfile" depends="dist">
+		<zip destfile="${dist}/${project.name}-${DSTAMP}.zip">
+			<zipfileset dir="${dist}" prefix="${app.package}">
+				<include name="plugin.properties"/>
+
+				<include name="README.txt" />
+				<include name="**/*.jar"/>
+				<exclude name="**/protege*.jar"/>
+			</zipfileset>
+		</zip>
+	</target>
+
+	<target name="deploy" depends="dist">
+		<delete dir="${protege.path}/plugins/${app.package}" />
+		<mkdir dir="${protege.path}/plugins/${app.package}" />
+
+		<copy todir="${protege.path}/plugins/${app.package}">
+			<fileset dir="${dist}">
+				<include name="plugin.properties"/>
+				<include name="**/*.jar" />
+				<exclude name="**/protege*.jar"/>
+			</fileset>
+		</copy>
+	</target>
+
+	<!-- JUnit -->
+	<path id="test.class.path">
+		<path refid="project.class.path"/>
+		<pathelement location="${test-build}" />
+        	<fileset dir="${protege.path}/plugins/edu.stanford.smi.protegex.owl">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="lib">
+			<include name="pellet/test/junit/*.jar"/>
+			<include name="derby/*.jar"/>
+        	<exclude name="**/owlapiv3/*.jar"/>			
+		</fileset>
+	</path>
+
+	<target name="compile-test" depends="compile"
+            description="Compile test files." >
+		<javac source="1.5" target="1.5" srcdir="${test-src}" destdir="${test-build}" debug="yes" deprecation="yes">
+			<classpath refid="test.class.path"/>
+		</javac>
+	</target>
+
+	<target name="test" depends="build,compile-test">
+		<junit maxmemory="512m" haltonfailure="false" failureproperty="build.junit.failure" fork="true" forkmode="once">
+			<classpath refid="test.class.path"/>
+			<formatter type="plain" usefile="false" />
+			<formatter type="xml" usefile="true" if="build.junit.formatter.xml" />
+			<sysproperty key="derby.system.home" value="${test.db.home}" />
+			<batchtest>
+				<fileset dir="${test-build}">
+					<include name="**/*Tests.class"/>
+				</fileset>
+			</batchtest>
+		</junit>
+		<fail if="build.junit.failure" message="JUnit test failure"/>
+	</target>
+
+
+	<!--<target name="run">-->
+	<!--<java jar="/Applications/Protege_3.2.1/protege.jar" fork="true" maxmemory="2048m">-->
+	<!--<jvmarg value="-Xmx2048m"/>-->
+	<!--</java>-->
+	<!--</target>-->
+</project>

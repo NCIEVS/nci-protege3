@@ -1,0 +1,136 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<project name = "change-management" default = "init" basedir = ".">
+
+	<property name = "project.name" value = "change-management"/>
+	<property name = "build.dir" value = "./build"/>
+
+	<!-- unlike most other projects, we need to pull source code from multiple directories -->
+	<property name = "build.src.changestats" value = "${build.dir}/changeStats/src"/>
+	<property name = "build.src.kbviewtab" value = "${build.dir}/changesKbViewTab/src"/>
+	<property name = "build.src.model" value = "${build.dir}/model/src"/>
+	<property name = "build.src.pplugin" value = "${build.dir}/projectPlugin/src"/>
+	<property name = "build.src.tab" value = "${build.dir}/changesTab/src"/>
+	<property name = "build.dest" value = "${build.dir}/classes"/>
+
+	<property name = "lib.dir" value = "./lib"/>
+	<property name = "docs.dir" value = "./docs"/>
+	<property name = "dist.dir" value = "./dist"/>
+	<property name = "packages" value = "edu.*"/>
+
+	<property file = "../global.properties"/>
+	
+	<target name = "init">
+		<tstamp/>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- PREPARE-SRC -->
+	<!-- =================================================================== -->
+	<target name = "prepare-src" depends = "init">
+		<mkdir dir = "${build.dest}"/>
+		<mkdir dir = "${dist.dir}"/>
+
+		<!-- get source code from subversion repository -->
+		<exec executable = "cmd.exe" dir = "${batch.files}" os = "${os}">
+			<arg line = "/c checkout ${svn.core.url}/${project.name}/trunk ../${project.name} --non-recursive"/>
+		</exec>
+		
+		<exec executable = "cmd.exe" dir = "${batch.files}" os = "${os}">
+			<arg line = "/c checkout ${svn.core.url}/${project.name}/trunk/changeStats/src ../${project.name}/${build.src.changestats}"/>
+		</exec>
+
+		<exec executable = "cmd.exe" dir = "${batch.files}" os = "${os}">
+			<arg line = "/c checkout ${svn.core.url}/${project.name}/trunk/changesKbViewTab/src ../${project.name}/${build.src.kbviewtab}"/>
+		</exec>
+
+		<exec executable = "cmd.exe" dir = "${batch.files}" os = "${os}">
+			<arg line = "/c checkout ${svn.core.url}/${project.name}/trunk/changesTab/src ../${project.name}/${build.src.tab}"/>
+		</exec>
+
+		<exec executable = "cmd.exe" dir = "${batch.files}" os = "${os}">
+			<arg line = "/c checkout ${svn.core.url}/${project.name}/trunk/projectPlugin/src ../${project.name}/${build.src.pplugin}"/>
+		</exec>
+
+		<exec executable = "cmd.exe" dir = "${batch.files}" os = "${os}">
+			<arg line = "/c checkout ${svn.core.url}/${project.name}/trunk/model/src ../${project.name}/${build.src.model}"/>
+		</exec>
+
+		<exec executable = "cmd.exe" dir = "${batch.files}" os = "${os}">
+			<arg line = "/c checkout ${svn.core.url}/${project.name}/trunk/docs ../${project.name}/docs"/>
+		</exec>
+
+		<exec executable = "cmd.exe" dir = "${batch.files}" os = "${os}">
+			<arg line = "/c checkout ${svn.core.url}/${project.name}/trunk/lib ../${project.name}/lib"/>
+		</exec>
+
+		<exec executable = "cmd.exe" dir = "${batch.files}" os = "${os}">
+			<arg line = "/c checkout ${svn.core.url}/${project.name}/trunk/projects ../${project.name}/projects"/>
+		</exec>
+
+		<!-- add license text to top of source files -->
+		<exec executable = "cmd.exe" dir = "${batch.files}" os = "${os}">
+			<arg line = "/c merge_license_with_source ../${project.name}/${build.src.changestats}"/>
+		</exec>
+
+		<exec executable = "cmd.exe" dir = "${batch.files}" os = "${os}">
+			<arg line = "/c merge_license_with_source ../${project.name}/${build.src.kbviewtab}"/>
+		</exec>
+
+		<exec executable = "cmd.exe" dir = "${batch.files}" os = "${os}">
+			<arg line = "/c merge_license_with_source ../${project.name}/${build.src.model}"/>
+		</exec>
+
+		<exec executable = "cmd.exe" dir = "${batch.files}" os = "${os}">
+			<arg line = "/c merge_license_with_source ../${project.name}/${build.src.pplugin}"/>
+		</exec>
+
+		<exec executable = "cmd.exe" dir = "${batch.files}" os = "${os}">
+			<arg line = "/c merge_license_with_source ../${project.name}/${build.src.tab}"/>
+		</exec>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- COMPILE -->
+	<!-- Compile the source directory. -->
+	<!-- =================================================================== -->
+	<target name = "compile" depends = "prepare-src">
+		<javac srcdir = "${build.src.tab}:${build.src.pplugin}:${build.src.kbviewtab}:${build.src.changestats}:${build.src.model}" destdir = "${build.dest}" deprecation = "on" debug = "true" debuglevel = "lines" includeAntRuntime = "no">
+			<classpath>
+				<pathelement path = "${protege.jar}"/>
+				<pathelement path = "${protege-owl.jar}"/>
+				<pathelement path = "${rdf-backend.jar}"/>
+				<fileset dir = "${lib.dir}">
+					<include name = "**/*.jar"/>
+				</fileset>
+			</classpath>
+		</javac>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- JAR -->
+	<!-- Create the class package. -->
+	<!-- =================================================================== -->
+	<target name = "jar" depends = "compile">
+		<jar jarfile = "${dist.dir}/${project.name}.jar" basedir = "${build.dest}" manifest = "${build.src.tab}/META-INF/MANIFEST.MF"/>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- CLEAN -->
+	<!-- Cleans all generated files and directories. -->
+	<!-- =================================================================== -->
+	<target name = "clean" depends = "init">
+		<delete dir = "${build.dir}"/>
+		<delete dir = "${docs.dir}"/>
+		<delete dir = "${dist.dir}"/>
+		<delete dir = "${lib.dir}"/>
+		<delete dir = "./projects"/>
+		<delete file = "plugin.properties"/>
+		<delete file = "README"/>
+		<delete file = "jsave.cfg"/>
+	</target>
+	
+	<!-- =================================================================== -->
+	<!-- ALL -->
+	<!-- =================================================================== -->
+	<target name = "all" depends = "jar"/>
+</project>

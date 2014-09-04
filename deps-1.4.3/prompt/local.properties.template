@@ -1,0 +1,9 @@
+
+#
+# Here is a fairly standard custom configuration of the lib jar files.
+#
+protege.lib=lib/protege.jar
+owl.lib=lib/protege-owl.jar
+rdf.lib=lib/rdf-backend.jar
+changes.lib=lib/change-management.jar
+change.model.lib=changes_model.jar

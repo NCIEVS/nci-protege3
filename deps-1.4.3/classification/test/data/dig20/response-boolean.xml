@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<responses:responses
+	xmlns="http://dl.kr.org/dig/lang/schema#"
+	xmlns:asks="http://dl.kr.org/dig/lang/asks-schema#"
+	xmlns:dig20="http://dl.kr.org/dig/lang/schema#"
+	xmlns:owl="http://www.w3.org/2002/07/owl#"
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+	xmlns:owl2xml="http://www.w3.org/2006/12/owl2-xml#"
+	xmlns:responses="http://dl.kr.org/dig/lang/responses-schema#"
+	xmlns:explanations="http://dl.kr.org/dig/lang/explanation-schema#">
+    <responses:response id="1">
+        <responses:boolean>true</responses:boolean>
+    </responses:response>
+    <responses:response id="2">
+        <responses:boolean>false</responses:boolean>
+    </responses:response>
+</responses:responses>

@@ -1,0 +1,258 @@
+<?xml version="1.0"?>
+
+<project name="NCIProtegeExtension" default="deploy-extension" basedir=".">
+	<property file="build.properties"/>
+	<property environment="env"/>
+	   <property name="protege.home" value="${env.PROTEGE_HOME}"/>
+    
+
+	<!-- set global properties for this build -->
+	<!-- property name="version" value="1.2.3"/ -->
+	<property name="src" location="src" />
+	<property name="tstsrc" location="test" />
+	<property name="lib" location="lib" />
+	<property name="build" location="build" />
+	<property name="dist" location="dist" />
+	<property name="config" location="config" />
+	<property name="config.file" value="ncitab_byName.xml" />
+	<property name="junit.dest" location="${build}/junit"/>
+	<property name="archive" location="archive" />
+	<property name="scripts" location="scripts" />
+        <property name="images" location="src/gov/nih/nci/protegex/edit/images" />
+	<property name="plugins" value="plugins/gov.nih.nci.protegex.ui.nciedittab" />
+	<property name="nciedittab.jar" value="nciedittab.jar"/>
+        <property name="mysql.jar" value="mysql-connector-java-3.0.14-production-bin.jar" />
+	<property name="remoteowl.plugin.dir"  value="plugins/gov.nih.nci.protegex.edit.RemoteOWL"/>
+        <property name="owl.plugin.dir"      value="plugins/edu.stanford.smi.protegex.owl" />
+        <property name="query.plugin.dir"    value="plugins/edu.stanford.smi.protegex.query.lucene"/>
+
+
+    <!-- 
+       #  ********** Finding Protege Libraries. *************
+       # 
+       #  We are using an approach that allows developers to decide
+       #  whether to hand copy the needed jars into the lib directory or
+       #  to point them to a protege installation.
+      -->
+    <target name="checkProtegeHome">
+      <condition property="protege.home.set">
+        <available file="${protege.home}/protege.jar" type="file"/>
+      </condition>
+    </target>
+    
+    <target name="useProtegeHome" depends="checkProtegeHome" 
+            if="protege.home.set">
+      <echo message="Using Protege Home = ${protege.home} to find protege jars"/>
+      <property name="jena.lib"     location="${protege.home}/${owl.plugin.dir}/jena.jar"/>
+      <property name="owl.lib"      location="${protege.home}/${owl.plugin.dir}/protege-owl.jar"/>
+      <property name="log4j.lib"   location="${protege.home}/${owl.plugin.dir}/log4j-1.2.12.jar"/>
+      <property name="protege.lib"  location="${protege.home}/protege.jar"/>
+      <property name="owlexport.lib"  location="${lib}/protegeowlexport-lib.jar"/>
+      <property name="prompt.lib" value="${protege.home}/plugins/edu.stanford.smi.protegex.prompt/prompt.jar"/>
+      <property name="query.lib"    location="${protege.home}/${query.plugin.dir}/luceneQueryPlugin.jar"/>
+    	<!-- property name="remoteowl.lib" location="${protege.home}/${remoteowl.plugin.dir}/RemoteOWLWrapper.jar"/ -->
+      <property name="xerces.lib"   location="${protege.home}/${owl.plugin.dir}/xercesImpl.jar"/>
+            <property name="xpp.lib"      location="${lib}/xpp3-1.1.4c.jar"/>
+    </target>
+    
+    <target name="useLibDir" depends="checkProtegeHome" 
+            unless="protege.home.set">
+      <echo message="Using lib dir to find protege jars"/>
+      <property name="jena.lib"     location="${lib}/jena.jar"/>
+      <property name="owl.lib"      location="${lib}/protege-owl.jar"/>
+      <property name="commons.logging.lib" location="${lib}/commons-logging-1.1.jar"/>
+      <property name="protege.lib"  location="${lib}/protege.jar"/>
+      <property name="prompt.lib" value="${lib}/prompt.jar"/>
+      <property name="owlexport.lib"  location="${lib}/protegeowlexport-lib.jar"/>
+      <property name="query.lib"    location="${lib}/advancedQueryPlugin.jar"/>
+    	<!-- property name="remoteowl.lib" location="${lib}/RemoteOWLWrapper.jar"/ -->
+      <property name="xerces.lib"   location="${lib}/xercesImpl.jar"/>
+      <property name="xpp.lib"      location="${lib}/xpp3-1.1.4c.jar"/>
+    </target>
+
+
+    <target name = "checkProtegeLibs" depends="useProtegeHome, useLibDir">
+      <condition property="libs.found">
+        <and>
+          <available file="${jena.lib}" type = "file"/>
+          <available file="${owl.lib}" type = "file"/>
+          <available file="${protege.lib}" type = "file"/>
+          <available file="${query.lib}" type = "file"/>
+        	<!-- available file="${remoteowl.lib}" type = "file"/ -->
+          <available file="${xerces.lib}" type = "file"/>
+        </and>
+      </condition>
+      <path id = "project.classpath">    
+        <pathelement location = "${jena.lib}"/>
+        <pathelement location = "${owl.lib}"/>
+        <pathelement location = "${protege.lib}"/>
+        <pathelement location = "${owlexport.lib}"/>
+        <pathelement location = "${prompt.lib}"/>
+        <pathelement location = "${query.lib}"/>
+      	<!-- pathelement location = "${remoteowl.lib}"/ -->
+        <pathelement location = "${xerces.lib}"/>
+      	<pathelement location = "${lib}/junit.jar"/>
+        <pathelement location = "${lib}/xpp3-1.1.4c.jar"/>
+        <pathelement location = "${lib}/commons-codec-1.3.jar"/>
+        <pathelement location = "${lib}/commons-httpclient-3.0.1.jar"/>
+      </path>
+
+    </target>
+
+    <target name="checkProtegeLibsAndReport" depends="checkProtegeLibs"
+            unless="libs.found">
+      <echo message="Missing protege libraries.  You can either "/>
+      <echo message="set the PROTEGE_HOME environment variable to a"/>
+      <echo message="protege installation directory where the"/>
+      <echo message="appropriate plugins have been installed or copy the"/>
+      <echo message="needed jars into the lib directory"/>
+      <echo message="The jar files in question are protege.jar, protege-owl.jar and advancedQuery.jar"/>
+      <fail message="build aborted."/>
+    </target>
+
+
+
+	<!-- build initialization -->
+	<target name="init">
+		<mkdir dir="${build}" />
+		<mkdir dir="${dist}" />
+		<mkdir dir="${archive}" />
+	</target>
+
+	<!-- cleans the build artifacts -->
+	<target name="clean" depends="init" description="Cleans">
+		<delete dir="${build}" />
+		<delete dir="${dist}" />
+		<delete dir="${archive}"/>
+		<delete file="${config}/ncitab.xml"/>
+	</target>
+
+
+	<!-- generates the jar manifest -->
+	<target name="create-jar-manifest" depends="init" description="makes a custom manifest">
+		<tstamp>
+			<format property="buildtime" pattern="MM-dd-yyyy HH:mm:s
+s" />
+		</tstamp>
+		<manifest file="${build}/MANIFEST.MF">
+			<attribute name="Built-By" value="${user.name}" />
+			<attribute name="Build-Date" value="${buildtime}" />
+		    <section name="gov/nih/nci/protegex/edit/NCIEditTab.class" >
+		        <attribute name="Tab-widget" value="true" />
+		    </section>
+			<section name="gov/nih/nci/protegex/workflow/NCIWorkflowTab.class" >
+					        <attribute name="Tab-widget" value="true" />
+					    </section>
+			<section name="gov/nih/nci/protegex/edit/NCITabPlugin.class" >
+					        <attribute name="Project-Plugin" value="true" />
+					    </section>
+			<section name="edu/stanford/smi/protegex/owl/ui/cls/HideClassAction.class">
+				<attribute name="ResourceAction" value="false"/>
+				</section>
+		</manifest>
+	</target>
+
+	<!-- compiles the source code -->
+
+	<target name="compile" depends="init,checkProtegeLibsAndReport">
+		<javac debug="on" srcdir="${src}" destdir="${build}" 
+                       includeAntRuntime="false">
+                    <classpath refid="project.classpath"/>
+		</javac>
+		<javac debug="on" srcdir="${tstsrc}" destdir="${build}" 
+		                       includeAntRuntime="false">
+		                    <classpath refid="project.classpath"/>
+				</javac>
+	</target>
+	
+	<!-- creates the jar file -->
+
+	<target name="jar" depends="create-jar-manifest,compile">
+		<jar jarfile="${dist}/${nciedittab.jar}" index="true" manifest="${build}/MANIFEST.MF">
+			<fileset dir="${build}" includes="gov/nih/nci/protegex/**/*.class" />
+		    <fileset dir="${src}" includes="*gov/nih/nci/protegex/edit/**/*.gif"/>
+		</jar>
+	</target>
+	
+
+    <!-- creates the deployment package -->
+		
+	<target name="deploy-extension" depends="jar">
+		<filter token="VERSION" value="${version}" />
+	    <copy filtering="true" todir="${config}" file="nciedittab.html" overwrite="true"/>
+		<copy file="${config}/${config.file}" tofile="${config}/ncitab.xml" overwrite="true"/>
+		<zip destfile="${archive}\NCIProtegeExtension.zip">
+			<!-- main directory -->
+			<zipfileset dir="${config}">
+			    <include name="ncitab.xml"/>
+			    <include name="biomedgt.keystore"/>
+			</zipfileset>
+			<!-- nci plugin -->
+			<zipfileset dir="${config}" prefix="${plugins}">
+				
+			    <include name="plugin.properties"/>
+				<include name="nciedittab.html"/>
+			</zipfileset>
+			<zipfileset dir="${dist}" prefix="${plugins}">
+				<include name="nciedittab.jar"/>
+			</zipfileset>
+			<zipfileset dir="${lib}" prefix="${plugins}">
+			    <include name="jdom.jar"/>
+			</zipfileset>	
+		</zip>
+	</target>
+
+        <target name="install" depends="deploy-extension">
+          <fail message = "set the protege.home variable to do an install">
+            <condition>
+              <not>
+                <istrue value="${protege.home.set}"/>
+              </not>
+            </condition>
+          </fail>
+          <unzip src       = "${archive}/NCIProtegeExtension.zip"
+                 dest      = "${protege.home}"
+                 overwrite = "true"/>
+        </target>
+	
+	
+	<target name="unit-test" depends="jar">
+			<antcall target="compile">
+				<param name="compile.debug" value="on" />
+				<param name="src" value="${tstsrc}" />
+			</antcall>
+			<copy todir="${junit.dest}">
+				<fileset dir="${tstsrc}">
+					<include name="*" />
+				</fileset>
+			</copy>		
+								
+			<junit printsummary="yes" haltonfailure="no" dir="${junit.dest}" fork="no" maxmemory="512m">
+				<!--failure property will most likely be used by the global build and is used by the failure target failureProperty="TEST-FAILED">      -->
+				<classpath>
+					<fileset dir="lib" includes="**" />
+					<pathelement location="${build}" />
+					
+				</classpath>
+				
+				<formatter type="xml" usefile="true" />
+				<batchtest fork="true" todir="${junit.dest}">
+					<fileset dir="test">
+						<include name="**/Test*.java" />
+					</fileset>
+				</batchtest>
+			</junit>
+			<delete includeEmptyDirs="true" failonerror="false">
+				<fileset dir="." includes="${junit.dest}/reports/**/*" />
+			</delete>
+			<junitreport todir="${junit.dest}">
+				<fileset dir="${junit.dest}">
+					<include name="TEST-*.xml" />
+				</fileset>
+				<report format="frames" todir="${junit.dest}/reports" />
+			</junitreport>
+			<!--  call target failure to provide email notification. This will be done from the global build <antcall target="fire.test.failure"/>  -->
+		</target>
+	
+			
+</project>

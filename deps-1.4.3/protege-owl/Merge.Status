@@ -1,0 +1,19 @@
+This branch has two source which merge into this location.  Note that
+the revisions for these two sources may not stay the same.
+
+trunk: 
+    revision=19618
+    source=http://smi-protege.stanford.edu/repos/protege/owl/branches/2010-06-13-lock
+
+target=http://smi-protege.stanford.edu/repos/protege/nci-branches/1.4.2.locks/owl
+
+svn merge ${source}@${revision} ${source}
+
+failed1=src/edu/stanford/smi/protegex/owl/model/impl/AbstractOWLModel.java
+svn diff ${source}/${failed1}@${revision} ${target}/${failed1}
+
+------------------------------------
+nci-1.4.2:
+    revision=19202
+    source=http://smi-protege.stanford.edu/repos/protege/nci-branches/1.4.2/owl
+

@@ -1,0 +1,4 @@
+explanation.jar snapshot from
+SVN: http://svn.versiondude.net/clark-parsia/nci-tab/explanation/trunk
+Revision: 805
+Date: 2010-09-14

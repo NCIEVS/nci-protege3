@@ -1,0 +1,25 @@
+
+trunk:
+    revision=19630
+    source=http://smi-protege.stanford.edu/repos/protege/protege-core/branches/2010-06-13-lock
+
+
+target=http://smi-protege.stanford.edu/repos/protege/nci-branches/1.4.2.locks/protege-core
+
+svn merge ${source}@${revision} ${source}@head
+
+svn diff ${source}@${revision} ${target}
+
+failed1=src/edu/stanford/smi/protege/storage/database/AbstractDatabaseFrameDb.java
+failed2=src/edu/stanford/smi/protege/server/Server.java
+svn diff ${source}/${failed1} ${target}/${failed1}
+svn diff ${source}/${failed2} ${target}/${failed2}
+
+
+---------------------------------------------------------------------------
+This is another merge path but I am not using this one.
+
+nci-1.4.2:
+    revision=19202
+    source=http://smi-protege.stanford.edu/repos/protege/nci-branches/1.4.2/protege-core
+

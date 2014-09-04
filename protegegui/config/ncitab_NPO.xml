@@ -1,0 +1,271 @@
+<!--  This file was used and tested in production for the NPO client for Protege v1.4.2 release. This comment was written on 08/17/2010 -->
+
+<config idBy="refid">   
+<!-- when idBy is set to code, it implies meaningful identifiers, names, are used for the ref:ID and 
+	another property, in this case codes is used to uniquely identify concepts -->
+	
+<panel>
+   <panel-name>def</panel-name>	
+				<!-- use: term, def, complex -->
+				<!-- any property that is not associated with any of 
+					these three panels is displayed in the "simple properties"
+					panel of the "properties" sub-tab -->
+   <panel-label>Definition</panel-label>   
+   <owl-property>
+	  <name root="ComplexDefinition">definition</name>
+	  <table>	
+		<field> 
+			<element>def-definition</element>	<!-- special value: $language -->
+			<label>Definition Text</label>
+			<type>text-paragraph</type>			<!-- special values: $username, $date -->
+		</field>
+		<field>
+			<element>xml:lang</element>
+			<label>Lang</label>
+			<enumeration default="en">$language</enumeration>
+		</field>
+	
+	  </table>	  
+	  <table type="binary">
+	  	<field> 
+			<element>Definition_Review_Date</element>
+			<label>Review Date</label>
+			<value>$date</value>			
+		</field>
+		<field>
+			<element>def-source</element>
+			<label>Definition Source</label>
+			<enumeration default="NPO">
+			  <value>NCI</value>
+			  <value>NPO</value>
+			</enumeration>
+		</field>
+		<field>
+		  <element>attr</element>
+          <label>Attribution</label>
+          <type>text-line</type>
+          </field>
+        <field>
+			<element>Definition_Reviewer_Name</element>
+			<label>Reviewer Name</label>
+			<value>$username</value>
+		</field>
+	  </table>
+   </owl-property>
+</panel>
+
+<panel>
+   <panel-name>term</panel-name>
+   <panel-label>Terms</panel-label>   
+   <owl-property>
+	<name root="ComplexTerm">FULL_SYN</name>
+	  <table>
+		<field> 
+			<element>term-name</element>
+			<label>Term</label>
+			<type>text-paragraph</type>			
+		</field>
+	  	<field> 
+			<element>term-group</element>
+			<label>Term Type</label>
+			<enumeration default="SY">
+			  <value>PT</value>
+			  <value>AB</value>
+			  <value>CN</value>
+			  <value>CNU</value>
+			  <value>SY</value>
+			</enumeration>
+		</field>
+		<field>
+			<element>term-source</element>
+			<label>Term Source</label>
+			<enumeration default="NPO">
+			  <value>NCI</value>
+			  <value>NPO</value>
+			</enumeration>
+		</field>
+		<field>
+			<element>source-code</element>
+			<label>Code</label>
+			<type>text-line</type>
+		</field>		
+		<field>
+			<element>xml:lang</element>
+			<label>Lang</label>
+			<enumeration default="en">$language</enumeration>
+		</field>
+	  </table>
+   </owl-property>
+</panel>
+
+<panel>
+   <panel-name>complex</panel-name>
+   <panel-label>Complex Properties</panel-label>
+   <owl-property>
+	<name root="ComplexDefinition">ALT_DEFINITION</name>
+	  <table>
+		<field> 
+			<element>def-definition</element>
+			<label>Definition Text</label>		<!-- NC -->
+			<type>text-paragraph</type>			
+		</field>
+		<field>
+			<element>xml:lang</element>
+			<label>Lang</label>			<!-- NT -->
+			<enumeration default="en">$language</enumeration>
+		</field>
+	
+	  </table>	  
+	  <table type="binary">
+	  	<field> 
+			<element>Definition_Review_Date</element>
+			<label>Review Date</label>		<!-- NC -->
+			<value>$date</value>			
+		</field>
+		<field>
+			<element>def-source</element>
+			<label>Definition Source</label>	<!-- NC -->
+			<enumeration default="NPO">
+			  <value>BioCarta</value>
+			  <value>BRIDG</value>
+			  <value>CADSR</value>
+			  <value>CDISC</value>
+			  <value>CRCH</value>
+			  <value>CTCAE</value>
+			  <value>DICOM</value>
+			  <value>FDA</value>
+			  <value>ICD03</value>
+			  <value>KEGG</value>
+			  <value>NCI</value>
+			  <value>NCI-GLOSS</value>
+			  <value>SPL</value>
+			  <value>NPO</value>
+			</enumeration>
+		</field>
+		<field>
+			<element>attr</element>
+			<label>Attribution</label>		<!-- NC -->
+			<type>text-line</type>
+		</field>
+		<field>
+			<element>Definition_Reviewer_Name</element>
+			<label>Reviewer Name</label>		<!-- NC -->
+			<value>$username</value>
+		</field>
+	  </table>
+   </owl-property>
+</panel>
+
+<required-property>  			<!-- the entry is the rdf:ID of the required property in the OWL file -->
+	<prefLabel>preferred_Name</prefLabel>
+	<altLabel>FULL_SYN</altLabel>
+	<definition>definition</definition>
+	<scopeNote>DesignNote</scopeNote>
+	<editorialNote>Editor_Note</editorialNote>
+	<preDeprecationChildConcept>OLD_CHILD</preDeprecationChildConcept>
+	<preDeprecationParentConcept>OLD_PARENT</preDeprecationParentConcept>
+	<preDeprecationRole>OLD_ROLE</preDeprecationRole>
+	<preDeprecationSourceRole>OLD_SOURCE_ROLE</preDeprecationSourceRole>
+	<concept-status>Concept_Status</concept-status>
+	<merge-retire>Merge_Source</merge-retire>
+	<merge-surviving>Merge_Target</merge-surviving> 	<!-- is one of these two redundant? -->
+	<merge-to>Merge_Into</merge-to>			<!-- is one of these two redundant? -->
+	<split-from>Split_From</split-from>
+	<preDeprecationAssoc>OLD_ASSOCIATION</preDeprecationAssoc>
+	<preDeprecationSourceAssoc>OLD_SOURCE_ASSOCIATION</preDeprecationSourceAssoc>		
+</required-property>
+
+
+
+<required-concepts>	  			<!-- the entry is the rdf:ID of the required concept in the OWL file -->
+	<premerged-identifier>Premerged_Concepts</premerged-identifier>
+	<preretired-identifier>Preretired_Concepts</preretired-identifier>
+	<deprecated-identifier>Retired_Concept_Current_Year</deprecated-identifier>
+</required-concepts>
+
+<workflow>
+	<base-url>https://biomedgt-qa.nci.nih.gov</base-url>
+	<top-level-page>/index.php/Special:ExportList</top-level-page>
+	<prefix name="http://purl.bioontology.org/ontology/npo#">NPO</prefix>
+</workflow>
+
+</config>
+
+
+
+
+
+
+<!--
+   <owl-property>
+	<name root="ComplexGOAnnotation">GO_Annotation</name>
+	  <table>
+		<field> 
+			<element>go-term</element>
+			<label>term</label>
+			<type>text-paragraph</type>			
+		</field>
+		<field>
+			<element>xml:lang</element>
+			<label>Lang</label>
+			<enumeration default="en">$language</enumeration>
+		</field>
+
+	  </table>	  
+	  <table type="binary">
+		<field>
+			<element>go-id</element>
+			<label>GO Identifier</label>
+			<type>text-line</type>
+		</field>
+		<field>
+			<element>go-evi</element>
+			<label>Evidence Code</label>
+			<type>text-line</type>
+		</field>
+	  	<field> 
+			<element>source-date</element>
+			<label>Assignment Date</label>
+			<value>$date</value>			
+		</field>
+		<field>
+			<element>go-source</element>
+			<label>Assignment Source</label>
+			<enumeration default="NCI">
+			  <value>NCI</value>
+			  <value>NCBI</value>
+			  <value>CGAP</value>
+			</enumeration>
+		</field>
+	  </table>
+   </owl-property>
+-->
+
+<!--
+<menu-disable>
+	<menu-bar>Project</menu-bar>
+	<menu-item>Metrics...</menu-item>
+</menu-disable>
+
+<menu-disable>
+	<menu-bar>Project</menu-bar>
+	<menu-item>Encodings...</menu-item>
+</menu-disable>
+
+-->
+
+<!--
+	<preDeprecationAssoc>OLD_ASSOCIATION</preDeprecationAssoc>
+	<preDeprecationSourceAssoc>OLD_SOURCE_ASSOCIATION</preDeprecationSourceAssoc>
+-->
+
+<!--
+
+<authorization prop="curatorial-authority">
+	<entry>
+		<authority>none</authority>
+		<username>none</username>
+	</entry>
+</authorization>
+
+-->
