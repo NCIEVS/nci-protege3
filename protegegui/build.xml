@@ -197,7 +197,7 @@ s" />
 				<include name="nciedittab.jar"/>
 			</zipfileset>
 			<zipfileset dir="${lib}" prefix="${plugins}">
-			    <include name="jdom.jar"/>
+			    <include name="xpp3-1.1.4c.jar"/>
 			</zipfileset>	
 		</zip>
 	</target>
