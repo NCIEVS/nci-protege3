@@ -140,9 +140,9 @@ s" />
 		    <section name="gov/nih/nci/protegex/edit/NCIEditTab.class" >
 		        <attribute name="Tab-widget" value="true" />
 		    </section>
-			<section name="gov/nih/nci/protegex/workflow/NCIWorkflowTab.class" >
-					        <attribute name="Tab-widget" value="true" />
-					    </section>
+			<!-- <section name="gov/nih/nci/protegex/workflow/NCIWorkflowTab.class" > -->
+			<!-- 		        <attribute name="Tab-widget" value="true" /> -->
+			<!-- 		    </section> -->
 			<section name="gov/nih/nci/protegex/edit/NCITabPlugin.class" >
 					        <attribute name="Project-Plugin" value="true" />
 					    </section>
