@@ -170,6 +170,7 @@ s" />
 	<target name="jar" depends="create-jar-manifest,compile">
 		<jar jarfile="${dist}/${nciedittab.jar}" index="true" manifest="${build}/MANIFEST.MF">
 			<fileset dir="${build}" includes="gov/nih/nci/protegex/**/*.class" />
+                        <fileset dir="${build}" includes="edu/stanford/smi/protegex/**/*.class" />
 		    <fileset dir="${src}" includes="*gov/nih/nci/protegex/edit/**/*.gif"/>
 		</jar>
 	</target>
