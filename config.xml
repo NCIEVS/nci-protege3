@@ -158,7 +158,7 @@ config.file=${ncitab.config.file}
 #
 #
 # where to deploy the software
-#deploy.dir=${nci.deploy.directory}
+deploy.dir=${nci.deploy.directory}
 #
 #
 client.max.memory=-Xmx${client.max.mem}M

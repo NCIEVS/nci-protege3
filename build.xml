@@ -52,7 +52,6 @@
   <property name="protege.home" location="${full.build}/dist/Protege"/>
 
   <property name="data.dir" location="./build/data"/>
-  <property name="deploy.dir" location="./build/deploy"/>
   <property name="deploy.protege.client.dir"
     location="${deploy.dir}/Protege.Client-${version}"/>
   <property name="deploy.protege.server.dir"
