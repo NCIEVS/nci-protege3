@@ -2,35 +2,12 @@
 <project name = "NCI Installer" default = "usage" basedir = ".">    
   <description>Ant file for building the nci server and clients </description>  
 
-  <property name="version.file" location="./version.info"/>
-  <property file="${version.file}"/>
-
-  
 
   <property name="deps" location="./deps-1.4.3"/>
   <property name="protegegui.project" location="./protegegui"/>
-  
-    
+
   <property name="build.properties" location="./build.properties"/>
-  <property file="${build.properties}"/>
-
-  
-
-  <property name="full.build"        location="./build"/>
-  <property name="full.dist"         location="${full.build}/dist"/>
-  <property name="full.archive"      location="${full.build}/archive"/>
-  <property name="resources"            location="./resources"/>
-  
-  <property name="protege.client"    location="${full.dist}/Protege.Client-${version}"/>
-  <property name="protege.server"    location="${full.dist}/Protege.Server-${version}"/>
-  <property name="explanation.server" location="${full.dist}/Explanation.Server-${version}"/>
-
-  <!-- === === === === project locations === === === === -->
- 
-
-  <!-- === === === === === === === === === === === === -->
-
-  <property name="protege.home" location="${full.build}/dist/Protege"/>
+    <property name="version.file" location="./version.info"/>
 
   <path id = "svn.classpath">
     <pathelement location="./lib/svnant.jar"/>
@@ -42,15 +19,7 @@
   <!-- Note: Need to set data.dir and deploy.dir for   -->
   <!--    deploy target to work properly.              -->
   <!-- === === === === === === === === === === === === -->
-  <property name="data.dir" location="./build/data"/>
-  <property name="deploy.dir" location="./build/deploy"/>
-  <property name="deploy.protege.client.dir"
-    location="${deploy.dir}/Protege.Client-${version}"/>
-  <property name="deploy.protege.server.dir"
-    location="${deploy.dir}/Protege.Server-${version}"/>
-  <property name="deploy.explanation.server.dir"
-    location="${deploy.dir}/Explanation.Server-${version}"/>
-
+  
   <!-- === === === === === === === === === === === === === === === -->
   <!--                      Development Functions                  -->
   <!-- === === === === === === === === === === === === === === === -->
@@ -62,18 +31,46 @@
 </target>
 
 <target name="config" depends="checkBuildPropsExist" unless="build.props.exist">
-<ant antfile="config.xml"/>
-<copy file="${build.properties}" tofile="${build.properties}-${version}" overwrite="true"/>
+  <ant antfile="config.xml"/>
+</target>
+
+<target name="setupProps">
+
+  <property file="${version.file}"/>
+  <property file="${build.properties}"/>
+
+  <copy file="${build.properties}" tofile="${build.properties}-${version}" overwrite="true"/>
+
+  <property file="${svn-url.properties.file}"/>
+  <property name="full.build"        location="./build"/>
+  <property name="full.dist"         location="${full.build}/dist"/>
+  <property name="full.archive"      location="${full.build}/archive"/>
+  <property name="resources"            location="./resources"/>
+  <property name="protege.client"    location="${full.dist}/Protege.Client-${version}"/>
+  <property name="protege.server"    location="${full.dist}/Protege.Server-${version}"/>
+  <property name="explanation.server" location="${full.dist}/Explanation.Server-${version}"/>
+  <property name="protege.home" location="${full.build}/dist/Protege"/>
+
+  <property name="data.dir" location="./build/data"/>
+  <property name="deploy.dir" location="./build/deploy"/>
+  <property name="deploy.protege.client.dir"
+    location="${deploy.dir}/Protege.Client-${version}"/>
+  <property name="deploy.protege.server.dir"
+    location="${deploy.dir}/Protege.Server-${version}"/>
+  <property name="deploy.explanation.server.dir"
+    location="${deploy.dir}/Explanation.Server-${version}"/>
+
 </target>
 
 
-  <target name="init" depends="config">
-    <property file="${build.properties}"/>
-    <property file="${svn-url.properties.file}"/>
+  <target name="init" depends="config, setupProps">
+    <echo message="Init it is running"/>
+    
     <mkdir dir="${full.build}"/>
     <mkdir dir="${full.dist}"/>
     <mkdir dir="${full.archive}"/>
     <mkdir dir="${protege.home}"/>
+    <mkdir dir="${deploy.dir}"/>
     <copy file="javacc/local.properties" todir="${protege.core.project}"/>
     <taskdef resource="svntask.properties" classpathref="svn.classpath"/>
     <condition property="clark.parsia.db.project.exists">
@@ -303,7 +300,7 @@
     </move>
   </target>
 
-  <target name="install" 
+  <target name="build" 
           depends="install.client,install.server, install.expserver, init"/>
 
   <!-- === === === === === === === === === === === === === === === -->
@@ -469,9 +466,10 @@
   <!-- === === === === archive === === === === -->
 
 
-  <target name="archive">
+  <target name="archive" depends="setupProps">
     <antcall target="clean.projects"/>
     <echo message="clean.projects done"/>
+    <echo message="current version is ${version}"/>
     <zip destfile="${full.archive}/ncibuilder-${version}.zip"
          basedir="."
          defaultexcludes="no"
@@ -561,7 +559,7 @@
   <!-- Deploys Protege.                                                     -->
   <!-- Note: Main deployment target:                                        -->
   <!--======================================================================-->
-  <target name="deploy" depends="deploy.protege,
+  <target name="deploy" depends="setupProps, deploy.protege,
     update.deploy.explanation.server.script.file,
     create.data.symlinks.for.deploy.protege.server.dir"/>
 

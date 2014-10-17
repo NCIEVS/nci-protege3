@@ -8,6 +8,14 @@
     addproperty="nci.prompt.ipAddress"
     defaultvalue="localhost"
 />
+</target>
+
+<target name="check.nci.deploy" unless="nci.deploy.directory">
+<input
+    message="Please enter location to deploy the software to:"
+    addproperty="nci.deploy.directory"
+    defaultvalue="/usr/local/protege"
+/>
 <!--
 <antcall target="prompt.for.prop">
   <param name="prompt.for" value="nci.prompt.ipAddress" />
@@ -109,6 +117,7 @@
 
 <target name="check.build.props" 
         depends="check.src.branch,
+        check.nci.deploy,
         check.ncitab.config,
         check.client.max.mem,
         check.server.max.mem,
@@ -127,6 +136,12 @@ password=${nci.prompt.password}
   </echo>
 </target>
 
+<target name="install.version.file">
+  <echo file="version.info">
+version=${svn-url.version}
+  </echo>
+</target>
+
  <target name="install.build.props">
       <echo file="build.properties">
 #
@@ -140,6 +155,11 @@ svn-url.properties.file=svn-url-${svn-url.version}.properties
 #
 # which config file to use for EditTab
 config.file=${ncitab.config.file}
+#
+#
+# where to deploy the software
+#deploy.dir=${nci.deploy.directory}
+#
 #
 client.max.memory=-Xmx${client.max.mem}M
 server.max.memory=-Xmx${server.max.mem}M
@@ -165,7 +185,7 @@ db.password=${nci.prompt.password}
     </echo>
 </target>
 
-<target name="all" depends="check.prompt.props, check.build.props, install.nci.prompt.config, install.build.props">
+<target name="all" depends="check.prompt.props, check.build.props, install.nci.prompt.config, install.build.props, install.version.file">
 <echo>build.properties and PromptNCIPlugin.properties configured</echo>
 </target>
 
@@ -176,6 +196,7 @@ db.password=${nci.prompt.password}
 
   <target name="clean">
     <delete file="build.properties"/>
+    <delete file="version.info"/>
     <delete file="PromptNCIPlugin.properties"/> 
   </target>
 
