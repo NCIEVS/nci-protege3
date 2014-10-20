@@ -17,7 +17,7 @@ if [ ! -e $JAVA_PATH/java ]; then
 	exit 1
 fi
 
-CLASSPATH=protege.jar:unicode_panel.jar:mysql-connector-java-5.0.0-beta-bin.jar
+CLASSPATH=protege.jar:unicode_panel.jar:mysql-connector-java-5.1.33-bin.jar
 MAINCLASS=edu.stanford.smi.protege.server.Server
 
 $JAVA_PATH/rmiregistry -J-Djava.rmi.server.codebase="file:$PWD/protege.jar" 2822 &
