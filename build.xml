@@ -126,7 +126,7 @@
     <ant antfile="${collab.project}/build.xml" 
          dir="${collab.project}"
          target="install"/>
-    <copy file="${resources}/mysql-connector-java-5.1.33-bin.jar" 
+    <copy file="${resources}/mysql-connector-java-5.0.0-beta-bin.jar" 
           todir="${protege.home}"/>
     
     
@@ -310,7 +310,7 @@
       <pathelement location="${protege.client}/protege.jar"/>
       <pathelement location="${protege.client}/looks.jar"/>
       <pathelement location="${protege.client}/unicode_panel.jar"/>
-      <pathelement location="${protege.client}/mysql-connector-java-5.1.33-bin.jar"/>
+      <pathelement location="${protege.client}/mysql-connector-java-5.0.0-beta-bin.jar"/>
       <fileset
            dir="${protege.client}/plugins/edu.stanford.smi.protegex.owl"
            includes="*.jar"/>
@@ -492,7 +492,7 @@
       <pathelement location="${protege.server}/protege.jar"/>
       <pathelement location="${protege.server}/looks.jar"/>
       <pathelement location="${protege.server}/unicode_panel.jar"/>
-      <pathelement location="${protege.server}/mysql-connector-java-5.1.33-bin.jar"/>
+      <pathelement location="${protege.server}/mysql-connector-java-5.0.0-beta-bin.jar"/>
       <pathelement location="${protege.server}/plugins/edu.stanford.smi.protegex.changes/change-model.jar"/>
   </path>
 
