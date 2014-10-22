@@ -21,7 +21,7 @@ if [ ! -e $JAVA_PATH/java ]; then
 	exit 1
 fi
 
-JARS=protege.jar:driver.jar:driver1.jar:looks.jar:unicode_panel.jar:mysql-connector-java-5.1.33-bin.jar
+JARS=protege.jar:driver.jar:driver1.jar:looks.jar:unicode_panel.jar:mysql-connector-java-5.0.0-beta-bin.jar
 MAIN_CLASS=edu.stanford.smi.protege.Application
 MAXIMUM_MEMORY=@MAX_MEMORY@
 LOG4J_OPT=-Dlog4j.configuration=file:./log4j.xml
