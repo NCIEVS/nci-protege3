@@ -544,23 +544,11 @@
   </target>
 
   <!--======================================================================-->
-  <!-- Creates data symbolic links (lucene and worklow directories)         -->
-  <!--   for deployed Protege.Server directory.                             -->
-  <!--======================================================================-->
-  <target name="create.data.symlinks.for.deploy.protege.server.dir">
-  <!-- <symlink link="${deploy.protege.server.dir}/lucene"
-      resource="${data.dir}/lucene"/>-->
-    <symlink link="${deploy.protege.server.dir}/workflow"
-      resource="${data.dir}/workflow"/>
-  </target>
-
-  <!--======================================================================-->
   <!-- Deploys Protege.                                                     -->
   <!-- Note: Main deployment target:                                        -->
   <!--======================================================================-->
   <target name="deploy" depends="setupProps, deploy.protege,
-    update.deploy.explanation.server.script.file,
-    create.data.symlinks.for.deploy.protege.server.dir"/>
+    update.deploy.explanation.server.script.file"/>
 
   <!-- === === === === === === === === === === === === === === === -->
   <!--                          Usage                              -->
