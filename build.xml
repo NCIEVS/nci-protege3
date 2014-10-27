@@ -562,9 +562,9 @@
   <!-- Deploys Protege applications to deployment directory:                -->
   <!--======================================================================-->
   <target name="deploy.protege">
-    <copy todir="${deploy.dir}">
-      <fileset dir="${full.dist}"/>
-    </copy>
+    <exec executable="cp">
+      <arg line="-Rp ${full.dist}/ ${deploy.dir}"/>
+    </exec>
     <delete dir="${deploy.protege.client.dir}/jre" />
   </target>
 
