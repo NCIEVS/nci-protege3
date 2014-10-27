@@ -25,23 +25,59 @@
   <!-- === === === === === === === === === === === === === === === -->
 
 <target name="checkBuildPropsExist">
+
 <condition property="build.props.exist">
   <available file="${build.properties}" type="file"/>
 </condition>
+
 </target>
 
 <target name="config" depends="checkBuildPropsExist" unless="build.props.exist">
   <ant antfile="config.xml"/>
 </target>
 
-<target name="setupProps">
+<target name="addVersionNo" if="add.build.no">
+
+  <echo message="Adding to value: ${release}"/> 
+  
+  <property name="version" value="${release}-${git.commit}"/>
+    <echo message="Did we declare version: ${version}"/> 
+</target>
+
+
+<target name="setupProps" depends="git.commit">
+  <!-- <antcall target="git.commit"/> -->
+
+  <property file="${build.properties}"/>
+
+  <echo message="Current commit: ${add.commit.hash}"/> 
+  
 
   <property file="${version.file}"/>
-  <property file="${build.properties}"/>
+
+  <condition property="add.build.no">
+    <and>
+      <isset property="add.commit.hash" />
+      <equals arg1="${add.commit.hash}" arg2="Y" />
+    </and>
+  </condition>
+
+  <echo message="Shall we add: ${add.build.no}"/> 
+
+  
+
+  <property name="version" value="${release}-${git.commit}"/>
+
+  <!-- antcall target="addVersionNo"/ -->
+
+  <echo message="version after the mod call: ${version}"/> 
+
+  
+  
 
   <copy file="${build.properties}" tofile="${build.properties}-${version}" overwrite="true"/>
 
-  <property file="${svn-url.properties.file}"/>
+  <property file="deps.properties"/>
   <property name="full.build"        location="./build"/>
   <property name="full.dist"         location="${full.build}/dist"/>
   <property name="full.archive"      location="${full.build}/archive"/>
@@ -612,6 +648,13 @@
       <regexp pattern="password=.*"/>
       <substitution expression="password=${db.password}"/>
     </replaceregexp>
+  </target>
+<target name="git.commit">
+    <exec executable="git" outputproperty="git.commit"
+          failifexecutionfails="false">
+      <arg line='log -n 1 --pretty=format:"%h"'/>
+    </exec>
+    <echo message="Current commit: ${git.commit}"/> 
   </target>
 
 </project>

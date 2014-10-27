@@ -16,11 +16,6 @@
     addproperty="nci.deploy.directory"
     defaultvalue="/usr/local/protege"
 />
-<!--
-<antcall target="prompt.for.prop">
-  <param name="prompt.for" value="nci.prompt.ipAddress" />
-</antcall>
--->
 
 </target>
 
@@ -63,7 +58,7 @@
         nci.prompt.user,
         nci.prompt.pass"/>
 
-
+<!--
 <target name="check.src.branch" unless="svn-url.version">
 <input
     message="Please enter branch to build:"
@@ -72,6 +67,18 @@
     defaultvalue="trunk"
 />
 </target>
+-->
+
+<target name="check.build.no" unless="add.commit.hash">
+<input
+    message="Append a build number to release number:"
+    validargs="Y,N"
+    addproperty="add.commit.hash"
+    defaultvalue="Y"
+/>
+
+</target>
+
 <target name="check.ncitab.config" unless="ncitab.config.file">
 <input
     message="Please enter an ncitab xml config file:"
@@ -116,8 +123,7 @@
 </target>
 
 <target name="check.build.props" 
-        depends="check.src.branch,
-        check.nci.deploy,
+        depends="check.nci.deploy,
         check.ncitab.config,
         check.client.max.mem,
         check.server.max.mem,
@@ -136,11 +142,13 @@ password=${nci.prompt.password}
   </echo>
 </target>
 
+<!--
 <target name="install.version.file">
   <echo file="version.info">
 version=${svn-url.version}
   </echo>
 </target>
+-->
 
  <target name="install.build.props">
       <echo file="build.properties">
@@ -150,7 +158,9 @@ version=${svn-url.version}
 # then the build will prompt for them
 #
 # which branch to build, default is trunk
-svn-url.properties.file=svn-url-${svn-url.version}.properties
+##svn-url.properties.file=svn-url-${svn-url.version}.properties
+
+add.commit.hash=${add.commit.hash}
 #
 #
 # which config file to use for EditTab
@@ -185,7 +195,9 @@ db.password=${nci.prompt.password}
     </echo>
 </target>
 
-<target name="all" depends="check.prompt.props, check.build.props, install.nci.prompt.config, install.build.props, install.version.file">
+<target name="all" depends="check.prompt.props, check.build.props, check.build.no,
+                            install.nci.prompt.config, install.build.props">
+<!--  install.version.file"> -->
 <echo>build.properties and PromptNCIPlugin.properties configured</echo>
 </target>
 
@@ -196,7 +208,7 @@ db.password=${nci.prompt.password}
 
   <target name="clean">
     <delete file="build.properties"/>
-    <delete file="version.info"/>
+    <!-- <delete file="version.info"/> -->
     <delete file="PromptNCIPlugin.properties"/> 
   </target>
 
@@ -231,5 +243,6 @@ db.password=${nci.prompt.password}
   <target name="display.properties">
     <echoproperties/>
   </target>
+
 
 </project>
