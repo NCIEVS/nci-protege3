@@ -23,7 +23,6 @@
 	<classpathentry kind="lib" path="lib/protege-owl.jar"/>
 	<classpathentry kind="lib" path="lib/protege.jar"/>
 	<classpathentry kind="lib" path="lib/protegeowlexport-lib.jar"/>
-	<classpathentry kind="lib" path="lib/standard-extensions.jar"/>
 	<classpathentry kind="lib" path="lib/xercesImpl.jar"/>
 	<classpathentry kind="lib" path="lib/xpp3-1.1.4c.jar"/>
 	<classpathentry kind="lib" path="lib/antlr-2.7.5.jar"/>
@@ -40,12 +39,15 @@
 	<classpathentry kind="lib" path="lib/jep-2.4.0.jar"/>
 	<classpathentry kind="lib" path="lib/json.jar"/>
 	<classpathentry kind="lib" path="lib/kazuki.jar"/>
-	<classpathentry kind="lib" path="lib/lucene-core-2.3.1.jar"/>
 	<classpathentry kind="lib" path="lib/orphanNodesAlg.jar"/>
 	<classpathentry kind="lib" path="lib/owlsyntax.jar"/>
 	<classpathentry kind="lib" path="lib/stax-api-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/swingx-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/wstx-asl-3.0.0.jar"/>
 	<classpathentry kind="lib" path="lib/xml-apis.jar"/>
+	<classpathentry kind="lib" path="lib/lucene-core.jar"/>
+	<classpathentry kind="lib" path="lib/phonetix.jar"/>
+	<classpathentry kind="lib" path="lib/xstream.jar"/>
+	<classpathentry kind="lib" path="lib/standard-extensions.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
