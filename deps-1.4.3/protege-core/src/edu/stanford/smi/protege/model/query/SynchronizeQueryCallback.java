@@ -36,14 +36,14 @@ public class SynchronizeQueryCallback implements QueryCallback, Localizable {
 
   public void provideQueryResults(Collection<Frame> frames) {
     try {
-      readerLock.lock();
+        //readerLock.lock();
       result = frames;
       synchronized (queryCondition) {
     	  queryCondition.notifyAll();
       }
     }
     finally {
-      readerLock.unlock();
+        //readerLock.unlock();
     }
   }
 
@@ -75,7 +75,7 @@ public class SynchronizeQueryCallback implements QueryCallback, Localizable {
   public Collection<Frame> waitForResults() throws OntologyException, ProtegeIOException {
 	  Object o = null;
 	  try {
-		  readerLock.lock();
+              //readerLock.lock();
 		  synchronized (queryCondition) {
 			  while (result == null) {
 				  try {
@@ -89,7 +89,7 @@ public class SynchronizeQueryCallback implements QueryCallback, Localizable {
 		  o = result;
 	  }
     finally {
-      readerLock.unlock();
+        //readerLock.unlock();
       result = null;
     }
     if (o instanceof Collection) {
