@@ -1,5 +1,5 @@
 @echo off
-set JARS=protege.jar;looks.jar;unicode_panel.jar;mysql-connector-java-5.0.0-beta-bin.jar
+set JARS=protege.jar;looks.jar;unicode_panel.jar;mysql-connector-java-5.1.33-bin.jar
 set MAIN_CLASS=edu.stanford.smi.protege.Application
 
 set MAX_MEMORY=@MAX_MEMORY@ 

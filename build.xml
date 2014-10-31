@@ -122,6 +122,8 @@
      <filter token="MAX_MEMORY" value="${client.max.memory}"/>
      <filter token="SERVER_MAX_MEMORY" value="${server.max.memory}"/>
      <filter token="SERVER_HOST_NAME" value="${server.host.name}"/>
+     <filter token="RMI_REGISTRY_PORT" value="${rmi.registry.port}"/>
+     <filter token="RMI_SERVER_PORT" value="${rmi.server.port}"/>
   </target>
 
   <!-- The revisions target can be found in svn revision 125 of this project -->
@@ -162,7 +164,7 @@
     <ant antfile="${collab.project}/build.xml" 
          dir="${collab.project}"
          target="install"/>
-    <copy file="${resources}/mysql-connector-java-5.0.0-beta-bin.jar" 
+    <copy file="${resources}/mysql-connector-java-5.1.33-bin.jar" 
           todir="${protege.home}"/>
     
     
@@ -346,7 +348,7 @@
       <pathelement location="${protege.client}/protege.jar"/>
       <pathelement location="${protege.client}/looks.jar"/>
       <pathelement location="${protege.client}/unicode_panel.jar"/>
-      <pathelement location="${protege.client}/mysql-connector-java-5.0.0-beta-bin.jar"/>
+      <pathelement location="${protege.client}/mysql-connector-java-5.1.33-bin.jar"/>
       <fileset
            dir="${protege.client}/plugins/edu.stanford.smi.protegex.owl"
            includes="*.jar"/>
@@ -528,7 +530,7 @@
       <pathelement location="${protege.server}/protege.jar"/>
       <pathelement location="${protege.server}/looks.jar"/>
       <pathelement location="${protege.server}/unicode_panel.jar"/>
-      <pathelement location="${protege.server}/mysql-connector-java-5.0.0-beta-bin.jar"/>
+      <pathelement location="${protege.server}/mysql-connector-java-5.1.33-bin.jar"/>
       <pathelement location="${protege.server}/plugins/edu.stanford.smi.protegex.changes/change-model.jar"/>
   </path>
 

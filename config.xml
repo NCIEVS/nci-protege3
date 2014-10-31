@@ -58,16 +58,6 @@
         nci.prompt.user,
         nci.prompt.pass"/>
 
-<!--
-<target name="check.src.branch" unless="svn-url.version">
-<input
-    message="Please enter branch to build:"
-    validargs="1.4.1,1.4.2,1.4.3,1.4.2.locks,trunk"
-    addproperty="svn-url.version"
-    defaultvalue="trunk"
-/>
-</target>
--->
 
 <target name="check.build.no" unless="add.commit.hash">
 <input
@@ -107,6 +97,20 @@
     defaultvalue="localhost"
 />
 </target>
+<target name="check.rmi.registry.port" unless="rmi.registry.port">
+<input
+    message="Please enter the rmi registry port no:"
+    addproperty="rmi.registry.port"
+    defaultvalue="2422"
+/>
+</target>
+<target name="check.rmi.server.port" unless="rmi.server.port">
+<input
+    message="Please enter the rmi server port no:"
+    addproperty="rmi.server.port"
+    defaultvalue="2424"
+/>
+</target>
 <target name="check.jena.url" unless="edu.stanford.smi.protegex.owl.jena.reasoner.URL">
 <input
     message="Please enter value for edu.stanford.smi.protegex.owl.jena.reasoner.URL: "
@@ -128,6 +132,8 @@
         check.client.max.mem,
         check.server.max.mem,
         check.server.host.name,
+        check.rmi.registry.port,
+        check.rmi.server.port,
         check.jena.url,
         check.panel.host"/>
 
@@ -141,14 +147,6 @@ userName=${nci.prompt.userName}
 password=${nci.prompt.password}
   </echo>
 </target>
-
-<!--
-<target name="install.version.file">
-  <echo file="version.info">
-version=${svn-url.version}
-  </echo>
-</target>
--->
 
  <target name="install.build.props">
       <echo file="build.properties">
@@ -174,6 +172,9 @@ deploy.dir=${nci.deploy.directory}
 client.max.memory=-Xmx${client.max.mem}M
 server.max.memory=-Xmx${server.max.mem}M
 server.host.name=${server.host.name}
+
+rmi.registry.port=${rmi.registry.port}
+rmi.server.port=${rmi.server.port}
 #
 # these are props for protege.properties file for both client/server
 edu.stanford.smi.protegex.owl.jena.reasoner.URL=${edu.stanford.smi.protegex.owl.jena.reasoner.URL}

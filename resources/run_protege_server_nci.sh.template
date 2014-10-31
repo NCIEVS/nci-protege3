@@ -16,7 +16,7 @@ if [ ! -e $JAVA_PATH/java ]; then
 	exit 1
 fi
 
-CLASSPATH=protege.jar:looks.jar:unicode_panel.jar:mysql-connector-java-5.0.0-beta-bin.jar
+CLASSPATH=protege.jar:looks.jar:unicode_panel.jar:mysql-connector-java-5.1.33-bin.jar
 MAINCLASS=edu.stanford.smi.protege.server.Server
 
 # If you want automatic saving of the project, setup the number of seconds in SAVE_INTERVAL_VALUE
@@ -25,8 +25,8 @@ MAINCLASS=edu.stanford.smi.protege.server.Server
 MAX_MEMORY=@SERVER_MAX_MEMORY@
 ENCODING=-Dfile.encoding=UTF-8
 TRANS_LEVEL=-Dtransaction.level=READ_COMMITTED
-RMI_REG_PORT=-Dprotege.rmi.registry.port=2822
-RMI_SERV_PORT=-Dprotege.rmi.server.port=2824
+RMI_REG_PORT=-Dprotege.rmi.registry.port=@RMI_REGISTRY_PORT@
+RMI_SERV_PORT=-Dprotege.rmi.server.port=@RMI_SERVER_PORT@
 CODEBASE_URL=file:$PWD/protege.jar
 CODEBASE=-Djava.rmi.server.codebase=$CODEBASE_URL
 HOSTNAME_PARAM=-Djava.rmi.server.hostname=@SERVER_HOST_NAME@

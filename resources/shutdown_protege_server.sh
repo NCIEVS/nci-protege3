@@ -11,7 +11,7 @@ then
 else 
   # Attempt to use the bundled VM if none specified
   if [ "$JAVA_HOME" = "" ]; then
-	JAVA_HOME=.
+	JAVA_HOME=/usr/jdk1.8.0_20
   fi
 
   JAVA_PATH=$JAVA_HOME/jre/bin
@@ -25,7 +25,7 @@ fi
 # ------------------- Where is Java? ------------------- 
 
 
-CLASSPATH=protege.jar:looks-2.1.3.jar:unicode_panel.jar:driver.jar:driver0.jar:driver1.jar:driver2.jar
+CLASSPATH=protege.jar:looks.jar:unicode_panel.jar
 MAINCLASS=edu.stanford.smi.protege.server.Shutdown
 
 
