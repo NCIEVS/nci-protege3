@@ -490,10 +490,7 @@
   <target name="clean" depends="clean.projects">
     <ant antfile="config.xml"
          target="clean"/>
-    <delete>
-      <fileset dir="${full.build}"
-               followsymlinks="false"/>
-    </delete>
+    <delete dir="${full.build}" />
 
   </target>
 
