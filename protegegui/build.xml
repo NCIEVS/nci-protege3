@@ -186,7 +186,6 @@ s" />
 			<!-- main directory -->
 			<zipfileset dir="${config}">
 			    <include name="ncitab.xml"/>
-			    <include name="biomedgt.keystore"/>
 			</zipfileset>
 			<!-- nci plugin -->
 			<zipfileset dir="${config}" prefix="${plugins}">

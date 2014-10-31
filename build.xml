@@ -124,6 +124,7 @@
      <filter token="SERVER_HOST_NAME" value="${server.host.name}"/>
      <filter token="RMI_REGISTRY_PORT" value="${rmi.registry.port}"/>
      <filter token="RMI_SERVER_PORT" value="${rmi.server.port}"/>
+     <filter token="RELEASE" value="${release}"/>
   </target>
 
   <!-- The revisions target can be found in svn revision 125 of this project -->
@@ -289,8 +290,11 @@
           overwrite="true"/>
      <copy file="${resources}/run_protege_server.sh"
            todir="${protege.home}"/>
-      <copy file="${resources}/run_rmiregistry.sh"
-           todir="${protege.home}"/>
+     <copy filtering="true" 
+          tofile="${protege.home}/run_rmiregistry.sh" 
+          file="${resources}/run_rmiregistry.sh.template" 
+          overwrite="true"/>
+      
        <copy file="${resources}/shutdown_protege_server.sh"
            todir="${protege.home}"/>
     <chmod dir="${protege.home}" perm="ugo+x" includes="**/*.sh"/>

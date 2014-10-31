@@ -36,7 +36,7 @@ LOG4J_OPT=-Dlog4j.configuration=file:./log4j.xml
 
 OPTIONS="$CBIO_OPTS $MAX_MEMORY $ENCODING $TRANS_LEVEL $RMI_REG_PORT $RMI_SERV_PORT $CODEBASE $HOSTNAME_PARAM ${LOG4J_OPT} $DEBUG_OPT"
 
-export METAPROJECT=/app/protege/data/Protege_1.4.3/NCIT/meta/nci_metaproject.pprj		
+export METAPROJECT=/app/protege/data/Protege_@RELEASE@/NCIT/meta/nci_metaproject.pprj		
 
 
 nohup $JAVA_PATH/java -server -cp $CLASSPATH $OPTIONS $MAINCLASS $SAVE_INTERVAL $METAPROJECT </dev/null >console.txt  2>&1 &

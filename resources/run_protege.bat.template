@@ -7,4 +7,4 @@ set LOG4J_OPT=-Dlog4j.configuration=file:./log4j.xml
 set OPTIONS=%MAX_MEMORY% %LOG4J_OPT%
 
 
-jre\bin\java %OPTIONS% -cp %JARS% %MAIN_CLASS% %1
+jre1.8.0_25\bin\java %OPTIONS% -cp %JARS% %MAIN_CLASS% %1
