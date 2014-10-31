@@ -565,7 +565,7 @@
   <!--======================================================================-->
   <target name="deploy.protege">
     <exec executable="cp">
-      <arg line="-Rp ${full.dist}/ ${deploy.dir}"/>
+      <arg line="-Rp ${full.dist}/. ${deploy.dir}"/>
     </exec>
     <delete dir="${deploy.protege.client.dir}/jre" />
   </target>
