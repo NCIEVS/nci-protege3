@@ -297,6 +297,8 @@
       
        <copy file="${resources}/shutdown_protege_server.sh"
            todir="${protege.home}"/>
+       <antcall target="install.nci.prompt.config"/>
+    <echo message="install.nci.prompt.config done"/>
     <chmod dir="${protege.home}" perm="ugo+x" includes="**/*.sh"/>
     <chmod dir="${protege.home}" perm="ugo+x" includes="**/*.bat"/>
     <move todir="${protege.server}">
@@ -305,6 +307,7 @@
     <delete dir="${protege.server}/examples" failonerror="false"/>
     <antcall target="install.server.ontologies"/>
     <echo message="install.server.ontologies done"/>
+    
   </target>
 
   <target name="install.expserver" depends="init">

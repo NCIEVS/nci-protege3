@@ -115,14 +115,14 @@
 <input
     message="Please enter value for edu.stanford.smi.protegex.owl.jena.reasoner.URL: "
     addproperty="edu.stanford.smi.protegex.owl.jena.reasoner.URL"
-    defaultvalue="localhost:8090\/explain"
+    defaultvalue="enter-host-name:enter-port\/explain"
 />
 </target>
 <target name="check.panel.host" unless="edu.stanford.smi.protege.server.ServerPanel.host_name">
 <input
     message="Please enter value for edu.stanford.smi.protege.server.ServerPanel.host_name:"
     addproperty="edu.stanford.smi.protege.server.ServerPanel.host_name"
-    defaultvalue="localhost\/:2633"
+    defaultvalue="enter-host-name\/:enter-port"
 />
 </target>
 
