@@ -297,6 +297,10 @@
       
        <copy file="${resources}/shutdown_protege_server.sh"
            todir="${protege.home}"/>
+       <copy file="${resources}/codegen.dat"
+           todir="${protege.home}"/>
+       <copy file="${resources}/codegen.properties"
+           todir="${protege.home}"/>
        <antcall target="install.nci.prompt.config"/>
     <echo message="install.nci.prompt.config done"/>
     <chmod dir="${protege.home}" perm="ugo+x" includes="**/*.sh"/>
