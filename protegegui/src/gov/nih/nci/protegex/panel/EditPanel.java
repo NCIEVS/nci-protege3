@@ -1146,7 +1146,7 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 						ModalDialog.MODE_OK_CANCEL);
 				if (ans == ModalDialog.OPTION_OK) {
 					r = dlg.getResult();
-					if (r != null) {
+					if ((r != null) && !role_mod.alreayHasItem(r))  {
 						int row = -1;
 						boolean isDedefining = dlg.getIsDefining();
 
