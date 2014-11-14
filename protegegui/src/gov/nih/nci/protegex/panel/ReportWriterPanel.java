@@ -178,7 +178,14 @@ public class ReportWriterPanel extends JPanel implements ActionListener,
 						.getSelectedFile().getAbsolutePath()));
 				while ((s = inFile.readLine()) != null) {
 					s = s.trim();
-					ocl.add(ClsUtil.getConceptByCode(tab.getOWLModel(), s));
+					OWLNamedClass foo = ClsUtil.getConceptByCode(tab.getOWLModel(), s); 
+					if (foo != null) {
+						ocl.add(foo);
+					} else {
+						reportTextArea
+						.append("\nOWLNamedClass does not exist for code:" + s);
+						
+					}
 
 				}
 				inFile.close();
