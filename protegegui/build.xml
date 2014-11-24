@@ -140,15 +140,18 @@ s" />
 		    <section name="gov/nih/nci/protegex/edit/NCIEditTab.class" >
 		        <attribute name="Tab-widget" value="true" />
 		    </section>
-			<!-- <section name="gov/nih/nci/protegex/workflow/NCIWorkflowTab.class" > -->
-			<!-- 		        <attribute name="Tab-widget" value="true" /> -->
-			<!-- 		    </section> -->
-			<section name="gov/nih/nci/protegex/edit/NCITabPlugin.class" >
-					        <attribute name="Project-Plugin" value="true" />
-					    </section>
-			<section name="edu/stanford/smi/protegex/owl/ui/cls/HideClassAction.class">
-				<attribute name="ResourceAction" value="false"/>
-				</section>
+		    <section name="edu/stanford/smi/protegex/NCIConceptHistory/NCIConceptHistory.class">
+		      <attribute name="Project-Plugin" value="true" />
+		    </section>
+                    <section name="edu/stanford/smi/protegex/NCIEVSHistory/EVSHistoryPlugin.class" >
+		      <attribute name="Project-Plugin" value="true" />
+		    </section>
+		    <section name="gov/nih/nci/protegex/edit/NCITabPlugin.class" >
+		      <attribute name="Project-Plugin" value="true" />
+		    </section>
+		    <section name="edu/stanford/smi/protegex/owl/ui/cls/HideClassAction.class">
+		      <attribute name="ResourceAction" value="false"/>
+		    </section>
 		</manifest>
 	</target>
 
