@@ -176,7 +176,7 @@ public class PreRetirePanel extends JPanel implements ActionListener,
 
         JPanel buttonPanel = new JPanel();
 
-        preretireButton_Preretire = new JButton("Preretire");
+        preretireButton_Preretire = new JButton("PreRetire");
         preretireButton_Preretire.addActionListener(this);
         preretireButton_Preretire.setEnabled(false);
 

@@ -117,7 +117,7 @@ public class NoteDialog extends JDialog implements ActionListener
 			designnote = fDesignNote.getText();
 			if (editornote.trim().equals("") || designnote.trim().equals(""))
 			{
-                MsgDialog.warning(this, "Warning", "Editor Note and Design Note are required.");
+                MsgDialog.warning(this, "Warning", "Editor's Note and Design Note are required.");
 				return;
 			}
 			editornote = prefix + "|" + (new Date()).toString() + " - " + fEditorNote.getText().trim();
