@@ -1800,11 +1800,13 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 			}
 
 			public void keyTyped(KeyEvent e) {
-				if (e.getModifiers() > 0) {
+				/* if (e.getModifiers() > 0) {
 
 				} else {
 					enableSaveButton(true);
 				}
+				*/
+				enableSaveButton(true);
 
 			}
 		});
