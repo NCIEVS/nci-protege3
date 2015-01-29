@@ -2415,7 +2415,7 @@ public class OWLWrapper {
 							+ remainder.getBrowserText());
 					RDFSClass copy = remainder.createClone();
 					cls.removeEquivalentClass(intersectionCls);
-					cls.addEquivalentClass(copy);
+					cls.addSuperclass(copy);
 				}
 			} else {
 				Collection operands = new ArrayList(
