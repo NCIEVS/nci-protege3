@@ -128,7 +128,7 @@ public class ClonePanel extends NCIDoublePanel {
 					break;
 				label = dlg.getLabel();
 				pt = dlg.getPT().trim();
-				def = StringUtil.escapeXML(dlg.getDefinition().trim());
+				def = dlg.getDefinition().trim();
 
 				if (label.compareTo("") == 0 || pt.compareTo("") == 0) {
 					_tab.showDataError("Please complete data entry.");
@@ -157,6 +157,7 @@ public class ClonePanel extends NCIDoublePanel {
 			if (!cancelled && !hasError) {
 
 				setCursor(DEFAULT_CURSOR);
+				String str_def = StringUtil.escapeXML(def);
 				boolean canClone = populate(label, pt, def);
 				if (!canClone) {
 					MsgDialog.ok(this, "Unable to create a new concept.");
