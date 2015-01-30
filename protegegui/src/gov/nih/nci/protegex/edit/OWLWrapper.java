@@ -865,7 +865,7 @@ public class OWLWrapper {
 		if (owl_cls == null)
 			return false;
 
-		if (name.compareTo(RDFSNames.Slot.IS_DEFINED_BY) == 0) {
+		if (name.compareTo(owlModel.getRDFSIsDefinedByProperty().getPrefixedName()) == 0) {
 			java.util.Collection col = owl_cls.getIsDefinedBy();
 			if (col != null) {
 				final Object[] obs = col.toArray();
@@ -886,7 +886,7 @@ public class OWLWrapper {
 			return false;
 		}
 
-		else if (name.compareTo(OWLNames.Slot.SAME_AS) == 0) {
+		else if (name.compareTo(owlModel.getOWLSameAsProperty().getPrefixedName()) == 0) {
 			java.util.Collection col = owl_cls.getSameAs();
 			if (col != null) {
 				final Object[] obs = col.toArray();
@@ -907,13 +907,13 @@ public class OWLWrapper {
 			return false;
 		}
 
-		else if (name.compareTo(RDFSNames.Slot.SEE_ALSO) == 0) {
+		else if (name.substring(name.indexOf(":") + 1).compareTo(RDFSNames.Slot.SEE_ALSO.substring(RDFSNames.Slot.SEE_ALSO.indexOf("#") + 1)) == 0) {
 			OWLNamedClass slotvalue = owlModel.getOWLNamedClass(value);
 			if (slotvalue == null) {
 				return false;
 			}
 			
-			OWLObjectProperty slot = owlModel.getOWLObjectProperty(name);
+			RDFProperty slot = owlModel.getRDFProperty(name);
 			if (slot != null) {
 				owl_cls.removePropertyValue(slot, slotvalue);
 				return true;
@@ -922,7 +922,7 @@ public class OWLWrapper {
 		}
 
 		//
-		else if (name.compareTo(OWLNames.Slot.DIFFERENT_FROM) == 0) {
+		else if (name.compareTo(owlModel.getOWLDifferentFromProperty().getPrefixedName()) == 0) {
 			OWLNamedClass slotvalue = owlModel.getOWLNamedClass(value);
 			if (slotvalue == null) {
 				return false;
