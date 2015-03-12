@@ -1,0 +1,311 @@
+<config idBy="code" useRules="nci">
+<!-- when idBy is set to code, it implies meaningful identifiers, names, are used for the ref:ID and 
+	another property, in this case codes is used to uniquely identify concepts -->
+
+<!--This file is for the public distribution package, to outside users not NCI -->
+	
+<panel>
+   <panel-name>def</panel-name>	
+				<!-- use: term, def, complex -->
+				<!-- any property that is not associated with any of 
+					these three panels is displayed in the "simple properties"
+					panel of the "properties" sub-tab -->
+   <panel-label>Definition</panel-label>   
+   <owl-property>
+	  <name root="ComplexDefinition">DEFINITION</name>
+	  <table>	
+		<field> 
+			<element>def-definition</element>	<!-- special value: $language -->
+			<label>Definition Text</label>
+			<type>text-paragraph</type>			<!-- special values: $username, $date -->
+		</field>
+		<field>
+			<element>xml:lang</element>
+			<label>Lang</label>
+			<enumeration default="en">$language</enumeration>
+		</field>	
+	  </table>	  
+	  <table type="binary">
+	  	<field> 
+			<element>Definition_Review_Date</element>
+			<label>Review Date</label>
+			<value>$date</value>			
+		</field>
+		<field>
+			<element>def-source</element>
+			<label>Definition Source</label>
+			<enumeration default="NCI">
+			  <value>NCI</value>
+			</enumeration>
+		</field>
+		<field>
+		  <element>attr</element>
+          <label>Attribution</label>
+          <type>text-line</type>
+          </field>
+        <field>
+			<element>Definition_Reviewer_Name</element>
+			<label>Reviewer Name</label>
+			<value>$username</value>
+		</field>
+	  </table>
+   </owl-property>
+</panel>
+
+<panel>
+   <panel-name>term</panel-name>
+   <panel-label>Terms</panel-label>   
+   <owl-property>
+	<name root="ComplexTerm">FULL_SYN</name>
+	  <table>
+		<field> 
+			<element required="true">term-name</element>
+			<label>Term</label>
+			<type>text-paragraph</type>			
+		</field>
+	  	<field> 
+			<element required="true">term-group</element>
+			<label>Term Type</label>
+			<enumeration default="SY">
+			  <value>PT</value>
+			  <value>AB</value>
+			  <value>AD</value>
+			  <value>AQ</value>
+			  <value>AQS</value>
+			  <value>BR</value>
+			  <value>CA2</value>
+			  <value>CA3</value>
+			  <value>CN</value>
+			  <value>CNU</value>
+			  <value>DN</value>
+			  <value>FB</value>
+			  <value>HD</value>
+			  <value>SN</value>
+			  <value>SY</value>
+			</enumeration>
+		</field>
+		<field>
+			<element required="true">term-source</element>
+			<label>Term Source</label>
+			<enumeration default="NCI">
+			  <value>BioCarta</value>
+			  <value>CADSR</value>
+			  <value>CDC</value>
+			  <value>CDISC</value>
+			  <value>CTCAE</value>
+			  <value>CTEP</value>
+			  <value>CTRM</value>
+			  <value>DCP</value>
+			  <value>DTP</value>
+			  <value>FDA</value>
+			  <value>KEGG</value>
+			  <value>MTH</value>
+			  <value>NCI-GLOSS</value>
+			  <value>NCI</value>
+			  <value>SEER</value>
+			</enumeration>
+		</field>
+		<field>
+			<element>source-code</element>
+			<label>Code</label>
+			<type>text-line</type>
+		</field>		
+		<field>
+			<element>xml:lang</element>
+			<label>Lang</label>
+			<enumeration default="en">$language</enumeration>
+		</field>
+		<field>
+			<element>subsource-name</element>
+			<label>Subsource</label>
+			<type>text-line</type>
+		</field> 
+       	  </table>
+   </owl-property>
+</panel>
+
+<panel>
+   <panel-name>complex</panel-name>
+   <panel-label>Complex Properties</panel-label>
+   <owl-property>
+	<name root="ComplexDefinition">ALT_DEFINITION</name>
+	  <table>
+		<field> 
+			<element required="true">def-definition</element>
+			<label>Definition Text</label>		<!-- NC -->
+			<type>text-paragraph</type>			
+		</field>
+		<field>
+			<element>xml:lang</element>
+			<label>Lang</label>			<!-- NT -->
+			<enumeration default="en">$language</enumeration>
+		</field>
+	
+	  </table>	  
+	  <table type="binary">
+	  	<field> 
+			<element required="true">Definition_Review_Date</element>
+			<label>Review Date</label>		<!-- NC -->
+			<value>$date</value>			
+		</field>
+		<field>
+			<element>def-source</element>
+			<label>Definition Source</label>	<!-- NC -->
+			<enumeration default="NCI">
+			  <value>CADSR</value>
+			  <value>CDISC</value>
+			  <value>CRCH</value>
+			  <value>CTCAE</value>
+			  <value>DICOM</value>
+			  <value>FDA</value>
+			  <value>ICD03</value>
+			  <value>NCI</value>
+			  <value>NCI-GLOSS</value>
+			</enumeration>
+		</field>
+		<field>
+			<element>attr</element>
+			<label>Attribution</label>		<!-- NC -->
+			<type>text-line</type>
+		</field>
+		<field>
+			<element>Definition_Reviewer_Name</element>
+			<label>Reviewer Name</label>		<!-- NC -->
+			<value>$username</value>
+		</field>
+	  </table>
+   </owl-property>
+   <owl-property>
+	<name root="ComplexGOAnnotation">GO_Annotation</name>
+	  <table>
+		<field> 
+			<element>go-term</element>
+			<label>term</label>
+			<type>text-paragraph</type>			
+		</field>
+		<field>
+			<element>xml:lang</element>
+			<label>Lang</label>
+			<enumeration default="en">$language</enumeration>
+		</field>
+
+	  </table>	  
+	  <table type="binary">
+		<field>
+			<element required="true">go-id</element>
+			<label>GO Identifier</label>
+			<type>text-line</type>
+		</field>
+		<field>
+			<element>go-evi</element>
+			<label>Evidence Code</label>
+			<type>text-line</type>
+		</field>
+	  	<field> 
+			<element>source-date</element>
+			<label>Assignment Date</label>
+			<value>$date</value>			
+		</field>
+		<field>
+			<element>go-source</element>
+			<label>Assignment Source</label>
+			<enumeration default="NCI">
+			  <value>NCI</value>
+			  <value>NCBI</value>
+			  <value>CGAP</value>
+			</enumeration>
+		</field>
+	  </table>
+   </owl-property>
+</panel>
+
+<menu-disable>
+	<menu-bar>Project</menu-bar>
+	<menu-item>Metrics...</menu-item>
+</menu-disable>
+
+<menu-disable>
+	<menu-bar>Project</menu-bar>
+	<menu-item>Encodings...</menu-item>
+</menu-disable>
+
+<required-property>  			<!-- the entry is the rdf:ID of the required property in the OWL file -->
+	<prefLabel sync="rdfs:label">Preferred_Name</prefLabel>
+	<altLabel>FULL_SYN</altLabel>
+	<definition>DEFINITION</definition>
+	<scopeNote>DesignNote</scopeNote>
+	<editorialNote>Editor_Note</editorialNote>
+	<preDeprecationChildConcept>OLD_CHILD</preDeprecationChildConcept>
+	<preDeprecationParentConcept>OLD_PARENT</preDeprecationParentConcept>
+	<preDeprecationRole>OLD_ROLE</preDeprecationRole>
+	<preDeprecationSourceRole>OLD_SOURCE_ROLE</preDeprecationSourceRole>
+	<preDeprecationAssoc>OLD_ASSOCIATION</preDeprecationAssoc>
+	<preDeprecationSourceAssoc>OLD_SOURCE_ASSOCIATION</preDeprecationSourceAssoc>
+	<concept-status>Concept_Status</concept-status>
+	<merge-retire>Merge_Source</merge-retire>
+	<merge-surviving>Merge_Target</merge-surviving> 	<!-- is one of these two redundant? -->
+	<merge-to>Merge_Into</merge-to>			<!-- is one of these two redundant? -->
+	<split-from>Split_From</split-from>			
+</required-property>
+
+<non-transferable-property>  <!-- applies to split, merge, copy -->
+	<identifier>legacy_concept_name</identifier>
+</non-transferable-property>
+
+
+
+<required-concepts>	  			<!-- the entry is the rdf:ID of the required concept in the OWL file -->
+	<premerged-identifier>Premerged_Concepts</premerged-identifier>
+	<preretired-identifier>Preretired_Concepts</preretired-identifier>
+	<deprecated-identifier>Retired_Concept_Current_Year</deprecated-identifier>
+</required-concepts>
+
+<workflow>
+	<base-url>https://biomedgt-dev.nci.nih.gov</base-url>
+	<top-level-page>/index.php/Special:ExportList</top-level-page>
+	<prefix name="http://ncicb.nci.nih.gov/xml/owl/EVS/BiomedGT.owl#">BGT</prefix>
+	<prefix name="http://purl.bioontology.org/ontology/npo#">NPO</prefix>
+</workflow>
+
+<authorization prop="curatorial-authority">
+	<entry>
+		<authority>FDA</authority>
+		<username>_test_administrator</username>
+	</entry>
+	<entry>
+		<authority>NCI Drug Dictionary</authority>
+		<username>_test_administrator</username>
+	</entry>		
+</authorization>
+
+</config>
+
+<!--
+# a reminder of the business rules behind the configurable items
+ 
+# Preferred Name
+ 
+    * Must exist (rdfs:label can substitute)
+    * Must match the value in the NCI|PT FULL_SYN and rdfs:label
+    * Can only be one per concept
+    * Does NOT need to be unique between concepts
+ 
+# FULL_SYN
+ 
+    * One and only one NCI|PT (or HD or AQ) FULL_SYN must exist
+         * If multiple antiquated term types exist, they must be denoted internally as AQS instead of AQ.  The AQS are converted to AQ on publication.
+        * Source is configurable
+    * The NCI|PT (or HD/AQ) FULL_SYN must remain in sync with the Preferred Name
+    * A concept may have more than one FULL_SYN
+    * A concept may not have more than one of the exact same FULL_SYN. Sameness includes the value, case, and qualifiers. Qualifiers are enough to differentiate one FULL_SYN from another.  Qualifiers include: Term Type, Term Source, Code, and Language.  Any difference in any one or more of these qualifiers constitutes an allowable difference in FULL_SYN.  However, "Review Date" and "Reviewer Name" are qualifiers that should not be considered when determining uniqueness of a FULL_SYN within a concept.
+    * Does not need to be unique between concepts.  Every NCI|PT FULL_SYN may be duplicated exactly if in different concepts.
+ 
+# Definition
+ 
+    * Should exist, but does not always.
+    * Should only be one per concept. Due to previous edits some concepts currently have more than one definition. These should be cleaned up and prevented in the future.
+    * Each DEFINITION must have 1 review date, 1 review name, 0 or 1 attributes, ? and 1 Source ??
+    * No characters less than utf-8 32 allowed in definitions
+    * Definitions can include the characters :,!,? or @
+    * Double spaces are trimmed to one space unless after a . ! ?
+ -->
