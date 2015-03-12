@@ -138,6 +138,10 @@ import gov.nih.nci.protegex.workflow.SuggestionDialog;
  */
 public class NCIEditTab extends AbstractTabWidget implements ActionListener,
 		NavigationHistoryTabWidget {
+	
+	public static void main(String[] args) {
+		edu.stanford.smi.protege.Application.main(args);
+	}
 
 	public boolean displayHostResource(RDFResource resource) {
 		if (resource instanceof OWLNamedClass) {
@@ -485,6 +489,8 @@ public class NCIEditTab extends AbstractTabWidget implements ActionListener,
 			permissionHashMap.put(LOAD_BATCH, Boolean.TRUE);
 			permissionHashMap.put(EDIT_BATCH, Boolean.TRUE);
 			permissionHashMap.put(PARTONOMY_TREE, Boolean.TRUE);
+			
+			//permissionHashMap.put(CHANGE_NAMESPACE, Boolean.TRUE);
 
 			permissionHashMap.put(DELETE, Boolean.FALSE);
 			permissionHashMap.put(EDIT_RETIRED, Boolean.FALSE);
