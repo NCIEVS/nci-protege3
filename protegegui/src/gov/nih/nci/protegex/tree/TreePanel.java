@@ -3109,11 +3109,11 @@ public class TreePanel extends JPanel implements DropTargetListener,
 
 		if (item.getType() == TYPE_PROPERTY)
 			addProperty(item.getName(), item.getValue(), null);
-		else if (item.getType() == TYPE_RESTRICTION) {
-
+		else if (item.getType() == TYPE_RESTRICTION)
 			addRestriction(item.getCls(), item.getIsDefining());
-		}
-		if (item.getType() == TYPE_PARENT)
+		else if (item.getType() == TYPE_ASSOCIATION)
+			this.addAssociation(item.getProperty(), item.getCls(), item.getName(), item.getValue());
+		else if (item.getType() == TYPE_PARENT)
 			addParent((Cls) item.getCls());
 
 		edit_tree.repaint();
