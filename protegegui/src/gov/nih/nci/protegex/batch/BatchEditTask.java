@@ -128,8 +128,12 @@ public class BatchEditTask extends BatchTask {
 					OWLNamedClass hostClass = wrapper.getOWLNamedClass(name);
 					OWLNamedClass targetClass = wrapper
 							.getOWLNamedClass(attributeName);
-					retval = wrapper.removeDirectSuperclass(hostClass,
+					if (targetClass.isDefinedClass()) {
+						retval = wrapper.removeEquivalentDefinitionNew(hostClass, targetClass);
+					} else {
+						retval = wrapper.removeDirectSuperclass(hostClass,
 							targetClass);
+					}
 				}
 
 				else if (attribute.compareToIgnoreCase("association") == 0) {
