@@ -199,8 +199,12 @@ public class DataHandler {
 		
 		boolean isRetired = wrapper.isRetired((OWLNamedClass) cls);
 		if (isRetired) {
-			filter.setErrorMessage("retired concepts are not editable.");
-			return Status.FAILURE;
+			if (tab.isActionAllowed(tab.EDIT_RETIRED)) {
+				return Status.SUCCESSFUL;
+			} else {
+				filter.setErrorMessage("retired concepts are not editable.");
+				return Status.FAILURE;
+			}
 		}
 
 		filter.setErrorMessage("");
