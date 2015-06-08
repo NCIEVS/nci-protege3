@@ -504,6 +504,12 @@ public class BatchEditTask extends BatchTask {
 											+ attributevalue_2
 											+ ") already exists.";
 									w.add(error_msg);
+								} else if (attributevalue_2
+										.equalsIgnoreCase("NA")) {
+									String error_msg = " -- property " + "("
+											+ attributename
+											+ ") new value is not specified.";
+									w.add(error_msg);
 								}
 							} else {
 								if (this.tab.getFilter().checkBatchProperty(
