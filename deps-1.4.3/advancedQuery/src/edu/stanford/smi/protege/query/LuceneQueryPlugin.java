@@ -141,6 +141,9 @@ public class LuceneQueryPlugin extends AbstractTabWidget {
     private JPanel pnlQueryBottom;
 
     private JButton btnSearch;
+    
+    private Thread searchThread;
+    private List<FrameWithBrowserText> results;
 
     private PagedFrameList resultsComponent;
 
@@ -507,46 +510,85 @@ public class LuceneQueryPlugin extends AbstractTabWidget {
      * queries then either an {@link AndQuery} or an {@link OrQuery} are used. Passes the {@link Query} on to
      * {@link LuceneQueryPlugin#doQuery(Query)} if the query is valid.
      */
-    public void doSearch() {
-        btnSearch.setEnabled(false);
-        resultsComponent.setHeaderLabel(SEARCH_IN_PROGRESS);
-        final Cursor oldCursor = getCursor();
-        setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-        searchResultsList.setListData(new String[] { SEARCHING_ITEM });
+	public void doSearch() {
+		// btnSearch.setEnabled(false);
+		if (btnSearch.getText().equalsIgnoreCase("Search")) {
+			btnSearch.setText("Cancel");
 
-        // start searching in a new thread
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                int hits = 0;
-                boolean error = false;
-                try {
-                    VisitableQuery query = QueryUtil.getQueryFromListPanel(queriesListPanel, btnAndQuery.isSelected());
-                    hits = doQuery(query);
-                    indicateSearchDone(hits, false);
-                    setViewButtonsEnabled((hits > 0));
-                } catch (InvalidQueryException e) {
-                    final String msg = "Invalid query: " + e.getMessage();
-                    System.err.println(msg);
-                    error = true;
-                    searchResultsList.setListData(new String[] { msg });
-                } catch (Exception ex) {
-                    // IOException happens for "sounds like" queries when the
-                    // ontology hasn't been indexed
-                    final String msg = "An exception occurred during the query.\n"
-                            + "This possibly happened because this ontology hasn't been indexed.\n" + ex.getMessage();
-                    JOptionPane.showMessageDialog(LuceneQueryPlugin.this, msg, "Error", JOptionPane.ERROR_MESSAGE);
-                    error = true;
-                    searchResultsList.setListData(new String[] { "An exception occurred during the query." });
-                } finally {
-                    setCursor(oldCursor);
-                    btnSearch.setEnabled(true);
-                    if (error) {
-                        indicateSearchDone(hits, true);
-                    }
-                }
-            }
-        });
-    }
+			resultsComponent.setHeaderLabel(SEARCH_IN_PROGRESS);
+			// final Cursor oldCursor = getCursor();
+			// setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+			searchResultsList.setListData(new String[] { SEARCHING_ITEM });
+
+			searchThread = new Thread(new Runnable() {
+				public void run() {
+					boolean error = false;
+					try {
+
+						VisitableQuery query = QueryUtil.getQueryFromListPanel(
+								queriesListPanel, btnAndQuery.isSelected());
+						// sleep to simulate long execution, remove this before
+						// checking in
+						Thread.sleep(10000);
+						results = new DoQueryJob(kb, query).execute();
+
+						// start searching in a new thread
+						SwingUtilities.invokeLater(new Runnable() {
+							public void run() {
+								System.out.println("Invoking later code");
+								int hits = 0;
+
+								hits = processResults(query, results);
+								indicateSearchDone(hits, false);
+								setViewButtonsEnabled((hits > 0));
+
+							}
+						});
+
+					} catch (InvalidQueryException e) {
+						final String msg = "Invalid query: " + e.getMessage();
+						System.err.println(msg);
+						error = true;
+						searchResultsList.setListData(new String[] { msg });
+
+					} catch (InterruptedException e) {
+						System.out.println("thread stop sleeping"
+								+ e.getMessage());
+						btnSearch.setText("Search");
+						indicateSearchDone(0, true);
+						error = true;
+						searchResultsList
+								.setListData(new String[] { "User cancelled the query." });
+					} catch (Exception ex) {
+						// IOException happens for "sounds like"
+						// queries when the
+						// ontology hasn't been indexed
+						final String msg = "An exception occurred during the query.\n"
+								+ "This possibly happened because this ontology hasn't been indexed.\n"
+								+ ex.getMessage();
+						JOptionPane.showMessageDialog(LuceneQueryPlugin.this,
+								msg, "Error", JOptionPane.ERROR_MESSAGE);
+						error = true;
+						searchResultsList
+								.setListData(new String[] { "An exception occurred during the query." });
+					} finally {
+						// setCursor(oldCursor);
+						btnSearch.setText("Search");
+						// btnSearch.setEnabled(true);
+						if (error) {
+							indicateSearchDone(0, true);
+						}
+					}
+				}
+			});
+			searchThread.start();
+
+			System.out.println("kicked off search");
+		} else {
+			System.out.println("Kill the search");
+			searchThread.interrupt();
+		}
+	}
 
     private void indicateSearchDone(int hits, boolean error) {
         String matchString;
@@ -570,39 +612,44 @@ public class LuceneQueryPlugin extends AbstractTabWidget {
      * @see KnowledgeBase#executeQuery(Query)
      * @return int number of hits for the query
      */
-    private int doQuery(Query q) {
-        List<FrameWithBrowserText> results = null;
-        if (q != null) {
-            results = new DoQueryJob(kb, q).execute();
-            Collection<FrameWithBrowserText> toRemove = new HashSet<FrameWithBrowserText>();
-            for (FrameWithBrowserText wrappedFrame : results) {
-                Frame frame = wrappedFrame.getFrame();
-                if (!configuration.isSearchResultsIncludeClasses() && frame instanceof Cls) {
-                    toRemove.add(wrappedFrame);
-                }
-                if (!configuration.isSearchResultsIncludeProperties() && frame instanceof Slot) {
-                    toRemove.add(wrappedFrame);
-                }
-                if (!configuration.isSearchResultsIncludeIndividuals() && frame instanceof SimpleInstance) {
-                    toRemove.add(wrappedFrame);
-                }
-            }
-            results.removeAll(toRemove);
-        }
-        int hits = results != null ? results.size() : 0;
-        if (hits == 0) {
-            queryRenderer.setQuery(null); // don't bold anything
-            resultsComponent.setAllFrames(new ArrayList<FrameWithBrowserText>());
-            searchResultsList.setListData(new String[] { SEARCH_NO_RESULTS_FOUND });
-        } else {
-            queryRenderer.setQuery(q); // bold the matching results
-            resultsComponent.setAllFrames(results);
-            resultsComponent.setPageSize(configuration.getMaxResultsDisplayed());
-            resultsComponent.setSearchType(configuration.getFilterResultsSearchType());
-            searchResultsList.setSelectedIndex(0);
-        }
-        return hits;
-    }
+	private int processResults(VisitableQuery q, List<FrameWithBrowserText> results) {
+
+		Collection<FrameWithBrowserText> toRemove = new HashSet<FrameWithBrowserText>();
+		for (FrameWithBrowserText wrappedFrame : results) {
+			Frame frame = wrappedFrame.getFrame();
+			if (!configuration.isSearchResultsIncludeClasses()
+					&& frame instanceof Cls) {
+				toRemove.add(wrappedFrame);
+			}
+			if (!configuration.isSearchResultsIncludeProperties()
+					&& frame instanceof Slot) {
+				toRemove.add(wrappedFrame);
+			}
+			if (!configuration.isSearchResultsIncludeIndividuals()
+					&& frame instanceof SimpleInstance) {
+				toRemove.add(wrappedFrame);
+			}
+		}
+		results.removeAll(toRemove);
+
+		int hits = results != null ? results.size() : 0;
+		if (hits == 0) {
+			queryRenderer.setQuery(null); // don't bold anything
+			resultsComponent
+					.setAllFrames(new ArrayList<FrameWithBrowserText>());
+			searchResultsList
+					.setListData(new String[] { SEARCH_NO_RESULTS_FOUND });
+		} else {
+			queryRenderer.setQuery(q); // bold the matching results
+			resultsComponent.setAllFrames(results);
+			resultsComponent
+					.setPageSize(configuration.getMaxResultsDisplayed());
+			resultsComponent.setSearchType(configuration
+					.getFilterResultsSearchType());
+			searchResultsList.setSelectedIndex(0);
+		}
+		return hits;
+	}
 
     public VisitableQuery getQuery() {
         VisitableQuery query = null;
