@@ -529,7 +529,7 @@ public class LuceneQueryPlugin extends AbstractTabWidget {
 								queriesListPanel, btnAndQuery.isSelected());
 						// sleep to simulate long execution, remove this before
 						// checking in
-						Thread.sleep(10000);
+						//Thread.sleep(10000);
 						results = new DoQueryJob(kb, query).execute();
 
 						// start searching in a new thread
