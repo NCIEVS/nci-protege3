@@ -516,6 +516,15 @@ public class BatchEditTask extends BatchTask {
 											+ attributename
 											+ ") new value is not specified.";
 									w.add(error_msg);
+								} else if (this.tab.getFilter().checkBatchProperty(
+										attributename, attributevalue_2)
+										&& this.tab
+												.getFilter()
+												.checkBatchPropertyNotFullSynPT(
+														attributename, attributevalue_2)) {
+
+								} else {
+									w.add(tab.getFilter().getErrorMessage());
 								}
 							} else {
 								if (this.tab.getFilter().checkBatchProperty(
