@@ -383,12 +383,8 @@ public class NCIEditFilter {
     private boolean checkComplexProperty(String p_name, String value, boolean batch, String warning) {
 
         if (tab.isComplexProp(p_name)) {
-            if (batch) {
-                CustomizedAnnotationData cad = NCIEditTab.getCustomizedAnnotationData(p_name);
-                return validateComplexProperty(cad, value, warning);
-            } else {
-                return ComplexPropertyParser.parseXML(value).size() > 1;
-            }
+        	CustomizedAnnotationData cad = NCIEditTab.getCustomizedAnnotationData(p_name);
+        	return validateComplexProperty(cad, value, warning);
 
         } else {
         	if (batch) {
