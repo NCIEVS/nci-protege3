@@ -3,6 +3,7 @@ package gov.nih.nci.protegex.batch;
 import edu.stanford.smi.protege.util.Log;
 import edu.stanford.smi.protegex.owl.model.OWLModel;
 import edu.stanford.smi.protegex.owl.model.OWLNamedClass;
+import edu.stanford.smi.protegex.owl.model.RDFSClass;
 import gov.nih.nci.protegex.edit.NCIEditTab;
 import gov.nih.nci.protegex.edit.OWLWrapper;
 import gov.nih.nci.protegex.util.ComplexPropertyParser;
@@ -134,12 +135,15 @@ public class BatchEditTask extends BatchTask {
 					OWLNamedClass hostClass = wrapper.getOWLNamedClass(name);
 					OWLNamedClass targetClass = wrapper
 							.getOWLNamedClass(attributeName);
-					if (targetClass.isDefinedClass()) {
-						retval = wrapper.removeEquivalentDefinitionNew(hostClass, targetClass);
-					} else {
+					
+					RDFSClass definition = hostClass.getDefinition();
+					if (definition == null) {
 						retval = wrapper.removeDirectSuperclass(hostClass,
-							targetClass);
+								targetClass);
+					} else {
+						retval = wrapper.removeEquivalentDefinitionNew(hostClass, targetClass);
 					}
+					
 				}
 
 				else if (attribute.compareToIgnoreCase("association") == 0) {
