@@ -49,7 +49,7 @@ import edu.stanford.smi.protege.query.menu.ConfigureLuceneAction;
 import edu.stanford.smi.protege.query.menu.InstallIndiciesAction;
 import edu.stanford.smi.protege.query.menu.QueryUIConfiguration;
 import edu.stanford.smi.protege.query.menu.SlotFilterType;
-import edu.stanford.smi.protege.query.nci.NCICreateWorkflowAction;
+
 import edu.stanford.smi.protege.query.nci.NCIEditAction;
 import edu.stanford.smi.protege.query.nci.NCIViewAction;
 import edu.stanford.smi.protege.query.querytypes.VisitableQuery;
@@ -266,7 +266,7 @@ public class LuceneQueryPlugin extends AbstractTabWidget {
         editButton = resultsComponent.addHeaderButton(getEditAction());
         viewButton = resultsComponent.addHeaderButton(getViewAction());
         // init de create workflow action
-        createWorkflowItemAction = getCreateWorkflowItemAction();
+        //createWorkflowItemAction = getCreateWorkflowItemAction();
 
         if (RemoteClientFrameStore.isOperationAllowed(getKnowledgeBase(), ExportToCsvAction.EXPORT_TO_CSV_OPERATION)) {
             resultsComponent.addHeaderButton(createExportAction());
@@ -316,12 +316,7 @@ public class LuceneQueryPlugin extends AbstractTabWidget {
         return viewAction;
     }
 
-    private AllowableAction getCreateWorkflowItemAction() {
-        if (createWorkflowItemAction == null) {
-            createWorkflowItemAction = new NCICreateWorkflowAction("Create workflow item", searchResultsList);
-        }
-        return createWorkflowItemAction;
-    }
+    
 
     protected JPopupMenu createPopupMenu() {
         JPopupMenu menu = null;
@@ -332,7 +327,7 @@ public class LuceneQueryPlugin extends AbstractTabWidget {
                 menu.add(getEditAction());
                 menu.addSeparator();
             }
-            menu.add(getCreateWorkflowItemAction());
+            //menu.add(getCreateWorkflowItemAction());
         }
         return menu;
     }
