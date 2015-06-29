@@ -143,7 +143,8 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 	private JButton reviewButton_Modify, saveButton_Modify,
 			cancelButton_Modify, newButton_Modify, deleteButton_Modify;
 
-	private JLabel codeLabel = null;
+	private JLabel codeLabel = new JLabel("  code: ");
+	private JTextField bar1 = new JTextField("");
 
 	private JTabbedPane tabbedPane_Modify = null;
 
@@ -295,13 +296,10 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 
 			if (code != null) {
 				code = wrapper.getPlainString(code);
-				if (code.compareTo("0") != 0) {
-					codeLabel.setText("   code: " + code + "   ");
-				} else {
-					codeLabel.setText("");
-				}
+				bar1.setText(code);
+				
 			} else {
-				codeLabel.setText("");
+				bar1.setText("");
 			}
 
 			// 091406
@@ -379,7 +377,7 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 
 			cancelButton_Modify.setEnabled(false);
 		} else {
-			codeLabel.setText("");
+			bar1.setText("");
 		}
 	}
 
@@ -1811,7 +1809,7 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 			}
 		});
 
-		codeLabel = new JLabel("");
+		
 		selectedInstance = getSelectedInstance();
 		// 120606
 		if (AdvancedQuery.equals("AdvancedQuery")) {
@@ -1819,6 +1817,16 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 		}
 
 		code = null;
+		
+		// set up little panel for code label and value to make it selectable		
+		JPanel foo1 = new JPanel();
+		foo1.setLayout(new BorderLayout());
+		foo1.add(codeLabel,BorderLayout.WEST);
+		
+		bar1.setEditable(false);
+		bar1.setBorder(null);
+		foo1.add(bar1,BorderLayout.CENTER);
+		
 		String preferred_name = null;
 		if (selectedInstance != null
 				&& selectedInstance instanceof OWLNamedClass) {
@@ -1831,14 +1839,11 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 			Cls cls = (Cls) selectedInstance;
 			String cls_name = wrapper.getInternalName(cls);
 
-			// if (code != null &&
-			// code.compareTo(selectedInstance.getBrowserText()) != 0)
 			if (code != null && code.compareTo(cls_name) != 0) {
-				codeLabel.setText("   code: " + code + "   ");
+				bar1.setText(code);
 			} else {
-				codeLabel.setText("   code: " + "   ");
+				bar1.setText("   ");
 			}
-
 			preferred_name = wrapper.getPropertyValue((Cls) selectedInstance,
 					NCIEditTab.PREFLABEL);
 
@@ -1879,6 +1884,7 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 		ptTextField.setPreferredSize(new Dimension(300, 22));
 		ptPanel.add(ptLabel, BorderLayout.WEST);
 		ptPanel.add(ptTextField, BorderLayout.CENTER);
+		ptPanel.add(foo1, BorderLayout.EAST);
 
 		RDFProperty prop = wrapper.getRDFProperty(NCIEditTab.PREFLABEL);
 		if (prop == null) {
@@ -1888,7 +1894,7 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 
 		RDFProperty cprop = wrapper.getRDFProperty(wrapper.getCodeSlotName());
 		if (cprop != null) {
-			ptPanel.add(codeLabel, BorderLayout.EAST);
+			ptPanel.add(foo1, BorderLayout.EAST);
 		}
 
 		labelPanel.add(ptPanel, BorderLayout.CENTER);
