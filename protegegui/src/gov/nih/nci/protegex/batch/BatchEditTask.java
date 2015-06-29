@@ -95,9 +95,15 @@ public class BatchEditTask extends BatchTask {
 			boolean retval = false;
 			if (edit.compareToIgnoreCase("new") == 0) {
 				if (attribute.compareToIgnoreCase("property") == 0) {
-
-					retval = wrapper.addAnnotationProperty(name, attributeName,
-							attributeValue);
+					if (attributeName.compareToIgnoreCase(NCIEditTab.ALTLABEL) == 0) {
+						OWLNamedClass hostClass = wrapper.getOWLNamedClass(name);
+						retval = wrapper.addAnnotationProperty(hostClass, NCIEditTab.ALTLABEL, 
+								owlModel.createRDFSLiteral(attributeValue, owlModel.getSystemFrames().getXmlLiteralType()));
+					} else {
+						retval = wrapper.addAnnotationProperty(name, attributeName,
+								attributeValue);
+						
+					}				
 
 				} else if (attribute.compareToIgnoreCase("parent") == 0) {
 					OWLNamedClass hostClass = wrapper.getOWLNamedClass(name);
