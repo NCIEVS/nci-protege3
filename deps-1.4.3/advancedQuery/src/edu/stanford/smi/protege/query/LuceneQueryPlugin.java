@@ -522,23 +522,12 @@ public class LuceneQueryPlugin extends AbstractTabWidget {
 
 						VisitableQuery query = QueryUtil.getQueryFromListPanel(
 								queriesListPanel, btnAndQuery.isSelected());
-						// sleep to simulate long execution, remove this before
-						// checking in
-						//Thread.sleep(10000);
+						Thread.sleep(100);
 						results = new DoQueryJob(kb, query).execute();
+						int hits = processResults(query, results);														
+						indicateSearchDone(hits, false);						
+						setViewButtonsEnabled((hits > 0));
 
-						// start searching in a new thread
-						SwingUtilities.invokeLater(new Runnable() {
-							public void run() {
-								System.out.println("Invoking later code");
-								int hits = 0;
-
-								hits = processResults(query, results);
-								indicateSearchDone(hits, false);
-								setViewButtonsEnabled((hits > 0));
-
-							}
-						});
 
 					} catch (InvalidQueryException e) {
 						final String msg = "Invalid query: " + e.getMessage();
