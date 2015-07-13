@@ -33,8 +33,6 @@ public class DoQueryJob extends ProtegeJob {
     @SuppressWarnings("unchecked")
     @Override
     public List<FrameWithBrowserText> run() throws ProtegeException {
-    	
-    	
         Collection<Frame> results = getKnowledgeBase().executeQuery(query);
         List<FrameWithBrowserText> wrappedResults = new ArrayList<FrameWithBrowserText>();
         RemoteSession session = null;
