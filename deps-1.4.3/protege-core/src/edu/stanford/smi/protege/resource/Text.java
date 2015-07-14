@@ -31,7 +31,7 @@ public final class Text {
     }
 
     public static String getBuildInfo() {
-        return "Build 1.4.4";
+        return "Build 1.5.0";
     }
 
     public static String getProgramName() {
@@ -43,7 +43,7 @@ public final class Text {
     }
 
     public static String getProgramNameAndVersion() {
-        return "NCI " + getProgramName() + " 1.4.4 " + getStatus();
+        return "NCI " + getProgramName() + " 1.5.0 " + getStatus();
     }
 
     public static String getBuildNumber() {
