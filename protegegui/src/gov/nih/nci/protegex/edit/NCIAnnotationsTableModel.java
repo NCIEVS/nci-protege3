@@ -474,8 +474,8 @@ public class NCIAnnotationsTableModel extends AbstractTableModel {
 		} else if (value instanceof RDFResource) {
 			return null;
 
-		} else if (value instanceof String) {
-		    return null;
+		//} else if (value instanceof String) {
+		    //return null;
 		} else {
 			HashMap<String, String> hmap = ComplexPropertyParser
 					.parseXML((String) values_get(row));
@@ -924,8 +924,9 @@ public class NCIAnnotationsTableModel extends AbstractTableModel {
 						// value2xml_map.put(text, new_prop_value_obj);
 						value2xml_array.add(i,
 								getStringValue(new_prop_value_obj));
-						// String language = getLanguage(i);
+						//String language = getLanguage(i);
 						// 010307
+						
 						String language = "en";
 						if (new_prop_value_obj instanceof RDFSLiteral) {
 							language = ((RDFSLiteral) new_prop_value_obj)
@@ -983,7 +984,9 @@ public class NCIAnnotationsTableModel extends AbstractTableModel {
 
 		if (value instanceof RDFSLiteral) {
 			RDFSLiteral literal = (RDFSLiteral) value;
-			String language = literal.getLanguage();
+			HashMap<String, String> hmap = ComplexPropertyParser
+					.parseXML((String) literal.getString());
+			String language = hmap.get("xml:lang");
 			values.add(createNewValue(text, language));
 		} else {
 			values.add(text);
