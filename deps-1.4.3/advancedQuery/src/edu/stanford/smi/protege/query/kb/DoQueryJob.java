@@ -25,6 +25,10 @@ public class DoQueryJob extends ProtegeJob {
     
     private Query query;
     
+    private boolean is_interrupted = false;
+    
+    public boolean isInterrupted() { return is_interrupted; }
+    
     public DoQueryJob(KnowledgeBase kb, Query query) {
         super(kb);
         this.query = query;
@@ -45,6 +49,11 @@ public class DoQueryJob extends ProtegeJob {
         try {
         	boolean isOWL = (getKnowledgeBase() instanceof OWLModel);
             for (Frame result : results) {
+            	if (Thread.interrupted()) {
+            		wrappedResults = new ArrayList<FrameWithBrowserText>();
+            		is_interrupted = true;
+            		throw new ProtegeException();
+            	}
 				if (isOWL && result instanceof RDFResource
 						&& ((RDFResource) result).isAnonymous()) {
 					continue;
@@ -53,7 +62,7 @@ public class DoQueryJob extends ProtegeJob {
 					continue;
 				}
                 wrappedResults.add(new FrameWithBrowserText(result, result.getBrowserText(), 
-                		((Instance) result).getDirectTypes(), ProtegeUI.getPotentialIconName(result)));
+                		((Instance) result).getDirectTypes(), ProtegeUI.getPotentialIconName(result)));               
             }
             Collections.sort(wrappedResults, new FrameWithBrowserTextComparator());
             results = new ArrayList<Frame>();

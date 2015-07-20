@@ -30,6 +30,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 
 import edu.stanford.smi.protege.action.ExportToCsvAction;
 import edu.stanford.smi.protege.action.ExportToCsvUtil;
@@ -49,7 +50,6 @@ import edu.stanford.smi.protege.query.menu.ConfigureLuceneAction;
 import edu.stanford.smi.protege.query.menu.InstallIndiciesAction;
 import edu.stanford.smi.protege.query.menu.QueryUIConfiguration;
 import edu.stanford.smi.protege.query.menu.SlotFilterType;
-
 import edu.stanford.smi.protege.query.nci.NCIEditAction;
 import edu.stanford.smi.protege.query.nci.NCIViewAction;
 import edu.stanford.smi.protege.query.querytypes.VisitableQuery;
@@ -142,7 +142,7 @@ public class LuceneQueryPlugin extends AbstractTabWidget {
 
     private JButton btnSearch;
     
-    private Thread searchThread;
+    private SwingWorker searchThread;
     private List<FrameWithBrowserText> results;
 
     private PagedFrameList resultsComponent;
@@ -505,85 +505,75 @@ public class LuceneQueryPlugin extends AbstractTabWidget {
      * queries then either an {@link AndQuery} or an {@link OrQuery} are used. Passes the {@link Query} on to
      * {@link LuceneQueryPlugin#doQuery(Query)} if the query is valid.
      */
-	public void doSearch() {
-		// btnSearch.setEnabled(false);
-		if (btnSearch.getText().equalsIgnoreCase("Search")) {
-			btnSearch.setText("Cancel");
+    public void doSearch() {
+    	// btnSearch.setEnabled(false);
+    	if (btnSearch.getText().equalsIgnoreCase("Search")) {
+    		btnSearch.setText("Cancel");
 
-			resultsComponent.setHeaderLabel(SEARCH_IN_PROGRESS);
-			// final Cursor oldCursor = getCursor();
-			// setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-			searchResultsList.setListData(new String[] { SEARCHING_ITEM });
+    		resultsComponent.setHeaderLabel(SEARCH_IN_PROGRESS);
+    		// final Cursor oldCursor = getCursor();
+    		// setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+    		searchResultsList.setListData(new String[] { SEARCHING_ITEM });
 
-			searchThread = new Thread(new Runnable() {
-				public void run() {
-					boolean error = false;
-					try {
+    		searchThread = new SwingWorker<Void, Void> () {
 
-						VisitableQuery query = QueryUtil.getQueryFromListPanel(
-								queriesListPanel, btnAndQuery.isSelected());
-						// sleep to simulate long execution, remove this before
-						// checking in
-						Thread.sleep(10000);
-						results = new DoQueryJob(kb, query).execute();
+    			public Void doInBackground() {
+    				boolean error = false;
+    				try {
+    					VisitableQuery query = QueryUtil.getQueryFromListPanel(
+    							queriesListPanel, btnAndQuery.isSelected());
+    					
+    					DoQueryJob dqj = new DoQueryJob(kb, query);
+    					
+    					results = dqj.execute();	
+    					
+    					if (dqj.isInterrupted()) {
+    						btnSearch.setText("Search");
+    						indicateSearchDone(0, true);
+    						error = true;
+    						searchResultsList
+    						.setListData(new String[] { "User cancelled the query or thread was otherwise interupted." });
 
-						// start searching in a new thread
-						SwingUtilities.invokeLater(new Runnable() {
-							public void run() {
-								System.out.println("Invoking later code");
-								int hits = 0;
+    					} else {
+    						System.out.println("Invoking later code");
+    						int hits = processResults(query, results);
+    						indicateSearchDone(hits, false);
+    						setViewButtonsEnabled((hits > 0));
+    					}
+    				} catch (InvalidQueryException e) {
 
-								hits = processResults(query, results);
-								indicateSearchDone(hits, false);
-								setViewButtonsEnabled((hits > 0));
+    					final String msg = "Invalid query: " + e.getMessage();
+    					System.err.println(msg);
+    					error = true;
+    					searchResultsList.setListData(new String[] { msg });
 
-							}
-						});
+    				} catch (Exception ex) {
+    					final String msg = "An exception occurred during the query.\n"
+    							+ "This possibly happened because this ontology hasn't been indexed.\n"
+    							+ ex.getMessage();
+    					JOptionPane.showMessageDialog(LuceneQueryPlugin.this,
+    							msg, "Error", JOptionPane.ERROR_MESSAGE);
+    					error = true;
+    					searchResultsList
+    					.setListData(new String[] { "An exception occurred during the query." });
+    				} finally {
+    					// setCursor(oldCursor);
+    					btnSearch.setText("Search");
+    					// btnSearch.setEnabled(true);
+    					if (error) {
+    						indicateSearchDone(0, true);
+    					}
+    				}
+					return null;
+    			}
+    		};
+    		searchThread.execute();
 
-					} catch (InvalidQueryException e) {
-						final String msg = "Invalid query: " + e.getMessage();
-						System.err.println(msg);
-						error = true;
-						searchResultsList.setListData(new String[] { msg });
-
-					} catch (InterruptedException e) {
-						System.out.println("thread stop sleeping"
-								+ e.getMessage());
-						btnSearch.setText("Search");
-						indicateSearchDone(0, true);
-						error = true;
-						searchResultsList
-								.setListData(new String[] { "User cancelled the query." });
-					} catch (Exception ex) {
-						// IOException happens for "sounds like"
-						// queries when the
-						// ontology hasn't been indexed
-						final String msg = "An exception occurred during the query.\n"
-								+ "This possibly happened because this ontology hasn't been indexed.\n"
-								+ ex.getMessage();
-						JOptionPane.showMessageDialog(LuceneQueryPlugin.this,
-								msg, "Error", JOptionPane.ERROR_MESSAGE);
-						error = true;
-						searchResultsList
-								.setListData(new String[] { "An exception occurred during the query." });
-					} finally {
-						// setCursor(oldCursor);
-						btnSearch.setText("Search");
-						// btnSearch.setEnabled(true);
-						if (error) {
-							indicateSearchDone(0, true);
-						}
-					}
-				}
-			});
-			searchThread.start();
-
-			System.out.println("kicked off search");
-		} else {
-			System.out.println("Kill the search");
-			searchThread.interrupt();
-		}
-	}
+    	} else {
+    		System.out.println("Kill the search");
+    		searchThread.cancel(true);
+    	}
+    }
 
     private void indicateSearchDone(int hits, boolean error) {
         String matchString;
