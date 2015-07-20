@@ -29,7 +29,6 @@ import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
 import edu.stanford.smi.protege.action.ExportToCsvAction;
@@ -523,16 +522,16 @@ public class LuceneQueryPlugin extends AbstractTabWidget {
     					VisitableQuery query = QueryUtil.getQueryFromListPanel(
     							queriesListPanel, btnAndQuery.isSelected());
     					
-    					DoQueryJob dqj = new DoQueryJob(kb, query);
+    					results = new DoQueryJob(kb, query).execute();
     					
-    					results = dqj.execute();	
     					
-    					if (dqj.isInterrupted()) {
+    					
+    					if (Thread.interrupted()) {
     						btnSearch.setText("Search");
     						indicateSearchDone(0, true);
     						error = true;
     						searchResultsList
-    						.setListData(new String[] { "User cancelled the query or thread was otherwise interupted." });
+    						.setListData(new String[] { "User cancelled the query or thread was otherwise interrupted." });
 
     					} else {
     						System.out.println("Invoking later code");

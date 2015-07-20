@@ -25,9 +25,6 @@ public class DoQueryJob extends ProtegeJob {
     
     private Query query;
     
-    private boolean is_interrupted = false;
-    
-    public boolean isInterrupted() { return is_interrupted; }
     
     public DoQueryJob(KnowledgeBase kb, Query query) {
         super(kb);
@@ -40,6 +37,7 @@ public class DoQueryJob extends ProtegeJob {
     	
     	
         Collection<Frame> results = getKnowledgeBase().executeQuery(query);
+       
         List<FrameWithBrowserText> wrappedResults = new ArrayList<FrameWithBrowserText>();
         RemoteSession session = null;
         if (getKnowledgeBase().getProject().isMultiUserServer()) { // disable frame calculator stuff
@@ -49,11 +47,7 @@ public class DoQueryJob extends ProtegeJob {
         try {
         	boolean isOWL = (getKnowledgeBase() instanceof OWLModel);
             for (Frame result : results) {
-            	if (Thread.interrupted()) {
-            		wrappedResults = new ArrayList<FrameWithBrowserText>();
-            		is_interrupted = true;
-            		throw new ProtegeException();
-            	}
+            	
 				if (isOWL && result instanceof RDFResource
 						&& ((RDFResource) result).isAnonymous()) {
 					continue;
