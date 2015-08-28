@@ -610,36 +610,36 @@ public class NCIEditFilter {
         return checkXMLNCNameCompliance(warning, name);
     }
 
-    public static boolean checkXMLNCNameCompliance(String value) {
-    	byte ptext[] = value.getBytes();
+	public static boolean checkXMLNCNameCompliance(String value) {
+		byte ptext[] = value.getBytes();
 		try {
 			value = new String(ptext, "ASCII");
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        if (value == null)
-            return false;
-        if (value.length() == 0)
-            return false;
+		if (value == null)
+			return false;
+		if (value.length() == 0)
+			return false;
 
-        // Leading character must be a letter or '_'
-        char c = value.charAt(0);
+		// Leading character must be a letter or '_'
+		char c = value.charAt(0);
 
-        if (!(Character.isLetter(c) || c == '_')) {
-            return false;
-        }
+		if (!(Character.isLetter(c) || c == '_')) {
+			return false;
+		}
 
-        // All characters must be a letter, a digit, or in {'.', '-', '_'}
-        // NCICB disallows period.
-        for (int i = 1; i < value.length(); i++) {
-            c = value.charAt(i);
-            if (!(Character.isLetter(c) || Character.isDigit(c) || c == '-' || c == '_')) {
-                return false;
-            }
-        }
-        return true;
-    }
+		// All characters must be a letter, a digit, or in {'.', '-', '_'}
+		// NCICB disallows period.
+		for (int i = 1; i < value.length(); i++) {
+			c = value.charAt(i);
+			if (!(Character.isLetter(c) || Character.isDigit(c) || c == '-' || c == '_')) {
+				return false;
+			}
+		}
+		return true;
+	}
 
     private boolean checkXMLNCNameCompliance(String warning, String value) {
         // Leading character must be a letter or '_'
