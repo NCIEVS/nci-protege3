@@ -14,6 +14,7 @@ import gov.nih.nci.protegex.util.ComplexPropertyParser;
 import gov.nih.nci.protegex.util.SemanticTypeUtil;
 import gov.nih.nci.protegex.util.StringUtil;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -610,6 +611,13 @@ public class NCIEditFilter {
     }
 
     public static boolean checkXMLNCNameCompliance(String value) {
+    	byte ptext[] = value.getBytes();
+		try {
+			value = new String(ptext, "ASCII");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         if (value == null)
             return false;
         if (value.length() == 0)
