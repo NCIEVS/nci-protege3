@@ -613,7 +613,7 @@ public class NCIEditFilter {
 	public static boolean checkXMLNCNameCompliance(String value) {
 		byte ptext[] = value.getBytes();
 		try {
-			value = new String(ptext, "ASCII");
+			value = new String(ptext, "US-ASCII");
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
