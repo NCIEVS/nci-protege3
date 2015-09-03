@@ -21,6 +21,8 @@ import gov.nih.nci.protegex.util.ComplexPropertyParser;
 import gov.nih.nci.protegex.util.MsgDialog;
 
 import java.awt.BorderLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -127,6 +129,12 @@ public class SplitPanel extends NCIDoublePanel {
 			boolean hasError = true;
 			while (!cancelled) {
 				NewClsDialog dlg = new NewClsDialog(_tab, false);
+				dlg.addWindowListener(new WindowAdapter() {
+					public void windowClosing(WindowEvent we) {
+						dlg.cancelButtonPressed = true;
+				    }
+				   
+				});
 				dlg.init(label, pt, "");
 				cancelled = dlg.cancelButtonPressed;
 
