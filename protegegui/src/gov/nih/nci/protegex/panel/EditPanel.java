@@ -682,7 +682,18 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 								.showErrorMessageDialog(tab,
 										"Cannot select " + clsName + ".");
 						return;
-					}
+					} else if (sups_mod.edit_panel.getSelectedInstance().getBrowserText().equals(dlg.getCls().getBrowserText())) {
+						try {
+							MsgDialog.ok(tab, "cannot select self.");
+							return;
+						} catch (Exception ex) {
+							Log.getLogger().log(Level.WARNING, "Exception caught",
+									ex);
+						}
+						
+						
+						
+					} 
 
 					RDFSClass aClass = (RDFSClass) dlg.getCls();
 
@@ -1274,6 +1285,7 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 				}
 
 				Cls cls = (Cls) CollectionUtilities.getFirstItem(c);
+				
 				if (cls == null
 						|| ((OWLNamedClass) cls).getPrefixedName().compareTo(
 								"owl:Thing") == 0) {
@@ -1284,6 +1296,17 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 						Log.getLogger().log(Level.WARNING, "Exception caught",
 								ex);
 					}
+				} else if (sups_mod.edit_panel.getSelectedInstance().getBrowserText().equals(cls.getBrowserText())) {
+					try {
+						MsgDialog.ok(tab, "cannot select self.");
+						return;
+					} catch (Exception ex) {
+						Log.getLogger().log(Level.WARNING, "Exception caught",
+								ex);
+					}
+					
+					
+					
 				} else {
 
 					// String prop_value = cls.getBrowserText();

@@ -71,7 +71,7 @@ public class NCIConditionsTableModel extends ConditionsTableModel {
 	 */
 	public Cls previouslyEditedCls;
 
-	EditPanel edit_panel;
+	public EditPanel edit_panel;
 
 	public NCIConditionsTableModel(OWLNamedClass hostCls,
 			Slot superclassesSlot, int type, EditPanel edit_panel) {
