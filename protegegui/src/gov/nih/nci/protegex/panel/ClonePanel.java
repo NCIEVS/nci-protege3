@@ -25,6 +25,9 @@ import gov.nih.nci.protegex.util.MsgDialog;
 import gov.nih.nci.protegex.util.StringUtil;
 
 import java.awt.BorderLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.logging.Level;
@@ -120,6 +123,13 @@ public class ClonePanel extends NCIDoublePanel {
 
 			while (!cancelled) {
 				NewClsDialog dlg = new NewClsDialog(_tab, true);
+				dlg.addWindowListener(new WindowAdapter() {
+					public void windowClosing(WindowEvent we) {
+						dlg.cancelButtonPressed = true;
+				    }
+				   
+				});
+				
 				dlg.init(label, pt, def);
 				cancelled = dlg.cancelButtonPressed;
 
