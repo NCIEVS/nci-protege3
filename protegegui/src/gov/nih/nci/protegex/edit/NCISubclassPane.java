@@ -76,7 +76,7 @@ public class NCISubclassPane extends OWLSubclassPane implements
 		tab = t;
 		initFinderAndPopup();
 
-		workflowAction = new AbstractAction("Create Workflow Task") {
+		/*workflowAction = new AbstractAction("Create Workflow Task") {
 
 			public static final long serialVersionUID = 123457892L;
 
@@ -86,7 +86,7 @@ public class NCISubclassPane extends OWLSubclassPane implements
 				getSelection().clear();
 
 			}
-		};
+		};*/
 
 		refactorNameSpaceAction = new AbstractAction("Rename Namespace") {
 
@@ -121,17 +121,18 @@ public class NCISubclassPane extends OWLSubclassPane implements
 	protected JPopupMenu createPopupMenu() {
 
 		if (getSelection().size() > 0) {
-
-			JPopupMenu menu = new JPopupMenu();
-			menu.add(workflowAction);
 			if (getSelection().size() > 1) {
+				return null;
 
 			} else {
 				if (tab.isActionAllowed(NCIEditTab.CHANGE_NAMESPACE)) {
-				menu.add(refactorNameSpaceAction);
+					JPopupMenu menu = new JPopupMenu();
+					menu.add(refactorNameSpaceAction);
+					return menu;
+				} else {
+					return null;
 				}
 			}
-			return menu;
 
 		} else {
 			return null;
