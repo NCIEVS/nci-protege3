@@ -77,6 +77,7 @@ public class NewClsDialog extends JDialog implements ActionListener {
 
 	public void init(String init_name, String init_pt, String def) {
 		Container contain = this.getContentPane();
+		
 		// this.setLocation(480,360);
 
 		this.setLocation(450, 300);
@@ -136,6 +137,8 @@ public class NewClsDialog extends JDialog implements ActionListener {
 		contain.add(buttonPanel, BorderLayout.SOUTH);
 
 		pack();
+		
+		
 		this.setVisible(true);
 	}
 

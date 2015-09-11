@@ -308,7 +308,7 @@ public class NCICreateValueAction extends ResourceAction {
 			System.out.println("table is null");
 		}
 
-		editPanel.enableSaveButton(true);
+		editPanel.enableSaveButton(true, false);
 		if (tableModel.getRowCount() == 1)
 			tab.getEditPanel().enableDelEditHB(type, true);
 	}

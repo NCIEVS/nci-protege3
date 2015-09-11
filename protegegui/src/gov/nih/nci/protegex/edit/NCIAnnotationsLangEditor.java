@@ -57,7 +57,7 @@ public class NCIAnnotationsLangEditor extends AbstractCellEditor implements
 	public Component getTableCellEditorComponent(JTable table, Object value,
 			boolean isSelected, int row, int column) {
 		comboBox.setSelectedItem(value);
-		edit_panel.enableSaveButton(true);
+		edit_panel.enableSaveButton(true, false);
 		return langHolder;
 	}
 }

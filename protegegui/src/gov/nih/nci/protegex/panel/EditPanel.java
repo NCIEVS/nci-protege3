@@ -106,6 +106,8 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumnModel;
@@ -253,6 +255,7 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 	}
 
 	private void updateAll(boolean no_focus) {
+		ptTextField.getDocument().removeDocumentListener(mydoclist);
 		this.isModified = false;
 		if (wrapper == null) {
 			System.out.println("WARNING: wrapper == null");
@@ -379,6 +382,9 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 		} else {
 			bar1.setText("");
 		}
+		mydoclist = new MyDocumentListener(ptTextField);
+		ptTextField.getDocument().addDocumentListener(mydoclist);
+		isModifiedNotPreferredText = false;
 	}
 
 	public OWLModel getOWLModel() {
@@ -522,7 +528,7 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 		if (ok) {
 		
 		
-		this.enableSaveButton(true);
+		this.enableSaveButton(true, false);
 		} else {
 			resetState();
 		}
@@ -534,7 +540,7 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 		sups_mod.togglePrimitiveDefiningState(false);
 		
 		if (ok) {
-		this.enableSaveButton(true);
+		this.enableSaveButton(true, false);
 		} else {
 			resetState();
 		}
@@ -590,7 +596,7 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 
 						RDFSClass aClass = rrc.getRestriction().createClone();
 						model.modifyRow(selIndex, aClass, rrc.getIsDefining());
-						enableSaveButton(true);
+						enableSaveButton(true, false);
 					}
 
 				}
@@ -615,7 +621,7 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 					r = dlg.getResult();
 					if (r != null) {
 						model.modifyRow(selIndex, r, dlg.getIsDefining());
-						enableSaveButton(true);
+						enableSaveButton(true, false);
 					}
 				}
 
@@ -855,7 +861,7 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 									row);
 							model.resetValue(name, value, newValue);
 							// model.setValue(newValue, row);
-							enableSaveButton(true);
+							enableSaveButton(true, false);
 
 							ok = true;
 						}
@@ -1165,7 +1171,7 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 							row = role_mod.findFirstRowInNecessaryBlock();
 						}
 						role_mod.addRow(r, row, isDedefining);
-						enableSaveButton(true);
+						enableSaveButton(true, false);
 
 					}
 				}
@@ -1199,7 +1205,7 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 
 						role_mod
 								.addRow(rrc.getRestriction(), row, isDedefining);
-						enableSaveButton(true);
+						enableSaveButton(true, false);
 					}
 
 				}
@@ -1238,7 +1244,7 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 					return;
 
 				role_mod.deleteRow(rowIndex);
-				enableSaveButton(true);
+				enableSaveButton(true, false);
 
 				// 062906
 				if (role_mod.getRowCount() == 2)
@@ -1374,7 +1380,7 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 									isDefining);
 							if (canAdd) {
 								enableDelEditHB(7, true);
-								enableSaveButton(true);
+								enableSaveButton(true, false);
 							}
 						} else {
 							row = sups_mod.getNamedSuperClassCount();
@@ -1385,7 +1391,7 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 								sups_table.scrollRectToVisible(sups_table
 										.getCellRect(row, 0, true));
 								enableDelEditHB(7, true);
-								enableSaveButton(true);
+								enableSaveButton(true, false);
 							}
 						}
 
@@ -1463,7 +1469,7 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 				// KLO
 				// cond_model_2.deleteRow(rowIndex, true);
 				sups_mod.deleteRow(rowIndex);
-				enableSaveButton(true);
+				enableSaveButton(true, false);
 				if (sups_mod.getRowCount() == 0) {
 					enableDelEditHB(7, false);
 				}
@@ -1510,7 +1516,7 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 						OWLNamedClass value = (OWLNamedClass) cls;
 						obj_prop_mod.addRow(property, value);
 
-						enableSaveButton(true);
+						enableSaveButton(true, false);
 						enableDelEditHB(4, true);
 					}
 				}
@@ -1550,7 +1556,7 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 					if (property != null && cls != null) {
 						obj_prop_mod.deleteRow(rowIndex);
 						obj_prop_mod.addRow(property, cls);
-						enableSaveButton(true);
+						enableSaveButton(true, false);
 					}
 				}
 			}
@@ -1785,7 +1791,67 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 
 		}
 	}
+	
+	private class MyDocumentListener implements DocumentListener {
+		
+		
+		private String origString = "";
+		private JTextField orig;
+		
+		public MyDocumentListener(JTextField foo) {
+			System.out.println("orig is " + foo.getText());
+			origString = foo.getText();
+			orig = foo;
+		}
+		
+		@Override
+		public void insertUpdate(DocumentEvent e) {
+			
+			boolean state = true;
+			
+			if (orig.getText().equals(origString)) {
+				state = false;
+			} else {
+				state = true;
+			}
+			enableSaveButton(state, true);
+			
+			System.out.println(origString);
+			System.out.println(orig.getText());
+			// TODO Auto-generated method stub
+			
+		}
 
+		@Override
+		public void removeUpdate(DocumentEvent e) {
+			boolean state = true;
+			
+			if (orig.getText().equals(origString)) {
+				state = false;
+			} else {
+				state = true;
+			}
+			enableSaveButton(state, true);
+			
+			System.out.println(origString);
+			System.out.println(orig.getText());
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void changedUpdate(DocumentEvent e) {
+			// these events never occur on a text field's underlying
+			// document
+			// TODO Auto-generated method stub
+			
+		}
+		
+		
+	};
+	private MyDocumentListener mydoclist;
+	private boolean isModifiedNotPreferredText = false;
+	
 	private void initialize() {
 
 		this.setLayout(new BorderLayout());
@@ -1805,33 +1871,9 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 		ptTextField = new JTextField();
 		ptTextField.setPreferredSize(new Dimension(300, 22));
 		// ptTextField.setEditable(false);
-
-		ptTextField.addKeyListener(new KeyListener() {
-			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_V) {
-					if (e.getModifiers() > 0) {
-						enableSaveButton(true);
-
-					}
-				}
-
-			}
-
-			public void keyReleased(KeyEvent e) {
-			}
-
-			public void keyTyped(KeyEvent e) {
-				/* if (e.getModifiers() > 0) {
-
-				} else {
-					enableSaveButton(true);
-				}
-				*/
-				enableSaveButton(true);
-
-			}
-		});
-
+		
+			
+       
 		
 		selectedInstance = getSelectedInstance();
 		// 120606
@@ -2034,6 +2076,9 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 		 */
 		cancelButton_Modify.setEnabled(false);
 		isModified = false;
+		
+		mydoclist = new MyDocumentListener(ptTextField);
+		ptTextField.getDocument().addDocumentListener(mydoclist);
 
 		this.setVisible(true);
 	}
@@ -2088,7 +2133,10 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 			simple_prop_mod.updateRDFSLabel(pnTF);
 			return true;
 		} else if (!pnTM.equalsIgnoreCase("")) {
+			ptTextField.getDocument().removeDocumentListener(mydoclist);
 		ptTextField.setText(pnTM);
+		mydoclist = new MyDocumentListener(ptTextField);
+		ptTextField.getDocument().addDocumentListener(mydoclist);
 		simple_prop_mod.updateRDFSLabel(pnTM);
 		return true;
 		} else {
@@ -2206,7 +2254,7 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 
 				saveButton_Modify.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 
-				enableSaveButton(false);
+				enableSaveButton(false, false);
 				reviewButton_Modify.setEnabled(true);
 
 				initial_preferred_name = getObjectValue(ptTextField.getText()
@@ -2298,14 +2346,32 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 		return tab.getUserName();
 	}
 
-	public void enableSaveButton(boolean state) {
+	public void enableSaveButton(boolean state, boolean isPreferredText) {
+		
+		if (isPreferredText) {
+			if (!isModifiedNotPreferredText) {
+				if (reviewButton_Modify != null) {
+					reviewButton_Modify.setEnabled(state);
+				}
+				saveButton_Modify.setEnabled(state);
+				cancelButton_Modify.setEnabled(state);
+				isModified = state;
 
-		if (reviewButton_Modify != null) {
-			reviewButton_Modify.setEnabled(state);
+			}
+		} else {
+
+			if (reviewButton_Modify != null) {
+				reviewButton_Modify.setEnabled(state);
+			}
+			saveButton_Modify.setEnabled(state);
+			cancelButton_Modify.setEnabled(state);
+			isModified = state;
+			
+			//
+			if (state) {
+				isModifiedNotPreferredText = true;
+			}
 		}
-		saveButton_Modify.setEnabled(state);
-		cancelButton_Modify.setEnabled(state);
-		isModified = state;
 	}
 
 	public boolean isSaveButtonEnabled() {

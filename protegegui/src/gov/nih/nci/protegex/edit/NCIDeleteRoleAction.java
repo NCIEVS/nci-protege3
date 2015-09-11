@@ -56,7 +56,7 @@ public class NCIDeleteRoleAction extends ResourceAction {
 		if (tableModel.getRowCount() > 0)
 			table.setRowSelectionInterval(0, 0);
 
-		tab.getEditPanel().enableSaveButton(true);
+		tab.getEditPanel().enableSaveButton(true, false);
     }
 
     public boolean confirmDeleteAction(String msg) {

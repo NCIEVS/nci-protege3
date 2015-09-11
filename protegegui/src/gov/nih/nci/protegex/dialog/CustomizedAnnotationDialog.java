@@ -170,7 +170,7 @@ public class CustomizedAnnotationDialog {
 
 						}
 						model.fireTableDataChanged();
-						edit_panel.enableSaveButton(true);
+						edit_panel.enableSaveButton(true, false);
 					}
 
 				}

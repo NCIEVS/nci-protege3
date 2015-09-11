@@ -149,7 +149,7 @@ public class NCIDeletePropertyAction extends ResourceAction {
 				tab.getEditPanel().enableDelEditHB(1, false);
 
 		}
-        editPanel.enableSaveButton(true);
+        editPanel.enableSaveButton(true, false);
     }
 
     public boolean confirmDeleteAction(String msg) {

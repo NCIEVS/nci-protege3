@@ -144,7 +144,7 @@ public class NCIFULLSYNTableModel extends AbstractTableModel {
 			return;
 		setValueAndGetIt(aValue, row, col);
 		fireTableCellUpdated(row, col);
-		editpanel.enableSaveButton(true);
+		editpanel.enableSaveButton(true, false);
 	}
 
 	private Object setLanguage(int row, String newLanguage) {
@@ -559,7 +559,7 @@ public class NCIFULLSYNTableModel extends AbstractTableModel {
 			properties.remove(index);
 			values.remove(index);
 			fireTableDataChanged();
-			editpanel.enableSaveButton(true);
+			editpanel.enableSaveButton(true, false);
 		}
 	}
 
@@ -567,7 +567,7 @@ public class NCIFULLSYNTableModel extends AbstractTableModel {
 		if (!hasPropertyValue(property, value)) {
 			addPropertyValue(property, value);
 			// isModified = true;
-			editpanel.enableSaveButton(true);
+			editpanel.enableSaveButton(true, false);
 		}
 
 		int index = getPropertyValueRow(property, value);
@@ -613,7 +613,7 @@ public class NCIFULLSYNTableModel extends AbstractTableModel {
 				values.set(i, new_prop_value_obj);
 				fireTableDataChanged();
 				// isModified = true;
-				editpanel.enableSaveButton(true);
+				editpanel.enableSaveButton(true, false);
 				return true;
 			}
 		}

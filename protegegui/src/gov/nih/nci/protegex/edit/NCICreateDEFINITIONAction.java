@@ -130,7 +130,7 @@ public class NCICreateDEFINITIONAction extends ResourceAction {
 				System.out.println("table is null");
 			}
 
-			tab.getEditPanel().enableSaveButton(true);
+			tab.getEditPanel().enableSaveButton(true, false);
 
 			//062906
 			if (tableModel.getRowCount()==1)

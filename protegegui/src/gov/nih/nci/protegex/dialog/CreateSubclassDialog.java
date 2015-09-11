@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -101,8 +103,10 @@ public class CreateSubclassDialog extends JDialog {
 			if (reply != ModalDialogFactory.OPTION_OK)
 				return;
 
-			if (hasName)
+			if (hasName) {
 				concept_name = name_field.getText().trim();
+				
+			}
 			preferred_name = pt_field.getText().trim();
 			definition = StringUtil.cleanString(def_area.getText(), false);
 			superconcept_name = superconcept_field.getText().trim();
@@ -114,6 +118,7 @@ public class CreateSubclassDialog extends JDialog {
 			superconcept_field.setText(superconcept_name);
 
 			if (hasName) {
+				
 				if (concept_name.compareTo("") == 0) {
 					MsgDialog.warning(this, "Incomplete data entry",
 							"Class name is mandatory.");
