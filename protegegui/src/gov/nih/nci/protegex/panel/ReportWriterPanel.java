@@ -204,7 +204,7 @@ public class ReportWriterPanel extends JPanel implements ActionListener,
 				public static final long serialVersionUID = 123456772L;
 
 				public Collection<Instance> getInstancesToExport() {
-					Collection<Instance> allClassesToExport = new LinkedHashSet<Instance>();
+					Collection<Instance> allClassesToExport = new ArrayList<Instance>();
 					List<Cls> selectedClsesInPanel = new ArrayList<Cls>(
 							getExportConfigurationPanel()
 									.getExportedClassesInPanel());
@@ -218,7 +218,7 @@ public class ReportWriterPanel extends JPanel implements ActionListener,
 
 				}
 
-				protected Collection<Cls> getInitialExportClses() {
+				protected ArrayList<Cls> getInitialExportClses() {
 					return ocl;
 
 				}

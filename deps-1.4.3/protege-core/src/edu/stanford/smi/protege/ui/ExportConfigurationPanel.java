@@ -57,7 +57,7 @@ public class ExportConfigurationPanel {
 
 	private Collection<Slot> slots = new LinkedHashSet<Slot>();
 	private Collection<Slot> possibleSlots = new LinkedHashSet<Slot>();
-	private Collection<Cls> clses = new LinkedHashSet<Cls>();	
+	private Collection<Cls> clses = new ArrayList<Cls>();	
 	
 	private String metadataString = "";
 	private boolean showExportSuperclasses = false;
