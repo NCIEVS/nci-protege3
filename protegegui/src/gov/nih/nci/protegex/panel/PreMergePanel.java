@@ -113,7 +113,8 @@ public class PreMergePanel extends NCIDoublePanel {
 		try {
 			setCursor(WAIT_CURSOR);
 			String retiringClsName = _lowerTreePanel.getLocalName();
-			String survivingClsName = _upperTreePanel.getLocalName();
+			String survivingClsName = _upperTreePanel.getDisplayName();
+			String survivingClsCode = _upperTreePanel.getCode();
 			if (retiringClsName == null || retiringClsName.compareTo("") == 0) {
 				setCursor(DEFAULT_CURSOR);
 				return;
@@ -132,13 +133,13 @@ public class PreMergePanel extends NCIDoublePanel {
 			String designnote = "";
 
 			// GF#7520
-			editornote = "Merge into " + survivingClsName;
+			editornote = "Merge into " + survivingClsName + "(" + survivingClsCode + ")";
 			
 			if (_tab.getUserName() != null) {
 			    editornote += ", " + _tab.getUserName();
 			}
 					
-			designnote = "See '" + survivingClsName + "'";
+			designnote = "See '" + survivingClsName + "(" + survivingClsCode + ")" + "'";
 
 			String prefix = "premerge_annotation";
 
