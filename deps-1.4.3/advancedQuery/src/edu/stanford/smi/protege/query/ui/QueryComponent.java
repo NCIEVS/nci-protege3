@@ -72,6 +72,7 @@ public class QueryComponent extends QueryBuildingJPanel {
     private static final long serialVersionUID = -6087068847427663289L;
     public static final String EXACT_MATCH = "exact match";
 	public static final String CONTAINS = "contains";
+	public static final String LUCENE = "lucene match";
 	public static final String STARTS_WITH = "starts with";
 	public static final String ENDS_WITH = "ends with";
 	public static final String PROPERTY_PRESENT = "property value present";
@@ -80,7 +81,7 @@ public class QueryComponent extends QueryBuildingJPanel {
 	public static final String PROPERTY_RESTRICTION_ABSENT = "property restriction absent";
 	public static final String[] DEFAULT_TYPES = { CONTAINS, STARTS_WITH, ENDS_WITH, 
 		EXACT_MATCH, PROPERTY_PRESENT,  PROPERTY_ABSENT, PROPERTY_RESTRICTION_PRESENT,
-		PROPERTY_RESTRICTION_ABSENT };
+		PROPERTY_RESTRICTION_ABSENT, LUCENE };
 	public static final String IS = "is";
 	public static final String GREATER_THAN = "greater than";
 	public static final String LESS_THAN = "less than";
@@ -326,7 +327,7 @@ public class QueryComponent extends QueryBuildingJPanel {
 	 * Creates a map of {@link ValueType} objects to String[] values used in the types {@link JComboBox}.
 	 */
 	protected void initializeTypes() {
-		String[] string = { CONTAINS, STARTS_WITH, ENDS_WITH, EXACT_MATCH, PROPERTY_PRESENT,  PROPERTY_ABSENT };	// any, string
+		String[] string = { CONTAINS, STARTS_WITH, ENDS_WITH, EXACT_MATCH, LUCENE, PROPERTY_PRESENT,  PROPERTY_ABSENT };	// any, string
 		String[] number = { IS, GREATER_THAN, LESS_THAN , PROPERTY_PRESENT, PROPERTY_ABSENT};	// integer, float
 		String[] objects = { PROPERTY_PRESENT, PROPERTY_ABSENT};	// instance, class
 		String[] enumerated = { IS , PROPERTY_PRESENT, PROPERTY_ABSENT};	// symbol, boolean
