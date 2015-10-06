@@ -1656,6 +1656,7 @@ public class NCIEditTab extends AbstractTabWidget implements ActionListener,
 			_clsesPanel.clearSelection();
 			_clsesPanel.setSelectedCls(cls);
 		}
+		_clsesPanel.requestFocus();
 	}
 	
 	public void setClassSelectedNew(Cls cls) {
