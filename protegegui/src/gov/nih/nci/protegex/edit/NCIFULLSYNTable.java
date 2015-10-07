@@ -26,6 +26,7 @@ public class NCIFULLSYNTable extends JTable {
 
 		super(model);
 		this.tableModel = model;
+		this.setAutoCreateRowSorter(true);
 
 		model.setTable(this);
 
@@ -61,7 +62,7 @@ public class NCIFULLSYNTable extends JTable {
 		langColumn.setCellRenderer(renderer);
 
 		setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		getTableHeader().setReorderingAllowed(false);
+		getTableHeader().setReorderingAllowed(true);
 		setRowMargin(0);
 		setIntercellSpacing(new Dimension(0, 0));
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

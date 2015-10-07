@@ -118,10 +118,11 @@ public class NCIFULLSYNTableModel extends AbstractTableModel {
 	 * contain text ("true"/"false"), rather than a check box.
 	 */
 	public Class<?> getColumnClass(int c) {
-		if (c == 4)
-			return String.class;
+		return String.class;
+		//if (c == 4)
+			//return String.class;
 
-		return getValueAt(0, c).getClass();
+		//return getValueAt(0, c).getClass();
 	}
 
 	/*
