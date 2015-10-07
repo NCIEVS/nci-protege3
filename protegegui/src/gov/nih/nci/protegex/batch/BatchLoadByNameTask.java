@@ -6,6 +6,7 @@ import edu.stanford.smi.protegex.owl.model.OWLNamedClass;
 import gov.nih.nci.protegex.edit.NCIEditFilter;
 import gov.nih.nci.protegex.edit.NCIEditTab;
 import gov.nih.nci.protegex.edit.OWLWrapper;
+import gov.nih.nci.protegex.util.SemanticTypeUtil;
 import gov.nih.nci.protegex.util.StringUtil;
 
 import java.util.Vector;
@@ -41,11 +42,17 @@ public class BatchLoadByNameTask extends BatchTask {
 	public boolean processTask(int taskId) {
 		try {
 			String s = (String) data_vec.elementAt(taskId);
-			Vector<String> w = getTokenStr(s, 3);
+			Vector<String> w = getTokenStr(s, 4);
 			
 			String name = (String) w.elementAt(0);
 			String pt = StringUtil.cleanString((String) w.elementAt(1), false);
 			String sup = (String) w.elementAt(2);
+			
+			String sem_type = "";
+			if (w.size() > 3) {
+				sem_type = (String) w.elementAt(3);
+			}
+			
 
 			if (owlModel == null) {
 				System.out.println("WARNING: owlModel is null...");
@@ -72,11 +79,22 @@ public class BatchLoadByNameTask extends BatchTask {
 
 			} else {
 				long beg = System.currentTimeMillis();
+				owlModel.beginTransaction("Batchload. Processing " + s);
 				OWLNamedClass cls = wrapper.createCls(name, pt, sup);
 				create_time += System.currentTimeMillis() - beg;
+				
 
 				if (cls != null) {
 					beg = System.currentTimeMillis();
+					if (sem_type.equalsIgnoreCase("NA")) {
+						// do nothing
+					} else {
+						if (this.tab.getFilter().checkSemanticTypeValue(sem_type)) {
+							wrapper.addAnnotationProperty(name, SemanticTypeUtil.SEMANTICTYPE,
+									sem_type);
+						}
+					}
+					
 				    tab.recordHistory(NCIEditTab.EVSHistoryAction.CREATE, cls, "");
 				    evs_time += System.currentTimeMillis() - beg;
 					super.print("\t" + name + " created. \n");
@@ -84,6 +102,7 @@ public class BatchLoadByNameTask extends BatchTask {
 					super.print("\t" + "Unable to create class " + name + "\n");
 					return false;
 				}
+				owlModel.commitTransaction();
 			}
 
 		} catch (Exception e) {
@@ -113,6 +132,24 @@ public class BatchLoadByNameTask extends BatchTask {
 				
 				String name = (String) v.elementAt(0);
 				String sup = (String) v.elementAt(2);
+				
+				String sem_type = "";
+				if (v.size() > 3) {
+					sem_type = (String) v.elementAt(3);
+				}
+				
+				if (sem_type.equalsIgnoreCase("NA")) {
+					// do nothing
+				} else {
+					if (this.tab.getFilter().checkSemanticTypeValue(sem_type)) {
+						//ok						
+					} else {
+						String error_msg = " -- semantic type " + sem_type + " is invalid.";
+						w.add(error_msg);
+						System.out.println(error_msg);
+						
+					}
+				}
 
 				if (!NCIEditFilter.checkXMLNCNameCompliance(name)) {
 					String error_msg = " -- concept name " + name + " is invalid.";
