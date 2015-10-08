@@ -43,6 +43,8 @@ public class SelectRoleDialog extends JDialog implements ActionListener
 	String role_modifier_label;
 
 	int selectedIndex = -1;
+	
+	Cls sel_cls;
 
 
 	JButton selButton;
@@ -94,8 +96,9 @@ public class SelectRoleDialog extends JDialog implements ActionListener
 		tf = new JTextField();
 		if (tab.getSelectedInstance() != null)
 		{
-			Cls cls = (Cls) tab.getSelectedInstance();
-			String sel_cls_name = tab.getOWLWrapper().getInternalName(cls);
+			sel_cls = (Cls) tab.getSelectedInstance();
+			//String sel_cls_name = tab.getOWLWrapper().getInternalName(cls);
+			String sel_cls_name = sel_cls.getBrowserText();
 
 			if (sel_cls_name.compareTo("owl:Thing") != 0)
 			{
@@ -153,25 +156,25 @@ public class SelectRoleDialog extends JDialog implements ActionListener
 		if (action == okButton)
 		{
             String cls_name = tf.getText();
-			Cls cls = tab.getWrapper().getOWLNamedClass(cls_name);
-			if (cls == null)
+			
+			if (sel_cls == null)
 			{
                 MsgDialog.ok(this, "Concept " + cls_name + " not found.");
 				return;
 			}
 
 
-			partonomyPanel.draw(tf.getText(), roleList.getSelectedValues());
+			partonomyPanel.draw(tab.getOWLWrapper().getInternalName(sel_cls), roleList.getSelectedValues());
 			dispose();
 		}else if (action == cancelButton){
 			dispose();
 		}else if (action == clsButton)	{
 			Collection clses = kb.getRootClses();
-			Cls cls = DisplayUtilities.pickConcreteCls(clsButton, kb, clses);
-			if (cls == null)
+			sel_cls = DisplayUtilities.pickConcreteCls(clsButton, kb, clses);
+			if (sel_cls == null)
 				System.out.println("cls == null");
 			else
-				tf.setText(tab.getOWLWrapper().getInternalName(cls));
+				tf.setText(sel_cls.getBrowserText());
 		}
 	}
 

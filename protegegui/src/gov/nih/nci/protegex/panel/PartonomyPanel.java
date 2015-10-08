@@ -222,7 +222,8 @@ public class PartonomyPanel extends JPanel implements ActionListener, PanelDirty
     private void createTree(Cls cls)
     {
 		selectedInstance = cls;
-		String name = tab.getWrapper().getInternalName(cls);//selectedInstance.getBrowserText();
+		//String name = tab.getWrapper().getInternalName(cls);//selectedInstance.getBrowserText();
+		String name = selectedInstance.getBrowserText();
 		root_node = new DefaultMutableTreeNode(name);
 
 		edit_tree = new JTree(root_node);
@@ -282,7 +283,8 @@ public class PartonomyPanel extends JPanel implements ActionListener, PanelDirty
 		{
 			for (int i=0; i<referring_clses.size(); i++){
 				Cls referring_cls = (Cls) referring_clses.elementAt(i);
-				String name = tab.getWrapper().getInternalName(referring_cls);//.getBrowserText();
+				//String name = tab.getWrapper().getInternalName(referring_cls);//.getBrowserText();
+				String name = referring_cls.getBrowserText();
 
 				if (!visitedNodes.contains(name))
 				{
@@ -358,7 +360,7 @@ public class PartonomyPanel extends JPanel implements ActionListener, PanelDirty
 						OWLObjectProperty property = (OWLObjectProperty) rdfproperty;
 						if (property.isTransitive())
 							//v.add(property.getBrowserText());
-							transPropList.add(property.getPrefixedName());
+							transPropList.add(property.getBrowserText());
 					}
 				}
 			}
