@@ -496,7 +496,7 @@ public class OWLWrapper {
 							.getOnProperty().getBrowserText();
 
 					if (restrication_name.equals(role_name)) {
-						Collection subs = owlcls.getSubclasses(false);
+						Collection subs = owlcls.getSubclasses();
 						Object[] obs_2 = subs.toArray();
 						for (int j = 0; j < obs_2.length; j++) {
 							OWLNamedClass owlcls_2 = (OWLNamedClass) obs_2[j];

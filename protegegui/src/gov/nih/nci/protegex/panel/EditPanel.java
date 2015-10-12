@@ -110,6 +110,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableModelEvent;
 import javax.swing.table.TableColumnModel;
 
 /**
@@ -932,9 +933,8 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 			
 	        
 
-			Collections.sort(full_syn_mod.getSortVector(), new MyComparator(isSortAsc, sortCol));
+			Collections.sort((ArrayList) full_syn_mod.getValues(), new MyComparator(full_syn_mod, isSortAsc, sortCol));
 			
-			//table.tableChanged(new TableModelEvent(NCIFULLSYNTableModel.this));
 			table.repaint();
 		}
 	}
@@ -943,10 +943,13 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 		protected boolean isSortAsc;
 
 		protected int col;
+		
+		private NCIFULLSYNTableModel full_syn;
 
-		public MyComparator(boolean sortAsc, int sortCol) {
+		public MyComparator(NCIFULLSYNTableModel mod, boolean sortAsc, int sortCol) {
 			isSortAsc = sortAsc;
 			col = sortCol;
+			full_syn = mod;
 		}
 
 		private int compareObjs(Object o1, Object o2) {
@@ -954,12 +957,9 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 		}
 
 		public int compare(Object o1, Object o2) {
-			if (!(o1 instanceof Vector) || !(o2 instanceof Vector))
-				return 0;
-			Vector s1 = (Vector) o1;
-			Vector s2 = (Vector) o2;
-			int result = 0;
-			result = compareObjs(s1.get(col), s2.get(col));
+			String s1 = full_syn.getFullSynValue(o1.toString(), col);
+			String s2 = full_syn.getFullSynValue(o2.toString(), col);
+			int result = s1.compareToIgnoreCase(s2);
 			if (!isSortAsc)
 				result = -result;
 			return result;

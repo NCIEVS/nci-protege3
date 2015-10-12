@@ -26,8 +26,7 @@ public class NCIFULLSYNTable extends JTable {
 
 		super(model);
 		this.tableModel = model;
-		this.setAutoCreateRowSorter(true);
-
+		
 		model.setTable(this);
 
 		JTextField textField = new JTextField();

@@ -99,7 +99,11 @@ public class NCIFULLSYNTableModel extends AbstractTableModel {
 	}
 
 	public Object getValue(int rowIndex) {
-		return values.get(rowIndex);
+		if (!values.isEmpty()) {
+			return values.get(rowIndex);
+		} else {
+			return "";
+		}
 	}
 
 	public Object getValueAt(int row, int col) {
@@ -118,11 +122,11 @@ public class NCIFULLSYNTableModel extends AbstractTableModel {
 	 * contain text ("true"/"false"), rather than a check box.
 	 */
 	public Class<?> getColumnClass(int c) {
-		return String.class;
-		//if (c == 4)
-			//return String.class;
+		//return String.class;
+		if (c == 4)
+			return String.class;
 
-		//return getValueAt(0, c).getClass();
+		return getValueAt(0, c).getClass();
 	}
 
 	/*
@@ -347,14 +351,6 @@ public class NCIFULLSYNTableModel extends AbstractTableModel {
 		return properties;
 	}
 	
-	public Vector getSortVector() {
-		Vector res = new Vector(values.size());
-		for (int i = 0; i < values.size(); i++) {
-			res.add(i,values.get(i));
-		}
-		return res;
-	}
-
 	public Collection getValues() {
 		return values;
 	}
@@ -377,7 +373,7 @@ public class NCIFULLSYNTableModel extends AbstractTableModel {
 		this.table = table;
 	}
 
-	private String getFullSynValue(String value, int column) {
+	public String getFullSynValue(String value, int column) {
 		if (value == null || value.equals(""))
 			return "";
 
