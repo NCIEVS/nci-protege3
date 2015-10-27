@@ -256,6 +256,39 @@ public class DataHandler {
 
 	}
 	
+	public Status checkDupsPT(JComponent panel, Cls cls) {
+
+		
+
+		filter.setErrorMessage("");
+
+		TreeItems init_state = null;
+		TreeItems curr_state = null;
+
+		if (panel instanceof TreePanel) {
+
+			init_state = ((TreePanel) panel).getInitialState();
+			curr_state = ((TreePanel) panel).getCurrentState();
+
+		} else if (panel instanceof EditPanel) {
+			init_state = ((EditPanel) panel).getInitialState();
+			curr_state = ((EditPanel) panel).getFinalState();
+
+		}
+
+		filter.setCurrState(curr_state);
+		filter.setInitialState(init_state);
+
+		if (!filter.runDupPT())
+			return Status.FAILURE;
+
+		
+		
+
+		return Status.SUCCESSFUL;
+
+	}
+	
 	// New implementation of the processData method, which minimizes the cloning
 	// at saving.
 	private Status processData(JComponent parent, Cls cls,

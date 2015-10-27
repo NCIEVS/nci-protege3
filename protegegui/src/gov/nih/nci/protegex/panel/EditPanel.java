@@ -2184,19 +2184,42 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 				saveButton_Modify.setEnabled(false);
 				return;
 			}
+			
+			OWLNamedClass curr_cls = (OWLNamedClass) instance;
+			
+			DataHandler.Status status = tab.getDataHandler().checkDupsPT(this,
+					(Cls) instance);
+			
+			if (status != DataHandler.Status.SUCCESSFUL) {
+				if (status == DataHandler.Status.FAILURE) {
+					tab.showError(instance.getBrowserText());
+					logger.warning("ERROR: Unable to save "
+							+ curr_cls.getBrowserText());
+				}
+				//this.ptTextField.setText(this.initial_preferred_name);
+				//simple_prop_mod.updateRDFSLabel(this.initial_preferred_name);
+				
+				saveButton_Modify.setEnabled(true);
+				cancelButton_Modify.setEnabled(true);
+				saveButton_Modify.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+				tab.addToListenedToClses((OWLNamedClass) curr_cls, this);
+				// updateAll();
 
+				return;
+			}
 			if (!synchronizePreferredName()) {
 				return;
 			}
+			
+			
 
-			OWLNamedClass curr_cls = (OWLNamedClass) instance;
 			tab.removeFromListenedToClses(curr_cls, this);
 
 			logger.fine("Starting entire save ...");
 			long t0 = System.currentTimeMillis();
 
 			saveButton_Modify.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-			DataHandler.Status status = tab.getDataHandler().canSaveData(this,
+			status = tab.getDataHandler().canSaveData(this,
 					(Cls) instance);
 			if (status != DataHandler.Status.SUCCESSFUL) {
 				if (status == DataHandler.Status.FAILURE) {
@@ -2204,6 +2227,8 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 					logger.warning("ERROR: Unable to save "
 							+ curr_cls.getBrowserText());
 				}
+				
+				
 				saveButton_Modify.setEnabled(true);
 				cancelButton_Modify.setEnabled(true);
 				saveButton_Modify.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -2212,6 +2237,10 @@ public class EditPanel extends JPanel implements ActionListener, PanelDirty,
 
 				return;
 			} else {
+				
+				
+
+				
 				try {
 					kb.beginTransaction("Save class in EditPanel "
 							+ curr_cls.getBrowserText(), curr_cls.getName());

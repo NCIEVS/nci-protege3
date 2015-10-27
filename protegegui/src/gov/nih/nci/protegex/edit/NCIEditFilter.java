@@ -257,6 +257,17 @@ public class NCIEditFilter {
         return true;
     }
 
+    public boolean runDupPT() {
+        
+        if (tab.useNCIRules()) {
+        
+        if (!checkFullSynDupPT())
+            return false;
+        }
+
+
+        return true;
+    }
     /**
      * 1. Each concept can have at most one Def_Curator property. 2. If a concept has a Def_Curator property, then only
      * authorized editors can make change to the NCI's DEFINITION property. 3. The names (schema name) of the users who
@@ -533,6 +544,72 @@ public class NCIEditFilter {
         return true;
     }
 
+    private boolean checkFullSynDupPT() {
+        Vector<Property> properties = curr_state.getProperties();
+        Property[] props = new Property[properties.size()];
+        for (int i = 0; i < properties.size(); i++) {
+            props[i] = (Property) properties.elementAt(i);
+        }
+
+        HashSet<String> fullsyn_set = new HashSet<String>();
+        String source, termtype;
+        String pt;
+
+        source = termtype = pt = null;
+
+        int pt_knt = 0;
+
+        for (int i = 0; i < props.length; i++) {
+            if (props[i].getName().compareTo(NCIEditTab.ALTLABEL) == 0) {
+                Qualifier[] qualifiers = getQualifiers(props[i]);
+
+                int num_source = 0;
+                int num_type = 0;
+                int num_code = 0;
+
+                String term_name = null;
+
+                for (int k = 0; k < qualifiers.length; k++) {
+                    if (qualifiers[k].getName().equals("term-source")) {
+                        source = qualifiers[k].getValue();
+                        num_source++;
+                    } else if (qualifiers[k].getName().equals("term-group")) {
+                        termtype = qualifiers[k].getValue();
+                        num_type++;
+                    } else if (qualifiers[k].getName().equals("source-code")) {
+                        num_code++;
+                    } else if (qualifiers[k].getName().equals("term-name"))
+                        term_name = qualifiers[k].getValue();
+                }
+
+                // 020206
+                if (num_type == 0) {
+                    termtype = DEFAULT_TERMTYPE;
+                    num_type++;
+                }
+                if (num_source == 0) {
+                    source = DEFAULT_SOURCE;
+                    num_source++;
+                }
+
+                if (isEquivalentToPT(termtype) && source.equals("NCI")) {
+                    pt_knt++;
+
+                    fullsyn_set.add(term_name);
+
+                    if (pt_knt > 1) {
+                        failure = "Cannot have more than one NCI PT (or its equivalent) ALTLABEL properties. ";
+                        return false;
+                    }
+                }
+
+            } else if (props[i].getName().equals(NCIEditTab.PREFLABEL)) {
+                pt = props[i].getValue();
+            }
+        }
+
+        return true;
+    }
     /*******************************************************************************************************************
      * for the DEFINITION property, only one space between tokens except when preceeded by period (.), exclamation mark
      * (!), or question mark (?), in which case two spaces are allowed.
